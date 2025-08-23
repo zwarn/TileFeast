@@ -9,13 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62e16a8951ea40e9aa428fed7175b894, type: 3}
-  m_Name: Strawberry-TShape 3
+  m_Script: {fileID: 11500000, guid: 85d0b7a8ccd5418383f1c9f86c5465c4, type: 3}
+  m_Name: BiggestConnectedRed
   m_EditorClassIdentifier: 
-  tilePosition:
-  - {x: 0, y: 0}
-  - {x: -1, y: 0}
-  - {x: 1, y: 0}
-  - {x: 0, y: -1}
-  sprite: {fileID: 21300000, guid: 0a37e813209f73346889f398755654ef, type: 3}
-  aspects: 00000000
+  aspect: 0

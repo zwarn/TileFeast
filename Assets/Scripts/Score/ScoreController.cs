@@ -14,6 +14,8 @@ namespace Score
         [Inject] private InteractionController _interactionController;
         [Inject] private BoardController _boardController;
 
+        [SerializeField] private List<ScoreCondition> _scoreConditions;
+
         private int _width;
         private int _height;
 
@@ -38,10 +40,10 @@ namespace Score
             var tilesDictionary = _boardController.GetShapeByPosition();
             ShapeSO[,] tilesArray = ScoreHelper.ConvertTiles(tilesDictionary, _width, _height);
 
-            var groups = ScoreHelper.GetGroups(tilesArray, so => so != null);
-            var biggestGroup = groups.OrderByDescending(group => group.Count).FirstOrDefault();
-            var count = biggestGroup?.Count ?? 0;
-            Debug.Log($"Score : {count}");
+            _scoreConditions.ForEach(condition => condition.CalculateScore(tilesArray));
+            int points = _scoreConditions.Select(condition => condition.GetScore()).Sum();
+
+            Debug.Log($"Score : {points}");
         }
     }
 }
