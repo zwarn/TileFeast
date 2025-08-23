@@ -1,4 +1,5 @@
-﻿using Board;
+﻿using System;
+using Board;
 using Shape.controller;
 using Shape.model;
 using UnityEngine;
@@ -11,6 +12,33 @@ namespace Hand
         [Inject] private BoardController _boardController;
         [Inject] private HandController _handController;
         [Inject] private ShapeSupplyController _shapeSupply;
+
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.Q))
+            {
+                _handController.Rotate(1);
+            }
+
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+                _handController.Rotate(-1);
+            }
+
+            if (Input.GetMouseButtonUp(1))
+            {
+                ReturnShape();
+            }
+        }
+
+        private void ReturnShape()
+        {
+            if (_handController.IsEmpty()) return;
+            
+            var shape = _handController.GetShape();
+            _shapeSupply.AddShape(shape);
+            _handController.FreeShape();
+        }
 
         public void BoardClicked(Vector2Int position)
         {

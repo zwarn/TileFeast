@@ -22,16 +22,6 @@ namespace Hand
 
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.Q))
-            {
-                _currentShape.Rotate(1);
-            }
-
-            if (Input.GetKeyUp(KeyCode.E))
-            {
-                _currentShape.Rotate(-1);
-            }
-
             var targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPosition.z = 0;
             transform.localPosition = targetPosition;
@@ -62,6 +52,11 @@ namespace Hand
             }
             _currentShape = shape;
             shapeView.SetData(_currentShape);
+        }
+
+        public void Rotate(int direction)
+        {
+            _currentShape.Rotate(direction);
         }
     }
 }

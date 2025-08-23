@@ -10,8 +10,9 @@ namespace Shape.controller
     {
         [SerializeField] private List<ShapeSO> shapes;
 
+        public event Action<ShapeSO> OnShapeAdded;
         public event Action<ShapeSO> OnShapeRemoved;
-        
+
         public List<ShapeSO> GetShapes()
         {
             return shapes;
@@ -23,9 +24,20 @@ namespace Shape.controller
             RemoveShapeEvent(shape);
         }
 
+        public void AddShape(ShapeWithRotation shape)
+        {
+            shapes.Add(shape.Shape);
+            AddShapeEvent(shape.Shape);
+        }
+
         public void RemoveShapeEvent(ShapeSO shape)
         {
             OnShapeRemoved?.Invoke(shape);
+        }
+
+        public void AddShapeEvent(ShapeSO shape)
+        {
+            OnShapeAdded?.Invoke(shape);
         }
     }
 }

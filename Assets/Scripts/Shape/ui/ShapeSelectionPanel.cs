@@ -16,26 +16,22 @@ namespace Shape.ui
         [SerializeField] private ShapeSelectionEntry prefab;
         [SerializeField] private Transform entryParent;
 
-        private Dictionary<ShapeSO, ShapeSelectionEntry> _entries = new();
+        private readonly Dictionary<ShapeSO, ShapeSelectionEntry> _entries = new();
 
         private void Start()
         {
-            _shapeSupply.GetShapes().ForEach(shape =>
-            {
-                var entryObject = _container.InstantiatePrefab(prefab, entryParent);
-                var entry = entryObject.GetComponent<ShapeSelectionEntry>();
-                entry.SetData(shape);
-                _entries.Add(shape, entry);
-            });
+            _shapeSupply.GetShapes().ForEach(AddEntry);
         }
-
+        
         private void OnEnable()
         {
+            _shapeSupply.OnShapeAdded += ShapeAdded;
             _shapeSupply.OnShapeRemoved += ShapeRemoved;
         }
 
         private void OnDisable()
         {
+            _shapeSupply.OnShapeAdded -= ShapeAdded;
             _shapeSupply.OnShapeRemoved -= ShapeRemoved;
         }
 
@@ -44,6 +40,20 @@ namespace Shape.ui
             var entry = _entries[shape];
             Destroy(entry.gameObject);
             _entries.Remove(shape);
+        }
+
+        private void ShapeAdded(ShapeSO shape)
+        {
+            AddEntry(shape);
+        }
+        
+        
+        private void AddEntry(ShapeSO shape)
+        {
+            var entryObject = _container.InstantiatePrefab(prefab, entryParent);
+            var entry = entryObject.GetComponent<ShapeSelectionEntry>();
+            entry.SetData(shape);
+            _entries.Add(shape, entry);
         }
     }
 }
