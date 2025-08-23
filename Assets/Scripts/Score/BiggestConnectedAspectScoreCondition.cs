@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Shape.model;
 using UnityEngine;
@@ -26,6 +27,11 @@ namespace Score
 
             _scoringTiles = biggestGroup;
             _score = count;
+        }
+
+        public override string GetText()
+        {
+            return $"Your biggest connected group of things {aspect.ToString()}";
         }
     }
 }

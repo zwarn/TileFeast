@@ -23,6 +23,8 @@ namespace Score
         {
             _width = _boardController.width;
             _height = _boardController.height;
+
+            CalculateScore();
         }
 
         private void OnEnable()
@@ -35,15 +37,17 @@ namespace Score
             _interactionController.OnBoardChanged -= CalculateScore;
         }
 
+        public List<ScoreCondition> GetConditions()
+        {
+            return _scoreConditions.ToList();
+        }
+
         private void CalculateScore()
         {
             var tilesDictionary = _boardController.GetShapeByPosition();
             ShapeSO[,] tilesArray = ScoreHelper.ConvertTiles(tilesDictionary, _width, _height);
 
             _scoreConditions.ForEach(condition => condition.CalculateScore(tilesArray));
-            int points = _scoreConditions.Select(condition => condition.GetScore()).Sum();
-
-            Debug.Log($"Score : {points}");
         }
     }
 }

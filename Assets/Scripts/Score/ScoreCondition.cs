@@ -1,4 +1,5 @@
-﻿using Shape.model;
+﻿using System;
+using Shape.model;
 using UnityEngine;
 
 namespace Score
@@ -8,5 +9,7 @@ namespace Score
     {
         public abstract int GetScore();
         public abstract void CalculateScore(ShapeSO[,] tiles);
+
+        public abstract String GetText();
     }
 }
