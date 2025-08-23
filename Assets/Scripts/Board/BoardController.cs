@@ -8,8 +8,8 @@ namespace Board
 {
     public class BoardController : MonoBehaviour
     {
-        [SerializeField] private int width;
-        [SerializeField] private int height;
+        [SerializeField] public int width;
+        [SerializeField] public int height;
 
         private readonly List<PlacedShape> _shapes = new();
         private readonly Dictionary<Vector2Int, PlacedShape> _shapesByPosition = new();
@@ -56,6 +56,11 @@ namespace Board
             return null;
         }
 
+        public Dictionary<Vector2Int, PlacedShape> GetShapeByPosition()
+        {
+            return _shapesByPosition.ToDictionary(pair => pair.Key, pair => pair.Value);
+        }
+
         private bool IsValid(List<Vector2Int> tiles)
         {
             return tiles.TrueForAll(IsValid);
@@ -68,8 +73,8 @@ namespace Board
 
         private bool InBounds(Vector2Int position)
         {
-            return position.x >= -width / 2 && position.x <= width / 2 &&
-                   position.y >= -height / 2 && position.y <= height / 2;
+            return position.x >= 0 && position.x < width &&
+                   position.y >= 0 && position.y < height;
         }
 
         private bool IsEmpty(Vector2Int position)

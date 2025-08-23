@@ -55,9 +55,9 @@ namespace Board
             if (eventData.button != 0) return;
 
             var worldClickPoint = Camera.main.ScreenToWorldPoint(eventData.position);
-            var localPosition = Vector2Int.RoundToInt(worldClickPoint - transform.position);
-
-            _interactionController.BoardClicked(localPosition);
+            var position = Vector2Int.RoundToInt(worldClickPoint);
+            
+            _interactionController.BoardClicked(position);
         }
     }
 }

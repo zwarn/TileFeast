@@ -25,7 +25,7 @@ namespace Shape.ui
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _interactionController.ShapeSelectionClicked(_shape);
+            _interactionController.GrabShapeFromSupply(_shape);
         }
     }
 }
