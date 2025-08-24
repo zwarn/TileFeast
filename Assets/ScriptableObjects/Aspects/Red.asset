@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85d0b7a8ccd5418383f1c9f86c5465c4, type: 3}
-  m_Name: BiggestConnectedRed
+  m_Script: {fileID: 11500000, guid: 2d828d07d1be409391017b023d4848a7, type: 3}
+  m_Name: Red
   m_EditorClassIdentifier: 
-  aspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+  image: {fileID: -5085024647646920290, guid: 955a8e65bd8687d4ca12490ad4ab6e57, type: 3}
+  name: Red

@@ -9,13 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62e16a8951ea40e9aa428fed7175b894, type: 3}
-  m_Name: Strawberry-TShape 4
+  m_Script: {fileID: 11500000, guid: 2d828d07d1be409391017b023d4848a7, type: 3}
+  m_Name: Fruits
   m_EditorClassIdentifier: 
-  tilePosition:
-  - {x: 0, y: 0}
-  - {x: -1, y: 0}
-  - {x: 1, y: 0}
-  - {x: 0, y: -1}
-  sprite: {fileID: 21300000, guid: 0a37e813209f73346889f398755654ef, type: 3}
-  aspects: 00000000
+  image: {fileID: 1511524153843131313, guid: 955a8e65bd8687d4ca12490ad4ab6e57, type: 3}
+  name: Fruits

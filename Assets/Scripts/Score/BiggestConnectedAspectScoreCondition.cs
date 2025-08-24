@@ -9,7 +9,7 @@ namespace Score
     [CreateAssetMenu(fileName = "ScoreCondition", menuName = "ScoreCondition/BiggestConnectedAspect", order = 0)]
     public class BiggestConnectedAspectScoreCondition : ScoreCondition
     {
-        public Aspect aspect;
+        public AspectSO aspect;
 
         private List<Vector2Int> _scoringTiles = new();
         private int _score;
@@ -31,7 +31,7 @@ namespace Score
 
         public override string GetText()
         {
-            return $"Your biggest connected group of things {aspect.ToString()}";
+            return $"Your biggest connected group of things {aspect.name}";
         }
     }
 }

@@ -1,5 +1,64 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3134621752351348549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5975676345572387527}
+  - component: {fileID: 3586512804109104207}
+  - component: {fileID: 4999595243685487042}
+  m_Layer: 0
+  m_Name: AspectSymbols
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5975676345572387527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3134621752351348549}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5894911182587129502}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3586512804109104207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3134621752351348549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b566886643c84a62a6a92b1536a9f016, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 3447987194599244068, guid: 677cae8f9b86a194cb39c48d1efa910f, type: 3}
+  parent: {fileID: 5975676345572387527}
+--- !u!210 &4999595243685487042
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3134621752351348549}
+  m_Enabled: 1
+  m_SortingLayerID: -37531149
+  m_SortingLayer: 2
+  m_SortingOrder: 1
+  m_SortAtRoot: 0
 --- !u!1 &5452547252447558390
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,6 +69,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5894911182587129502}
   - component: {fileID: 9014385922383016419}
+  - component: {fileID: 2689994336142983072}
   m_Layer: 0
   m_Name: ShapeView
   m_TagString: Untagged
@@ -31,6 +91,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2539761138312647201}
+  - {fileID: 5975676345572387527}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9014385922383016419
@@ -46,6 +107,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 6392780574851368562}
+  aspectListView: {fileID: 3586512804109104207}
+--- !u!210 &2689994336142983072
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5452547252447558390}
+  m_Enabled: 1
+  m_SortingLayerID: -37531149
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &6156505267427490114
 GameObject:
   m_ObjectHideFlags: 0

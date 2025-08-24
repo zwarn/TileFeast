@@ -8,6 +8,6 @@ namespace Shape.model
     {
         public List<Vector2Int> tilePosition;
         public Sprite sprite;
-        public List<Aspect> aspects;
+        public List<AspectSO> aspects;
     }
 }

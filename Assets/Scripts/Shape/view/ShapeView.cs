@@ -1,5 +1,6 @@
 ﻿using System;
 using Shape.model;
+using Shape.ui;
 using UnityEngine;
 
 namespace Shape.view
@@ -7,6 +8,7 @@ namespace Shape.view
     public class ShapeView : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private AspectListView aspectListView;
 
         private ShapeWithRotation _shape;
 
@@ -19,6 +21,8 @@ namespace Shape.view
             {
                 spriteRenderer.sprite = shape.Shape.sprite;
                 transform.rotation = Quaternion.Euler(0, 0, 90 * _shape.Rotation);
+
+                aspectListView.SetData(shape.Shape.aspects, shape.Shape);
             }
         }
 
