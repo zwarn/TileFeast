@@ -38,7 +38,7 @@ namespace Piece.ui
 
         private void SetPosition(int index, AspectView aspectView, PieceSO piece)
         {
-            var position = piece.tilePosition.OrderBy(pos => pos.x).ThenByDescending(pos => pos.y).First();
+            var position = piece.shape.tilePosition.OrderBy(pos => pos.x).ThenByDescending(pos => pos.y).First();
 
             Vector2 delta = index switch
             {

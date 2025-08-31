@@ -12,11 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62e16a8951ea40e9aa428fed7175b894, type: 3}
   m_Name: Blue-TShape
   m_EditorClassIdentifier: 
-  tilePosition:
-  - {x: 0, y: 0}
-  - {x: -1, y: 0}
-  - {x: 1, y: 0}
-  - {x: 0, y: -1}
+  shape: {fileID: 11400000, guid: e10915dbc9fe43c4fa342928cf334ef2, type: 2}
   sprite: {fileID: 21300000, guid: 7d7971ca3729d4a4daf881e340b1956c, type: 3}
   aspects:
   - {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}

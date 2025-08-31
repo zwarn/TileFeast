@@ -6,7 +6,7 @@ namespace Piece.model
     [CreateAssetMenu(fileName = "Piece", menuName = "Piece", order = 0)]
     public class PieceSO : ScriptableObject
     {
-        public List<Vector2Int> tilePosition;
+        public ShapeSO shape;
         public Sprite sprite;
         public List<AspectSO> aspects;
     }
