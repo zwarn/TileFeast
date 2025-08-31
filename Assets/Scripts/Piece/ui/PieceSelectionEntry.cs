@@ -1,31 +1,31 @@
 ﻿using Hand;
-using Shape.model;
+using Piece.model;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Shape.ui
+namespace Piece.ui
 {
-    public class ShapeSelectionEntry : MonoBehaviour, IPointerClickHandler
+    public class PieceSelectionEntry : MonoBehaviour, IPointerClickHandler
     {
         [Inject] private InteractionController _interactionController;
 
         [SerializeField] private Image image;
 
-        private ShapeSO _shape;
+        private PieceSO _piece;
 
-        public void SetData(ShapeSO shape)
+        public void SetData(PieceSO piece)
         {
-            _shape = shape;
+            _piece = piece;
 
-            image.sprite = shape.sprite;
+            image.sprite = piece.sprite;
         }
 
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _interactionController.GrabShapeFromSupply(_shape);
+            _interactionController.GrabPieceFromSupply(_piece);
         }
     }
 }

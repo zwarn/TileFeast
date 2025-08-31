@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Board;
 using Hand;
-using Shape.model;
+using Piece.model;
 using UnityEngine;
 using Zenject;
 
@@ -44,8 +44,8 @@ namespace Score
 
         private void CalculateScore()
         {
-            var tilesDictionary = _boardController.GetShapeByPosition();
-            ShapeSO[,] tilesArray = ScoreHelper.ConvertTiles(tilesDictionary, _width, _height);
+            var tilesDictionary = _boardController.GetPieceByPosition();
+            PieceSO[,] tilesArray = ScoreHelper.ConvertTiles(tilesDictionary, _width, _height);
 
             _scoreConditions.ForEach(condition => condition.CalculateScore(tilesArray));
         }

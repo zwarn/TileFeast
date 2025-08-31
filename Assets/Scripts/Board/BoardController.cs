@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Shape.model;
+using Piece.model;
 using UnityEngine;
 
 namespace Board
@@ -11,54 +11,54 @@ namespace Board
         [SerializeField] public int width;
         [SerializeField] public int height;
 
-        private readonly List<PlacedShape> _shapes = new();
-        private readonly Dictionary<Vector2Int, PlacedShape> _shapesByPosition = new();
+        private readonly List<PlacedPiece> _pieces = new();
+        private readonly Dictionary<Vector2Int, PlacedPiece> _piecesByPosition = new();
 
-        public event Action<PlacedShape> OnShapePlaced;
-        public event Action<PlacedShape> OnShapeRemoved;
+        public event Action<PlacedPiece> OnPiecePlaced;
+        public event Action<PlacedPiece> OnPieceRemoved;
 
-        public List<PlacedShape> Shapes => _shapes.ToList();
+        public List<PlacedPiece> Pieces => _pieces.ToList();
 
-        public bool PlaceShape(ShapeWithRotation newShape, Vector2Int position)
+        public bool PlacePiece(PieceWithRotation newPiece, Vector2Int position)
         {
-            var shape = new PlacedShape(newShape.Shape, newShape.Rotation, position);
-            if (!IsValid(shape.GetTilePosition()))
+            var piece = new PlacedPiece(newPiece.Piece, newPiece.Rotation, position);
+            if (!IsValid(piece.GetTilePosition()))
             {
                 return false;
             }
 
-            _shapes.Add(shape);
-            shape.GetTilePosition().ForEach(pos => _shapesByPosition[pos] = shape);
-            PlaceShapeEvent(shape);
+            _pieces.Add(piece);
+            piece.GetTilePosition().ForEach(pos => _piecesByPosition[pos] = piece);
+            PlacePieceEvent(piece);
             return true;
         }
 
-        public bool RemoveShape(PlacedShape shape)
+        public bool RemovePiece(PlacedPiece piece)
         {
-            bool removed = _shapes.Remove(shape);
+            bool removed = _pieces.Remove(piece);
             if (!removed)
             {
                 return false;
             }
 
-            shape.GetTilePosition().ForEach(pos => _shapesByPosition.Remove(pos));
-            RemoveShapeEvent(shape);
+            piece.GetTilePosition().ForEach(pos => _piecesByPosition.Remove(pos));
+            RemovePieceEvent(piece);
             return true;
         }
 
-        public PlacedShape GetShape(Vector2Int position)
+        public PlacedPiece GetPiece(Vector2Int position)
         {
-            if (_shapesByPosition.TryGetValue(position, out var shape))
+            if (_piecesByPosition.TryGetValue(position, out var piece))
             {
-                return shape;
+                return piece;
             }
 
             return null;
         }
 
-        public Dictionary<Vector2Int, PlacedShape> GetShapeByPosition()
+        public Dictionary<Vector2Int, PlacedPiece> GetPieceByPosition()
         {
-            return _shapesByPosition.ToDictionary(pair => pair.Key, pair => pair.Value);
+            return _piecesByPosition.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         private bool IsValid(List<Vector2Int> tiles)
@@ -79,18 +79,18 @@ namespace Board
 
         private bool IsEmpty(Vector2Int position)
         {
-            _shapesByPosition.TryGetValue(position, out var shape);
-            return shape == null;
+            _piecesByPosition.TryGetValue(position, out var piece);
+            return piece == null;
         }
 
-        private void PlaceShapeEvent(PlacedShape shape)
+        private void PlacePieceEvent(PlacedPiece piece)
         {
-            OnShapePlaced?.Invoke(shape);
+            OnPiecePlaced?.Invoke(piece);
         }
 
-        private void RemoveShapeEvent(PlacedShape shape)
+        private void RemovePieceEvent(PlacedPiece piece)
         {
-            OnShapeRemoved?.Invoke(shape);
+            OnPieceRemoved?.Invoke(piece);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Board;
-using Shape.controller;
-using Shape.model;
+using Piece.controller;
+using Piece.model;
 using UnityEngine;
 using Zenject;
 
@@ -11,7 +11,7 @@ namespace Hand
     {
         [Inject] private BoardController _boardController;
         [Inject] private HandController _handController;
-        [Inject] private ShapeSupplyController _shapeSupply;
+        [Inject] private PieceSupplyController _pieceSupply;
 
         public event Action OnBoardChanged;
 
@@ -34,7 +34,7 @@ namespace Hand
 
             if (Input.GetMouseButtonUp(1))
             {
-                ReturnShapeToSupply();
+                ReturnPieceToSupply();
             }
         }
 
@@ -52,11 +52,11 @@ namespace Hand
 
         private void PutOnBoard(Vector2Int position)
         {
-            var shape = _handController.GetShape();
-            bool success = _boardController.PlaceShape(shape, position);
+            var piece = _handController.GetPiece();
+            bool success = _boardController.PlacePiece(piece, position);
             if (success)
             {
-                _handController.FreeShape();
+                _handController.FreePiece();
                 BoardChangedEvent();
             }
         }
@@ -65,29 +65,29 @@ namespace Hand
         {
             if (!_handController.IsEmpty()) return;
 
-            var placedShape = _boardController.GetShape(position);
-            if (placedShape == null) return;
+            var placedPiece = _boardController.GetPiece(position);
+            if (placedPiece == null) return;
 
-            _boardController.RemoveShape(placedShape);
-            _handController.SetShape(new ShapeWithRotation(placedShape.Shape, placedShape.Rotation));
+            _boardController.RemovePiece(placedPiece);
+            _handController.SetPiece(new PieceWithRotation(placedPiece.Piece, placedPiece.Rotation));
             BoardChangedEvent();
         }
 
-        public void GrabShapeFromSupply(ShapeSO shape)
+        public void GrabPieceFromSupply(PieceSO piece)
         {
             if (!_handController.IsEmpty()) return;
 
-            _handController.SetShape(new ShapeWithRotation(shape, 0));
-            _shapeSupply.RemoveShape(shape);
+            _handController.SetPiece(new PieceWithRotation(piece, 0));
+            _pieceSupply.RemovePiece(piece);
         }
 
-        private void ReturnShapeToSupply()
+        private void ReturnPieceToSupply()
         {
             if (_handController.IsEmpty()) return;
 
-            var shape = _handController.GetShape();
-            _shapeSupply.AddShape(shape);
-            _handController.FreeShape();
+            var piece = _handController.GetPiece();
+            _pieceSupply.AddPiece(piece);
+            _handController.FreePiece();
         }
 
         public void BoardChangedEvent()

@@ -1,5 +1,5 @@
 ﻿using System;
-using Shape.model;
+using Piece.model;
 using UnityEngine;
 
 namespace Score
@@ -8,7 +8,7 @@ namespace Score
     public abstract class ScoreCondition : ScriptableObject
     {
         public abstract int GetScore();
-        public abstract void CalculateScore(ShapeSO[,] tiles);
+        public abstract void CalculateScore(PieceSO[,] tiles);
 
         public abstract String GetText();
     }

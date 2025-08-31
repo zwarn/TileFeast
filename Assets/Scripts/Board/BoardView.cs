@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Hand;
-using Shape;
-using Shape.model;
-using Shape.view;
+using Piece.model;
+using Piece.view;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Board
@@ -16,38 +16,38 @@ namespace Board
         [Inject] private BoardController _boardController;
         [Inject] private InteractionController _interactionController;
 
-        [SerializeField] private ShapeView shapeViewPrefab;
-        [SerializeField] private Transform shapeViewParent;
+        [SerializeField] private PieceView pieceViewPrefab;
+        [SerializeField] private Transform pieceViewParent;
 
-        private Dictionary<PlacedShape, ShapeView> _views = new();
+        private Dictionary<PlacedPiece, PieceView> _views = new();
 
         private void OnEnable()
         {
-            _boardController.OnShapePlaced += ShapePlaced;
-            _boardController.OnShapeRemoved += ShapeRemoved;
+            _boardController.OnPiecePlaced += PiecePlaced;
+            _boardController.OnPieceRemoved += PieceRemoved;
         }
 
         private void OnDisable()
         {
-            _boardController.OnShapePlaced -= ShapePlaced;
-            _boardController.OnShapeRemoved -= ShapeRemoved;
+            _boardController.OnPiecePlaced -= PiecePlaced;
+            _boardController.OnPieceRemoved -= PieceRemoved;
         }
 
-        private void ShapePlaced(PlacedShape shape)
+        private void PiecePlaced(PlacedPiece piece)
         {
-            var viewObject = _container.InstantiatePrefab(shapeViewPrefab);
-            viewObject.transform.parent = shapeViewParent;
-            var shapeView = viewObject.GetComponent<ShapeView>();
-            shapeView.SetData(new ShapeWithRotation(shape.Shape, shape.Rotation));
-            shapeView.transform.position = new Vector3(shape.Position.x, shape.Position.y);
-            _views.Add(shape, shapeView);
+            var viewObject = _container.InstantiatePrefab(pieceViewPrefab);
+            viewObject.transform.parent = pieceViewParent;
+            var pieceView = viewObject.GetComponent<PieceView>();
+            pieceView.SetData(new PieceWithRotation(piece.Piece, piece.Rotation));
+            pieceView.transform.position = new Vector3(piece.Position.x, piece.Position.y);
+            _views.Add(piece, pieceView);
         }
 
-        private void ShapeRemoved(PlacedShape shape)
+        private void PieceRemoved(PlacedPiece piece)
         {
-            var shapeView = _views[shape];
-            _views.Remove(shape);
-            Destroy(shapeView.gameObject);
+            var pieceView = _views[piece];
+            _views.Remove(piece);
+            Destroy(pieceView.gameObject);
         }
 
         public void OnPointerClick(PointerEventData eventData)

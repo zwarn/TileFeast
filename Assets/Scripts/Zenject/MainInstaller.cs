@@ -1,7 +1,7 @@
 using Board;
 using Hand;
+using Piece.controller;
 using Score;
-using Shape.controller;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +10,7 @@ public class MainInstaller : MonoInstaller
     [SerializeField] private HandController handController;
     [SerializeField] private BoardController boardController;
     [SerializeField] private InteractionController interactionController;
-    [SerializeField] private ShapeSupplyController shapeSupplyController;
+    [SerializeField] private PieceSupplyController pieceSupplyController;
     [SerializeField] private ScoreController scoreController;
 
     public override void InstallBindings()
@@ -18,7 +18,7 @@ public class MainInstaller : MonoInstaller
         Container.Bind<HandController>().FromInstance(handController);
         Container.Bind<BoardController>().FromInstance(boardController);
         Container.Bind<InteractionController>().FromInstance(interactionController);
-        Container.Bind<ShapeSupplyController>().FromInstance(shapeSupplyController);
+        Container.Bind<PieceSupplyController>().FromInstance(pieceSupplyController);
         Container.Bind<ScoreController>().FromInstance(scoreController);
     }
 }

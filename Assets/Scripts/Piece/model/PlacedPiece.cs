@@ -2,13 +2,13 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Shape.model
+namespace Piece.model
 {
-    public class PlacedShape
+    public class PlacedPiece
     {
-        public PlacedShape(ShapeSO shape, int rotation, Vector2Int position)
+        public PlacedPiece(PieceSO piece, int rotation, Vector2Int position)
         {
-            Shape = shape;
+            Piece = piece;
             Rotation = rotation;
             Position = position;
         }
@@ -16,11 +16,11 @@ namespace Shape.model
         public int Rotation { get; private set; }
 
         public Vector2Int Position { get; }
-        public ShapeSO Shape { get; private set; }
+        public PieceSO Piece { get; private set; }
 
         public List<Vector2Int> GetTilePosition()
         {
-            return Shape.tilePosition.Select(pos =>
+            return Piece.tilePosition.Select(pos =>
             {
                 switch (Rotation)
                 {

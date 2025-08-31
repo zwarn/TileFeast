@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Shape.model;
+using Piece.model;
 using UnityEngine;
 
 namespace Score
@@ -19,7 +19,7 @@ namespace Score
             return _score;
         }
 
-        public override void CalculateScore(ShapeSO[,] tiles)
+        public override void CalculateScore(PieceSO[,] tiles)
         {
             var groups = ScoreHelper.GetGroups(tiles, so => so != null && so.aspects.Contains(aspect));
             var biggestGroup = groups.OrderByDescending(group => group.Count).FirstOrDefault();

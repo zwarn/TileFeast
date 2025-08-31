@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Shape.model;
+using Piece.model;
 using UnityEngine;
 
 namespace Score
@@ -9,23 +9,23 @@ namespace Score
     public static class ScoreHelper
     {
         
-        public static ShapeSO[,] ConvertTiles(Dictionary<Vector2Int, PlacedShape> tiles, int width, int height)
+        public static PieceSO[,] ConvertTiles(Dictionary<Vector2Int, PlacedPiece> tiles, int width, int height)
         {
-            var result = new ShapeSO[width, height];
+            var result = new PieceSO[width, height];
 
             tiles.ToList().ForEach(pair =>
             {
                 Vector2Int pos = pair.Key;
                 if (pos.x < width && pos.y < height)
                 {
-                    result[pos.x, pos.y] = pair.Value.Shape;
+                    result[pos.x, pos.y] = pair.Value.Piece;
                 }
             });
 
             return result;
         }
         
-        public static List<List<Vector2Int>> GetGroups(ShapeSO[,] tilesArray, Func<ShapeSO, bool> check)
+        public static List<List<Vector2Int>> GetGroups(PieceSO[,] tilesArray, Func<PieceSO, bool> check)
         {
             List<List<Vector2Int>> groups = new List<List<Vector2Int>>();
             List<Vector2Int> visited = new List<Vector2Int>();
@@ -50,7 +50,7 @@ namespace Score
             return groups;
         }
 
-        private static List<Vector2Int> FillGroup(ShapeSO[,] tilesArray, Func<ShapeSO, bool> check, int x, int y,
+        private static List<Vector2Int> FillGroup(PieceSO[,] tilesArray, Func<PieceSO, bool> check, int x, int y,
             List<Vector2Int> visited)
         {
             List<Vector2Int> tiles = new List<Vector2Int>();
@@ -75,7 +75,7 @@ namespace Score
             return tiles;
         }
 
-        private static void FindCandidates(ShapeSO[,] tilesArray, Func<ShapeSO, bool> check, List<Vector2Int> visited,
+        private static void FindCandidates(PieceSO[,] tilesArray, Func<PieceSO, bool> check, List<Vector2Int> visited,
             Vector2Int position, Queue<Vector2Int> candidates)
         {
             foreach (var candidate in Neighbors(tilesArray, position.x, position.y).Where(pos => !visited.Contains(pos))
@@ -86,7 +86,7 @@ namespace Score
             }
         }
 
-        private static List<Vector2Int> Neighbors(ShapeSO[,] tiles, int x, int y)
+        private static List<Vector2Int> Neighbors(PieceSO[,] tiles, int x, int y)
         {
             List<Vector2Int> result = new List<Vector2Int>();
 

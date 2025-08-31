@@ -1,7 +1,7 @@
-﻿using Shape.model;
+﻿using Piece.model;
 using UnityEngine;
 
-namespace Shape.ui
+namespace Piece.ui
 {
     public class AspectView : MonoBehaviour
     {

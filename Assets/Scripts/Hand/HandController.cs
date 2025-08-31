@@ -1,7 +1,7 @@
 ﻿using System;
 using Board;
-using Shape.model;
-using Shape.view;
+using Piece.model;
+using Piece.view;
 using UnityEngine;
 using Zenject;
 
@@ -9,15 +9,13 @@ namespace Hand
 {
     public class HandController : MonoBehaviour
     {
-        [Inject] private BoardController _boardController;
+        [SerializeField] private PieceView pieceView;
 
-        [SerializeField] private ShapeView shapeView;
-
-        private ShapeWithRotation _currentShape;
+        private PieceWithRotation _currentPiece;
 
         private void Start()
         {
-            FreeShape();
+            FreePiece();
         }
 
         private void Update()
@@ -29,34 +27,35 @@ namespace Hand
 
         public bool IsEmpty()
         {
-            return _currentShape == null;
+            return _currentPiece == null;
         }
 
-        public ShapeWithRotation GetShape()
+        public PieceWithRotation GetPiece()
         {
-            return _currentShape;
+            return _currentPiece;
         }
 
-        public void FreeShape()
+        public void FreePiece()
         {
-            _currentShape = null;
-            shapeView.SetData(_currentShape);
+            _currentPiece = null;
+            pieceView.SetData(_currentPiece);
         }
 
-        public void SetShape(ShapeWithRotation shape)
+        public void SetPiece(PieceWithRotation piece)
         {
             if (!IsEmpty())
             {
-                Debug.LogError("Tried to override held shape");
+                Debug.LogError("Tried to override held piece");
                 return;
             }
-            _currentShape = shape;
-            shapeView.SetData(_currentShape);
+
+            _currentPiece = piece;
+            pieceView.SetData(_currentPiece);
         }
 
         public void Rotate(int direction)
         {
-            _currentShape.Rotate(direction);
+            _currentPiece.Rotate(direction);
         }
     }
 }

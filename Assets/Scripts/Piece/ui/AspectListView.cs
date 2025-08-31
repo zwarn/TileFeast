@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Shape.model;
+using Piece.model;
 using UnityEngine;
 
-namespace Shape.ui
+namespace Piece.ui
 {
     public class AspectListView : MonoBehaviour
     {
@@ -13,7 +13,7 @@ namespace Shape.ui
 
         private readonly List<AspectView> _aspectViews = new();
 
-        public void SetData(List<AspectSO> aspects, ShapeSO shape)
+        public void SetData(List<AspectSO> aspects, PieceSO piece)
         {
             int viewsNeeded = aspects.Count - _aspectViews.Count;
             for (int i = 0; i < viewsNeeded; i++)
@@ -32,13 +32,13 @@ namespace Shape.ui
 
                 _aspectViews[i].SetData(aspects[i], targetSorting);
                 _aspectViews[i].gameObject.SetActive(true);
-                SetPosition(i, _aspectViews[i], shape);
+                SetPosition(i, _aspectViews[i], piece);
             }
         }
 
-        private void SetPosition(int index, AspectView aspectView, ShapeSO shape)
+        private void SetPosition(int index, AspectView aspectView, PieceSO piece)
         {
-            var position = shape.tilePosition.OrderBy(pos => pos.x).ThenByDescending(pos => pos.y).First();
+            var position = piece.tilePosition.OrderBy(pos => pos.x).ThenByDescending(pos => pos.y).First();
 
             Vector2 delta = index switch
             {

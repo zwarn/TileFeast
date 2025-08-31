@@ -1,16 +1,16 @@
-﻿namespace Shape.model
+﻿namespace Piece.model
 {
-    public class ShapeWithRotation
+    public class PieceWithRotation
     {
-        public ShapeWithRotation(ShapeSO shape, int rotation)
+        public PieceWithRotation(PieceSO piece, int rotation)
         {
-            Shape = shape;
+            Piece = piece;
             Rotation = rotation;
         }
 
         public int Rotation { get; private set; }
 
-        public ShapeSO Shape { get; private set; }
+        public PieceSO Piece { get; private set; }
 
         public void Rotate(int dir)
         {
