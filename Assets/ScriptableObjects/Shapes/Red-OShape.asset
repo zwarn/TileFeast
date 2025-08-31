@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e16a8951ea40e9aa428fed7175b894, type: 3}
+  m_Name: Red-OShape
+  m_EditorClassIdentifier: 
+  tilePosition:
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: -1}
+  - {x: 0, y: -1}
+  sprite: {fileID: 21300000, guid: b09e4bad04a99e145b1c81c23aff5358, type: 3}
+  aspects:
+  - {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+  - {fileID: 11400000, guid: 50bfa8231b9e7a34f83bd360d8bd7756, type: 2}
