@@ -730,7 +730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e74db5ae9348029381ba1003868a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shapes:
+  pieces:
   - {fileID: 11400000, guid: d3c83bd4b67171240acc1b3ceebaa487, type: 2}
   - {fileID: 11400000, guid: d6999263c242366429778c8a327e4db7, type: 2}
   - {fileID: 11400000, guid: 840dadcb9588b634b8d584be003bd542, type: 2}
@@ -784,6 +784,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scoreConditions:
   - {fileID: 11400000, guid: 746233ee92d5bb34aa56832c945e53f9, type: 2}
+  - {fileID: 11400000, guid: 7b9dee74e5f95074194cdb504a6d5c1e, type: 2}
+  - {fileID: 11400000, guid: 8351ae4a741ce434c8bcdc571c737757, type: 2}
 --- !u!114 &758885933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -929,7 +931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826b6758436c4c45b107403f55f5acfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shapeView: {fileID: 643717476}
+  pieceView: {fileID: 643717476}
 --- !u!114 &924213298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,8 +990,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fea1c1cab1048c4af12f27c0984b536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shapeViewPrefab: {fileID: 9014385922383016419, guid: c1d9a58b975b223498361a88d3ec4fbd, type: 3}
-  shapeViewParent: {fileID: 957307253}
+  pieceViewPrefab: {fileID: 9014385922383016419, guid: c1d9a58b975b223498361a88d3ec4fbd, type: 3}
+  pieceViewParent: {fileID: 957307253}
 --- !u!4 &957307253
 Transform:
   m_ObjectHideFlags: 0
@@ -1201,7 +1203,7 @@ MonoBehaviour:
   handController: {fileID: 924213297}
   boardController: {fileID: 957307251}
   interactionController: {fileID: 924213298}
-  shapeSupplyController: {fileID: 754699921}
+  pieceSupplyController: {fileID: 754699921}
   scoreController: {fileID: 758885932}
 --- !u!114 &1676055676
 MonoBehaviour:
