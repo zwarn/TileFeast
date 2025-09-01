@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Piece.model;
+using Scenario;
 using UnityEngine;
+using Zenject;
 
 namespace Board
 {
@@ -14,11 +16,33 @@ namespace Board
         private readonly List<PlacedPiece> _pieces = new();
         private readonly Dictionary<Vector2Int, PlacedPiece> _piecesByPosition = new();
 
+        [Inject] private ScenarioController _scenarioController;
+
         public event Action<PlacedPiece> OnPiecePlaced;
         public event Action<PlacedPiece> OnPieceRemoved;
 
         public List<PlacedPiece> Pieces => _pieces.ToList();
 
+        private void OnEnable()
+        {
+            _scenarioController.OnScenarioChanged += OnScenario;
+        }
+
+        private void OnDisable()
+        {
+            _scenarioController.OnScenarioChanged -= OnScenario;
+        }
+
+        private void OnScenario(ScenarioSO scenario)
+        {
+            Clear();
+        }
+
+        private void Clear()
+        {
+            _pieces.ForEach(piece => RemovePiece(piece));
+        }
+        
         public bool PlacePiece(PieceWithRotation newPiece, Vector2Int position)
         {
             var piece = new PlacedPiece(newPiece.Piece, newPiece.Rotation, position);

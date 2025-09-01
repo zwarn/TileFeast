@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Piece.model;
+using Scenario;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Zenject;
 
 namespace Piece.controller
 {
@@ -12,6 +14,19 @@ namespace Piece.controller
 
         public event Action<PieceSO> OnPieceAdded;
         public event Action<PieceSO> OnPieceRemoved;
+        public event Action<List<PieceSO>> OnPiecesReplaced;
+
+        [Inject] private ScenarioController _scenarioController;
+
+        private void OnEnable()
+        {
+            _scenarioController.OnScenarioChanged += ChangeAvailablePieces;
+        }
+
+        private void OnDisable()
+        {
+            _scenarioController.OnScenarioChanged -= ChangeAvailablePieces;
+        }
 
         public List<PieceSO> GetPieces()
         {
@@ -30,6 +45,13 @@ namespace Piece.controller
             AddPieceEvent(piece.Piece);
         }
 
+        private void ChangeAvailablePieces(ScenarioSO scenario)
+        {
+            pieces.Clear();
+            pieces.AddRange(scenario.availablePieces);
+            ReplacePiecesEvent(pieces);
+        }
+
         public void RemovePieceEvent(PieceSO piece)
         {
             OnPieceRemoved?.Invoke(piece);
@@ -38,6 +60,11 @@ namespace Piece.controller
         public void AddPieceEvent(PieceSO piece)
         {
             OnPieceAdded?.Invoke(piece);
+        }
+
+        public void ReplacePiecesEvent(List<PieceSO> newPieces)
+        {
+            OnPiecesReplaced?.Invoke(newPieces);
         }
     }
 }

@@ -155,6 +155,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 350, y: 200}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!1 &411974768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 411974770}
+  - component: {fileID: 411974769}
+  m_Layer: 0
+  m_Name: Scenario
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &411974769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411974768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3cf7636e942434785bce730eae5911e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scenario: {fileID: 11400000, guid: e1fffa51900c914448808b83c5f14f71, type: 2}
+--- !u!4 &411974770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411974768}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &448237083
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,10 +827,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c42c05ed9f4d6ead8a41c474bff6ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreConditions:
-  - {fileID: 11400000, guid: 746233ee92d5bb34aa56832c945e53f9, type: 2}
-  - {fileID: 11400000, guid: 7b9dee74e5f95074194cdb504a6d5c1e, type: 2}
-  - {fileID: 11400000, guid: 8351ae4a741ce434c8bcdc571c737757, type: 2}
 --- !u!114 &758885933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1205,6 +1246,7 @@ MonoBehaviour:
   interactionController: {fileID: 924213298}
   pieceSupplyController: {fileID: 754699921}
   scoreController: {fileID: 758885932}
+  scenarioController: {fileID: 411974769}
 --- !u!114 &1676055676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1440,6 +1482,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
+  - {fileID: 411974770}
   - {fileID: 924213296}
   - {fileID: 957307253}
   - {fileID: 1972063434}

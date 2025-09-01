@@ -4,6 +4,7 @@ using System.Linq;
 using Board;
 using Hand;
 using Piece.model;
+using Scenario;
 using UnityEngine;
 using Zenject;
 
@@ -13,8 +14,9 @@ namespace Score
     {
         [Inject] private InteractionController _interactionController;
         [Inject] private BoardController _boardController;
+        [Inject] private ScenarioController _scenarioController;
 
-        [SerializeField] private List<ScoreCondition> _scoreConditions;
+        private List<ScoreCondition> _scoreConditions;
 
         private int _width;
         private int _height;
@@ -23,18 +25,18 @@ namespace Score
         {
             _width = _boardController.width;
             _height = _boardController.height;
-
-            CalculateScore();
         }
 
         private void OnEnable()
         {
             _interactionController.OnBoardChanged += CalculateScore;
+            _scenarioController.OnScenarioChanged += OnScenario;
         }
 
         private void OnDisable()
         {
             _interactionController.OnBoardChanged -= CalculateScore;
+            _scenarioController.OnScenarioChanged -= OnScenario;
         }
 
         public List<ScoreCondition> GetConditions()
@@ -48,6 +50,12 @@ namespace Score
             PieceSO[,] tilesArray = ScoreHelper.ConvertTiles(tilesDictionary, _width, _height);
 
             _scoreConditions.ForEach(condition => condition.CalculateScore(tilesArray));
+        }
+
+        private void OnScenario(ScenarioSO scenario)
+        {
+            _scoreConditions = scenario.scoreConditions;
+            CalculateScore();
         }
     }
 }

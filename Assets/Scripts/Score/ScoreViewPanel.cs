@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Scenario;
 using UnityEngine;
 using Zenject;
 
@@ -8,16 +9,27 @@ namespace Score
     public class ScoreViewPanel : MonoBehaviour
     {
         [Inject] private DiContainer _container;
-        [Inject] private ScoreController _scoreController;
+        [Inject] private ScenarioController _scenarioController;
 
         [SerializeField] private Dictionary<ScoreCondition, ScoreViewEntry> _entries = new();
         [SerializeField] private ScoreViewEntry prefab;
         [SerializeField] private Transform parent;
 
 
-        private void Start()
+        private void OnEnable()
         {
-            _scoreController.GetConditions().ForEach(AddEntry);
+            _scenarioController.OnScenarioChanged += OnScenario;
+        }
+
+        private void OnDisable()
+        {
+            _scenarioController.OnScenarioChanged -= OnScenario;
+        }
+
+        private void OnScenario(ScenarioSO scenario)
+        {
+            Clear();
+            scenario.scoreConditions.ForEach(AddEntry);
         }
 
         private void AddEntry(ScoreCondition condition)

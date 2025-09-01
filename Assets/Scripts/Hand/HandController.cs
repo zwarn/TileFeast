@@ -1,7 +1,7 @@
 ﻿using System;
-using Board;
 using Piece.model;
 using Piece.view;
+using Scenario;
 using UnityEngine;
 using Zenject;
 
@@ -11,9 +11,26 @@ namespace Hand
     {
         [SerializeField] private PieceView pieceView;
 
+        [Inject] private ScenarioController _scenarioController;
+
         private PieceWithRotation _currentPiece;
 
-        private void Start()
+        private void OnEnable()
+        {
+            _scenarioController.OnScenarioChanged += OnScenario;
+        }
+
+        private void OnDisable()
+        {
+            _scenarioController.OnScenarioChanged -= OnScenario;
+        }
+
+        private void OnScenario(ScenarioSO scenario)
+        {
+            Clear();
+        }
+
+        private void Clear()
         {
             FreePiece();
         }
