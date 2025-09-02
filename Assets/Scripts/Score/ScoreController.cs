@@ -44,6 +44,12 @@ namespace Score
             return _scoreConditions.ToList();
         }
 
+        public int TotalScore()
+        {
+            var total = _scoreConditions.Sum(condition => condition.GetScore());
+            return total;
+        }
+
         private void CalculateScore()
         {
             var tilesDictionary = _boardController.GetPieceByPosition();
