@@ -9,6 +9,6 @@ namespace Scenario
     public class ScenarioSO : ScriptableObject
     {
         public List<PieceSO> availablePieces;
-        public List<ScoreCondition> scoreConditions;
+        public List<ScoreRule> scoreRules;
     }
 }

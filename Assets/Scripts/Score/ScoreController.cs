@@ -16,7 +16,7 @@ namespace Score
         [Inject] private BoardController _boardController;
         [Inject] private ScenarioController _scenarioController;
 
-        private List<ScoreCondition> _scoreConditions;
+        private List<ScoreRule> _scoreRules;
 
         private int _width;
         private int _height;
@@ -39,14 +39,14 @@ namespace Score
             _scenarioController.OnScenarioChanged -= OnScenario;
         }
 
-        public List<ScoreCondition> GetConditions()
+        public List<ScoreRule> GetScoreRules()
         {
-            return _scoreConditions.ToList();
+            return _scoreRules.ToList();
         }
 
         public int TotalScore()
         {
-            var total = _scoreConditions.Sum(condition => condition.GetScore());
+            var total = _scoreRules.Sum(rule => rule.GetScore());
             return total;
         }
 
@@ -55,12 +55,12 @@ namespace Score
             var tilesDictionary = _boardController.GetPieceByPosition();
             PieceSO[,] tilesArray = ScoreHelper.ConvertTiles(tilesDictionary, _width, _height);
 
-            _scoreConditions.ForEach(condition => condition.CalculateScore(tilesArray));
+            _scoreRules.ForEach(rule => rule.CalculateScore(tilesArray));
         }
 
         private void OnScenario(ScenarioSO scenario)
         {
-            _scoreConditions = scenario.scoreConditions;
+            _scoreRules = scenario.scoreRules;
             CalculateScore();
         }
     }

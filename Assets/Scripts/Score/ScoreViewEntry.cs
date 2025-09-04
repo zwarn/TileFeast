@@ -9,17 +9,17 @@ namespace Score
         [SerializeField] private TMP_Text descriptionLabel;
         [SerializeField] private TMP_Text scoreLabel;
 
-        private ScoreCondition _condition;
+        private ScoreRule _rule;
 
-        public void SetData(ScoreCondition condition)
+        public void SetData(ScoreRule rule)
         {
-            _condition = condition;
+            _rule = rule;
         }
 
         private void Update()
         {
-            var score = _condition.GetScore();
-            var text = _condition.GetText();
+            var score = _rule.GetScore();
+            var text = _rule.GetText();
 
             descriptionLabel.text = text;
             scoreLabel.text = score.ToString();

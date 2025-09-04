@@ -14,7 +14,7 @@ namespace Score
         [Inject] private ScenarioController _scenarioController;
         [Inject] private ScoreController _scoreController;
 
-        [SerializeField] private Dictionary<ScoreCondition, ScoreViewEntry> _entries = new();
+        [SerializeField] private Dictionary<ScoreRule, ScoreViewEntry> _entries = new();
         [SerializeField] private ScoreViewEntry prefab;
         [SerializeField] private Transform parent;
         [SerializeField] private TMP_Text total;
@@ -38,15 +38,15 @@ namespace Score
         private void OnScenario(ScenarioSO scenario)
         {
             Clear();
-            scenario.scoreConditions.ForEach(AddEntry);
+            scenario.scoreRules.ForEach(AddEntry);
         }
 
-        private void AddEntry(ScoreCondition condition)
+        private void AddEntry(ScoreRule rule)
         {
-            var conditionViewGameobject = _container.InstantiatePrefab(prefab, parent);
-            var scoreViewEntry = conditionViewGameobject.GetComponent<ScoreViewEntry>();
-            scoreViewEntry.SetData(condition);
-            _entries.Add(condition, scoreViewEntry);
+            var scoreViewGameobject = _container.InstantiatePrefab(prefab, parent);
+            var scoreViewEntry = scoreViewGameobject.GetComponent<ScoreViewEntry>();
+            scoreViewEntry.SetData(rule);
+            _entries.Add(rule, scoreViewEntry);
         }
 
         private void Clear()
