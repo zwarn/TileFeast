@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace Score
 {
-    [CreateAssetMenu(fileName = "ScoreCondition", menuName = "ScoreCondition/BiggestConnectedAspect", order = 0)]
-    public class BiggestConnectedAspectScoreCondition : ScoreCondition
+    [CreateAssetMenu(fileName = "ScoreRule", menuName = "ScoreRule/BiggestConnectedAspect", order = 0)]
+    public class BiggestConnectedAspectScoreRule : ScoreRule
     {
         public AspectSO aspect;
 
