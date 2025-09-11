@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Board;
-using Scenario;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -11,23 +8,22 @@ namespace Score
     public class ScoreViewPanel : MonoBehaviour
     {
         [Inject] private DiContainer _container;
-        [Inject] private ScenarioController _scenarioController;
         [Inject] private ScoreController _scoreController;
-
-        [SerializeField] private Dictionary<ScoreRule, ScoreViewEntry> _entries = new();
+        
         [SerializeField] private ScoreViewEntry prefab;
         [SerializeField] private Transform parent;
         [SerializeField] private TMP_Text total;
 
+        private Dictionary<ScoreRule, ScoreViewEntry> _entries = new();
 
         private void OnEnable()
         {
-            _scenarioController.OnScenarioChanged += OnScenario;
+            _scoreController.OnScoreRuleReset += OnScoreRuleReset;
         }
 
         private void OnDisable()
         {
-            _scenarioController.OnScenarioChanged -= OnScenario;
+            _scoreController.OnScoreRuleReset -= OnScoreRuleReset;
         }
 
         private void Update()
@@ -35,10 +31,10 @@ namespace Score
             total.text = _scoreController.TotalScore().ToString();
         }
 
-        private void OnScenario(ScenarioSO scenario)
+        private void OnScoreRuleReset(List<ScoreRule> scoreRules)
         {
             Clear();
-            scenario.scoreRules.ForEach(AddEntry);
+            scoreRules.ForEach(AddEntry);
         }
 
         private void AddEntry(ScoreRule rule)

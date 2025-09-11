@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Hand;
 using Piece.model;
 using Piece.view;
@@ -25,14 +26,22 @@ namespace Board
         {
             _boardController.OnPiecePlaced += PiecePlaced;
             _boardController.OnPieceRemoved += PieceRemoved;
+            _boardController.OnBoardReset += ResetPieces;
         }
 
         private void OnDisable()
         {
             _boardController.OnPiecePlaced -= PiecePlaced;
             _boardController.OnPieceRemoved -= PieceRemoved;
+            _boardController.OnBoardReset -= ResetPieces;
         }
 
+        private void ResetPieces(List<PlacedPiece> newPieces)
+        {
+            _views.Keys.ToList().ForEach(PieceRemoved);
+            newPieces.ForEach(PiecePlaced);
+        }
+        
         private void PiecePlaced(PlacedPiece piece)
         {
             var viewObject = _container.InstantiatePrefab(pieceViewPrefab);

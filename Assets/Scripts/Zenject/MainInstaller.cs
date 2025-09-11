@@ -3,6 +3,7 @@ using Hand;
 using Piece.controller;
 using Scenario;
 using Score;
+using State;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +15,7 @@ public class MainInstaller : MonoInstaller
     [SerializeField] private PieceSupplyController pieceSupplyController;
     [SerializeField] private ScoreController scoreController;
     [SerializeField] private ScenarioController scenarioController;
+    [SerializeField] private GameStateController gameStateController;
 
     public override void InstallBindings()
     {
@@ -23,5 +25,6 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PieceSupplyController>().FromInstance(pieceSupplyController);
         Container.Bind<ScoreController>().FromInstance(scoreController);
         Container.Bind<ScenarioController>().FromInstance(scenarioController);
+        Container.Bind<GameStateController>().FromInstance(gameStateController);
     }
 }

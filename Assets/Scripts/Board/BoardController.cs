@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Piece.model;
 using Scenario;
+using State;
 using UnityEngine;
 using Zenject;
 
@@ -13,11 +14,12 @@ namespace Board
         [SerializeField] public int width;
         [SerializeField] public int height;
 
-        private readonly List<PlacedPiece> _pieces = new();
+        private List<PlacedPiece> _pieces = new();
         private readonly Dictionary<Vector2Int, PlacedPiece> _piecesByPosition = new();
 
-        [Inject] private ScenarioController _scenarioController;
+        [Inject] private GameStateController _gameStateController;
 
+        public event Action<List<PlacedPiece>> OnBoardReset;
         public event Action<PlacedPiece> OnPiecePlaced;
         public event Action<PlacedPiece> OnPieceRemoved;
 
@@ -25,22 +27,27 @@ namespace Board
 
         private void OnEnable()
         {
-            _scenarioController.OnScenarioChanged += OnScenario;
+            _gameStateController.OnStateOverride += OnGameStateOverride;
         }
 
         private void OnDisable()
         {
-            _scenarioController.OnScenarioChanged -= OnScenario;
+            _gameStateController.OnStateOverride -= OnGameStateOverride;
         }
 
-        private void OnScenario(ScenarioSO scenario)
+        private void OnGameStateOverride(GameState newState)
         {
-            Clear();
+            // TODO: verify that newState is valid
+            _pieces = newState.PlacedPieces;
+            RebuildPiecesByPosition();
+            BoardResetEvent(Pieces);
         }
 
-        private void Clear()
+        private void RebuildPiecesByPosition()
         {
-            _pieces.ForEach(piece => RemovePiece(piece));
+            _piecesByPosition.Clear();
+            _pieces.ForEach(piece => piece.GetTilePosition().ForEach(pos => _piecesByPosition[pos] = piece));
+            
         }
         
         public bool PlacePiece(PieceWithRotation newPiece, Vector2Int position)
@@ -115,6 +122,11 @@ namespace Board
         private void RemovePieceEvent(PlacedPiece piece)
         {
             OnPieceRemoved?.Invoke(piece);
+        }
+        
+        private void BoardResetEvent(List<PlacedPiece> placedPieces)
+        {
+            OnBoardReset?.Invoke(placedPieces);
         }
     }
 }

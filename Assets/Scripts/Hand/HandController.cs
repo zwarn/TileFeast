@@ -2,6 +2,7 @@
 using Piece.model;
 using Piece.view;
 using Scenario;
+using State;
 using UnityEngine;
 using Zenject;
 
@@ -11,28 +12,24 @@ namespace Hand
     {
         [SerializeField] private PieceView pieceView;
 
-        [Inject] private ScenarioController _scenarioController;
+        [Inject] private GameStateController _gameStateController;
 
         private PieceWithRotation _currentPiece;
 
         private void OnEnable()
         {
-            _scenarioController.OnScenarioChanged += OnScenario;
+            _gameStateController.OnStateOverride += OnStateOverride;
         }
 
         private void OnDisable()
         {
-            _scenarioController.OnScenarioChanged -= OnScenario;
+            _gameStateController.OnStateOverride -= OnStateOverride;
         }
 
-        private void OnScenario(ScenarioSO scenario)
+        private void OnStateOverride(GameState newState)
         {
-            Clear();
-        }
-
-        private void Clear()
-        {
-            FreePiece();
+            _currentPiece = newState.PieceInHand ? new PieceWithRotation(newState.PieceInHand, 0) : null;
+            pieceView.SetData(_currentPiece);
         }
 
         private void Update()

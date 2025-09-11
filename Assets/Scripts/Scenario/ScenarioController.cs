@@ -1,5 +1,7 @@
 ﻿using System;
+using State;
 using UnityEngine;
+using Zenject;
 
 namespace Scenario
 {
@@ -7,7 +9,7 @@ namespace Scenario
     {
         [SerializeField] private ScenarioSO scenario;
 
-        public Action<ScenarioSO> OnScenarioChanged;
+        [Inject] private GameStateController _gameStateController;
 
         private void Start()
         {
@@ -17,12 +19,7 @@ namespace Scenario
         public void LoadScenario(ScenarioSO incomingScenario)
         {
             scenario = incomingScenario;
-            ScenarioChangedEvent(scenario);
-        }
-
-        public void ScenarioChangedEvent(ScenarioSO incomingScenario)
-        {
-            OnScenarioChanged?.Invoke(incomingScenario);
+            _gameStateController.LoadScenario(scenario);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using Board;
 using Hand;
 using Piece.model;
-using Scenario;
+using State;
 using UnityEngine;
 using Zenject;
 
@@ -14,7 +14,9 @@ namespace Score
     {
         [Inject] private InteractionController _interactionController;
         [Inject] private BoardController _boardController;
-        [Inject] private ScenarioController _scenarioController;
+        [Inject] private GameStateController _gameStateController;
+
+        public Action<List<ScoreRule>> OnScoreRuleReset;
 
         private List<ScoreRule> _scoreRules;
 
@@ -30,13 +32,13 @@ namespace Score
         private void OnEnable()
         {
             _interactionController.OnBoardChanged += CalculateScore;
-            _scenarioController.OnScenarioChanged += OnScenario;
+            _gameStateController.OnStateOverride += OnStateOverride;
         }
 
         private void OnDisable()
         {
             _interactionController.OnBoardChanged -= CalculateScore;
-            _scenarioController.OnScenarioChanged -= OnScenario;
+            _gameStateController.OnStateOverride -= OnStateOverride;
         }
 
         public List<ScoreRule> GetScoreRules()
@@ -58,10 +60,16 @@ namespace Score
             _scoreRules.ForEach(rule => rule.CalculateScore(tilesArray));
         }
 
-        private void OnScenario(ScenarioSO scenario)
+        private void OnStateOverride(GameState gameState)
         {
-            _scoreRules = scenario.scoreRules;
+            _scoreRules = gameState.ScoreRules;
             CalculateScore();
+            ScoreRuleResetEvent(_scoreRules);
+        }
+
+        private void ScoreRuleResetEvent(List<ScoreRule> scoreRules)
+        {
+            OnScoreRuleReset?.Invoke(scoreRules);
         }
     }
 }
