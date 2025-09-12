@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Scenario;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -9,6 +10,7 @@ namespace Score
     {
         [Inject] private DiContainer _container;
         [Inject] private ScoreController _scoreController;
+        [Inject] private ScenarioController _scenarioController;
         
         [SerializeField] private ScoreViewEntry prefab;
         [SerializeField] private Transform parent;
@@ -35,6 +37,11 @@ namespace Score
         {
             Clear();
             scoreRules.ForEach(AddEntry);
+        }
+
+        public void GoToNextScenario()
+        {
+            _scenarioController.LoadNextScenario();
         }
 
         private void AddEntry(ScoreRule rule)

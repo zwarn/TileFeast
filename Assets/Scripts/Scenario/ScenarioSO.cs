@@ -10,5 +10,6 @@ namespace Scenario
     {
         public List<PieceSO> availablePieces;
         public List<ScoreRule> scoreRules;
+        public ScenarioSO nextLevel;
     }
 }

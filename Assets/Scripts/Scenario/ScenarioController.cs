@@ -21,5 +21,12 @@ namespace Scenario
             scenario = incomingScenario;
             _gameStateController.LoadScenario(scenario);
         }
+
+        public void LoadNextScenario()
+        {
+            if (scenario.nextLevel == null) return;
+            
+            LoadScenario(scenario.nextLevel);
+        }
     }
 }
