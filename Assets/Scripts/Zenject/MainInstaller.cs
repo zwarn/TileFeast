@@ -15,6 +15,7 @@ public class MainInstaller : MonoInstaller
     [SerializeField] private ScoreController scoreController;
     [SerializeField] private ScenarioController scenarioController;
     [SerializeField] private GameController gameController;
+    [SerializeField] private HighlightController highlightController;
 
     public override void InstallBindings()
     {
@@ -24,5 +25,6 @@ public class MainInstaller : MonoInstaller
         Container.Bind<ScoreController>().FromInstance(scoreController);
         Container.Bind<ScenarioController>().FromInstance(scenarioController);
         Container.Bind<GameController>().FromInstance(gameController);
+        Container.Bind<HighlightController>().FromInstance(highlightController);
     }
 }

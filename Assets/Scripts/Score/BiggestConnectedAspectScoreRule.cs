@@ -29,6 +29,11 @@ namespace Score
             _score = count;
         }
 
+        public override List<Vector2Int> GetScoreArea()
+        {
+            return _scoringTiles;
+        }
+
         public override string GetText()
         {
             return $"Your biggest connected group of things {aspect.name}";
