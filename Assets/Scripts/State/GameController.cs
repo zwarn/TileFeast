@@ -4,6 +4,7 @@ using Hand;
 using Piece.controller;
 using Piece.model;
 using Scenario;
+using Score;
 using UnityEngine;
 using Zenject;
 
@@ -11,33 +12,40 @@ namespace State
 {
     public class GameController : MonoBehaviour
     {
-
         public GameState CurrentState
         {
             get => _gameCurrentState;
             private set => _gameCurrentState = value;
         }
+
         public event Action OnBoardChanged;
-        
+
         [Inject] private BoardController _boardController;
         [Inject] private HandController _handController;
         [Inject] private PieceSupplyController _pieceSupply;
-        
-        private GameState _gameCurrentState;
+        [Inject] private ScoreController _scoreController;
 
-        public Action<GameState> OnStateOverride;
+        private GameState _gameCurrentState;
 
         public void LoadScenario(ScenarioSO scenario)
         {
             CurrentState = new GameState(scenario);
-            OverrideStateEvent(CurrentState);
+
+            //TODO: verify the new state is valid
+
+            _boardController.UpdateState(CurrentState);
+            _handController.UpdateState(CurrentState);
+            _pieceSupply.UpdateState(CurrentState);
+            _scoreController.UpdateState(CurrentState);
+
+            BoardChangedEvent();
         }
-        
+
         private void Update()
         {
             HandleInput();
         }
-        
+
         private void HandleInput()
         {
             if (Input.GetKeyUp(KeyCode.Q))
@@ -55,7 +63,7 @@ namespace State
                 ReturnPieceToSupply();
             }
         }
-        
+
         public void BoardClicked(Vector2Int position)
         {
             if (_handController.IsEmpty())
@@ -111,11 +119,6 @@ namespace State
         public void BoardChangedEvent()
         {
             OnBoardChanged?.Invoke();
-        }
-
-        private void OverrideStateEvent(GameState newState)
-        {
-            OnStateOverride?.Invoke(newState);
         }
     }
 }

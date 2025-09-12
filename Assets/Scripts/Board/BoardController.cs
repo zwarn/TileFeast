@@ -17,27 +17,14 @@ namespace Board
         private List<PlacedPiece> _pieces = new();
         private readonly Dictionary<Vector2Int, PlacedPiece> _piecesByPosition = new();
 
-        [Inject] private GameController _gameController;
-
         public event Action<List<PlacedPiece>> OnBoardReset;
         public event Action<PlacedPiece> OnPiecePlaced;
         public event Action<PlacedPiece> OnPieceRemoved;
 
         public List<PlacedPiece> Pieces => _pieces.ToList();
 
-        private void OnEnable()
+        public void UpdateState(GameState newState)
         {
-            _gameController.OnStateOverride += OnGameStateOverride;
-        }
-
-        private void OnDisable()
-        {
-            _gameController.OnStateOverride -= OnGameStateOverride;
-        }
-
-        private void OnGameStateOverride(GameState newState)
-        {
-            // TODO: verify that newState is valid
             _pieces = newState.PlacedPieces;
             RebuildPiecesByPosition();
             BoardResetEvent(Pieces);
@@ -47,9 +34,8 @@ namespace Board
         {
             _piecesByPosition.Clear();
             _pieces.ForEach(piece => piece.GetTilePosition().ForEach(pos => _piecesByPosition[pos] = piece));
-            
         }
-        
+
         public bool PlacePiece(PieceWithRotation newPiece, Vector2Int position)
         {
             var piece = new PlacedPiece(newPiece.Piece, newPiece.Rotation, position);
@@ -123,7 +109,7 @@ namespace Board
         {
             OnPieceRemoved?.Invoke(piece);
         }
-        
+
         private void BoardResetEvent(List<PlacedPiece> placedPieces)
         {
             OnBoardReset?.Invoke(placedPieces);

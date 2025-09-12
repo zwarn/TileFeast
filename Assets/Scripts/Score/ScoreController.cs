@@ -31,13 +31,18 @@ namespace Score
         private void OnEnable()
         {
             _gameController.OnBoardChanged += CalculateScore;
-            _gameController.OnStateOverride += OnStateOverride;
         }
 
         private void OnDisable()
         {
             _gameController.OnBoardChanged -= CalculateScore;
-            _gameController.OnStateOverride -= OnStateOverride;
+        }
+
+        public void UpdateState(GameState gameState)
+        {
+            _scoreRules = gameState.ScoreRules;
+            CalculateScore();
+            ScoreRuleResetEvent(_scoreRules);
         }
 
         public List<ScoreRule> GetScoreRules()
@@ -57,13 +62,6 @@ namespace Score
             PieceSO[,] tilesArray = ScoreHelper.ConvertTiles(tilesDictionary, _width, _height);
 
             _scoreRules.ForEach(rule => rule.CalculateScore(tilesArray));
-        }
-
-        private void OnStateOverride(GameState gameState)
-        {
-            _scoreRules = gameState.ScoreRules;
-            CalculateScore();
-            ScoreRuleResetEvent(_scoreRules);
         }
 
         private void ScoreRuleResetEvent(List<ScoreRule> scoreRules)
