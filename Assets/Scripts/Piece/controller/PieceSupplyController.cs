@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Piece.model;
-using Scenario;
 using State;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Piece.controller
@@ -17,16 +15,16 @@ namespace Piece.controller
         public event Action<PieceSO> OnPieceRemoved;
         public event Action<List<PieceSO>> OnPiecesReplaced;
 
-        [Inject] private GameStateController _gameStateController;
+        [Inject] private GameController _gameController;
 
         private void OnEnable()
         {
-            _gameStateController.OnStateOverride += OnStateOverride;
+            _gameController.OnStateOverride += OnStateOverride;
         }
 
         private void OnDisable()
         {
-            _gameStateController.OnStateOverride -= OnStateOverride;
+            _gameController.OnStateOverride -= OnStateOverride;
         }
 
         public void RemovePiece(PieceSO piece)

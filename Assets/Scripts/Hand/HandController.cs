@@ -12,18 +12,18 @@ namespace Hand
     {
         [SerializeField] private PieceView pieceView;
 
-        [Inject] private GameStateController _gameStateController;
+        [Inject] private GameController _gameController;
 
         private PieceWithRotation _currentPiece;
 
         private void OnEnable()
         {
-            _gameStateController.OnStateOverride += OnStateOverride;
+            _gameController.OnStateOverride += OnStateOverride;
         }
 
         private void OnDisable()
         {
-            _gameStateController.OnStateOverride -= OnStateOverride;
+            _gameController.OnStateOverride -= OnStateOverride;
         }
 
         private void OnStateOverride(GameState newState)

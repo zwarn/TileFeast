@@ -9,7 +9,7 @@ namespace Scenario
     {
         [SerializeField] private ScenarioSO scenario;
 
-        [Inject] private GameStateController _gameStateController;
+        [Inject] private GameController _gameController;
 
         private void Start()
         {
@@ -19,7 +19,7 @@ namespace Scenario
         public void LoadScenario(ScenarioSO incomingScenario)
         {
             scenario = incomingScenario;
-            _gameStateController.LoadScenario(scenario);
+            _gameController.LoadScenario(scenario);
         }
 
         public void LoadNextScenario()

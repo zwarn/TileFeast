@@ -12,9 +12,8 @@ namespace Score
 {
     public class ScoreController : MonoBehaviour
     {
-        [Inject] private InteractionController _interactionController;
         [Inject] private BoardController _boardController;
-        [Inject] private GameStateController _gameStateController;
+        [Inject] private GameController _gameController;
 
         public Action<List<ScoreRule>> OnScoreRuleReset;
 
@@ -31,14 +30,14 @@ namespace Score
 
         private void OnEnable()
         {
-            _interactionController.OnBoardChanged += CalculateScore;
-            _gameStateController.OnStateOverride += OnStateOverride;
+            _gameController.OnBoardChanged += CalculateScore;
+            _gameController.OnStateOverride += OnStateOverride;
         }
 
         private void OnDisable()
         {
-            _interactionController.OnBoardChanged -= CalculateScore;
-            _gameStateController.OnStateOverride -= OnStateOverride;
+            _gameController.OnBoardChanged -= CalculateScore;
+            _gameController.OnStateOverride -= OnStateOverride;
         }
 
         public List<ScoreRule> GetScoreRules()

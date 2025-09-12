@@ -17,7 +17,7 @@ namespace Board
         private List<PlacedPiece> _pieces = new();
         private readonly Dictionary<Vector2Int, PlacedPiece> _piecesByPosition = new();
 
-        [Inject] private GameStateController _gameStateController;
+        [Inject] private GameController _gameController;
 
         public event Action<List<PlacedPiece>> OnBoardReset;
         public event Action<PlacedPiece> OnPiecePlaced;
@@ -27,12 +27,12 @@ namespace Board
 
         private void OnEnable()
         {
-            _gameStateController.OnStateOverride += OnGameStateOverride;
+            _gameController.OnStateOverride += OnGameStateOverride;
         }
 
         private void OnDisable()
         {
-            _gameStateController.OnStateOverride -= OnGameStateOverride;
+            _gameController.OnStateOverride -= OnGameStateOverride;
         }
 
         private void OnGameStateOverride(GameState newState)

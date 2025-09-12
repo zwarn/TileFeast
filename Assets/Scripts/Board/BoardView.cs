@@ -4,6 +4,7 @@ using System.Linq;
 using Hand;
 using Piece.model;
 using Piece.view;
+using State;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -15,7 +16,7 @@ namespace Board
     {
         [Inject] private DiContainer _container;
         [Inject] private BoardController _boardController;
-        [Inject] private InteractionController _interactionController;
+        [Inject] private GameController _gameController;
 
         [SerializeField] private PieceView pieceViewPrefab;
         [SerializeField] private Transform pieceViewParent;
@@ -66,7 +67,7 @@ namespace Board
             var worldClickPoint = Camera.main.ScreenToWorldPoint(eventData.position);
             var position = Vector2Int.RoundToInt(worldClickPoint);
             
-            _interactionController.BoardClicked(position);
+            _gameController.BoardClicked(position);
         }
     }
 }

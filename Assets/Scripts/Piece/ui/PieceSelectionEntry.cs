@@ -1,5 +1,6 @@
 ﻿using Hand;
 using Piece.model;
+using State;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ namespace Piece.ui
 {
     public class PieceSelectionEntry : MonoBehaviour, IPointerClickHandler
     {
-        [Inject] private InteractionController _interactionController;
+        [Inject] private GameController _gameController;
 
         [SerializeField] private Image image;
 
@@ -25,7 +26,7 @@ namespace Piece.ui
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _interactionController.GrabPieceFromSupply(_piece);
+            _gameController.GrabPieceFromSupply(_piece);
         }
     }
 }

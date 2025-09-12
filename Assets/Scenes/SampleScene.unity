@@ -1012,7 +1012,6 @@ GameObject:
   m_Component:
   - component: {fileID: 924213296}
   - component: {fileID: 924213297}
-  - component: {fileID: 924213298}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -1049,18 +1048,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pieceView: {fileID: 643717476}
---- !u!114 &924213298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 924213295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 249c04920f5c4412a052b2868ab9f549, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &957307250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1724,11 +1711,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handController: {fileID: 924213297}
   boardController: {fileID: 957307251}
-  interactionController: {fileID: 924213298}
   pieceSupplyController: {fileID: 754699921}
   scoreController: {fileID: 758885932}
   scenarioController: {fileID: 411974769}
-  gameStateController: {fileID: 1765971542}
+  gameController: {fileID: 1765971542}
 --- !u!114 &1676055676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1866,7 +1852,7 @@ GameObject:
   - component: {fileID: 1765971543}
   - component: {fileID: 1765971542}
   m_Layer: 0
-  m_Name: GameState
+  m_Name: GameController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
