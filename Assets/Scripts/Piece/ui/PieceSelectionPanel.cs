@@ -15,7 +15,6 @@ namespace Piece.ui
 
         [SerializeField] private PieceSelectionEntry prefab;
         [SerializeField] private Transform entryParent;
-        [SerializeField] private ScrollRect scrollRect;
 
         private readonly Dictionary<PieceSO, PieceSelectionEntry> _entries = new();
 
@@ -41,7 +40,6 @@ namespace Piece.ui
             }
             _entries.Clear();
             pieces.ForEach(PieceAdded);
-            scrollRect.verticalNormalizedPosition = 1f;
         }
 
         private void PieceRemoved(PieceSO piece)
