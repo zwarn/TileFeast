@@ -282,6 +282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8047026247117451113}
   - component: {fileID: 2712214797671818587}
+  - component: {fileID: 5720869728712096259}
   m_Layer: 5
   m_Name: ScoreCondition
   m_TagString: Untagged
@@ -324,3 +325,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptionLabel: {fileID: 6454196945778898823}
   scoreLabel: {fileID: 7102752478463520035}
+--- !u!114 &5720869728712096259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8194635493756256005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: 450
+  m_MinHeight: 200
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
