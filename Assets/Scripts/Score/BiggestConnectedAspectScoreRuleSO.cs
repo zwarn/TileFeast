@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Piece;
 using Piece.aspect;
 using UnityEngine;
 
@@ -19,9 +18,9 @@ namespace Score
             return _score;
         }
 
-        public override void CalculateScore(PieceSO[,] tiles)
+        public override void CalculateScore(ScoreContext context)
         {
-            var groups = ScoreHelper.GetGroups(tiles, so => so != null && so.aspects.Contains(aspect));
+            var groups = ScoreHelper.GetGroups(context.TileArray, so => so != null && so.aspects.Contains(aspect));
             var biggestGroup = groups.OrderByDescending(group => group.Count).FirstOrDefault();
             var count = biggestGroup?.Count ?? 0;
 

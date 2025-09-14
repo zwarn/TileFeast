@@ -57,9 +57,11 @@ namespace Score
         private void CalculateScore()
         {
             var tilesDictionary = _boardController.GetPieceByPosition();
-            var tilesArray = ScoreHelper.ConvertTiles(tilesDictionary, _width, _height);
+            var tileArray = ScoreHelper.ConvertTiles(tilesDictionary, _width, _height);
 
-            _scoreRules.ForEach(rule => rule.CalculateScore(tilesArray));
+            var context = new ScoreContext(_gameController.CurrentState, tileArray);
+
+            _scoreRules.ForEach(rule => rule.CalculateScore(context));
         }
 
         private void ScoreRuleResetEvent(List<ScoreRuleSO> scoreRules)
