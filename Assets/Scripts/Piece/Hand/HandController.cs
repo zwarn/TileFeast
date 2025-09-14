@@ -7,7 +7,7 @@ namespace Piece.hand
     {
         [SerializeField] private PieceView pieceView;
 
-        private PieceWithRotation _currentPiece;
+        private GameState _gameState;
 
         private void Update()
         {
@@ -18,24 +18,24 @@ namespace Piece.hand
 
         public void UpdateState(GameState newState)
         {
-            _currentPiece = newState.PieceInHand ? new PieceWithRotation(newState.PieceInHand, 0) : null;
-            pieceView.SetData(_currentPiece);
+            _gameState = newState;
+            pieceView.SetData(_gameState.PieceInHand);
         }
 
         public bool IsEmpty()
         {
-            return _currentPiece == null;
+            return _gameState.PieceInHand == null;
         }
 
         public PieceWithRotation GetPiece()
         {
-            return _currentPiece;
+            return _gameState.PieceInHand;
         }
 
         public void FreePiece()
         {
-            _currentPiece = null;
-            pieceView.SetData(_currentPiece);
+            _gameState.PieceInHand = null;
+            pieceView.SetData(_gameState.PieceInHand);
         }
 
         public void SetPiece(PieceWithRotation piece)
@@ -46,13 +46,13 @@ namespace Piece.hand
                 return;
             }
 
-            _currentPiece = piece;
-            pieceView.SetData(_currentPiece);
+            _gameState.PieceInHand = piece;
+            pieceView.SetData(_gameState.PieceInHand);
         }
 
         public void Rotate(int direction)
         {
-            _currentPiece.Rotate(direction);
+            _gameState.PieceInHand.Rotate(direction);
         }
     }
 }

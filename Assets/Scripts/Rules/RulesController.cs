@@ -71,6 +71,7 @@ namespace Rules
         {
             var tilesDictionary = _boardController.GetPieceByPosition();
             var tileArray = RulesHelper.ConvertTiles(tilesDictionary, _boardController.width, _boardController.height);
+            
             var context = new PlacementRuleContext(_gameController.CurrentState, tileArray);
 
             _placementRules.ForEach(rule => rule.Calculate(context));

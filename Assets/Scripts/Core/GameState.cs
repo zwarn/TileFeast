@@ -10,12 +10,12 @@ namespace Core
     public class GameState
     {
         public List<PieceSO> AvailablePieces;
-        public PieceSO PieceInHand;
+        public PieceWithRotation PieceInHand;
         public List<PlacedPiece> PlacedPieces;
         public List<ScoreRuleSO> ScoreRules;
         public List<PlacementRuleSO> PlacementRules;
 
-        public GameState(List<PlacedPiece> placedPieces, List<PieceSO> availablePieces, PieceSO pieceInHand,
+        public GameState(List<PlacedPiece> placedPieces, List<PieceSO> availablePieces, PieceWithRotation pieceInHand,
             List<ScoreRuleSO> scoreRules, List<PlacementRuleSO> placementRules)
         {
             PlacedPieces = placedPieces;

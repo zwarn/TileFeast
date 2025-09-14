@@ -78,6 +78,7 @@ namespace Core
 
             _boardController.RemovePiece(placedPiece);
             _handController.SetPiece(new PieceWithRotation(placedPiece.Piece, placedPiece.Rotation));
+            
             BoardChangedEvent();
         }
 
@@ -87,6 +88,7 @@ namespace Core
 
             _handController.SetPiece(new PieceWithRotation(piece, 0));
             _pieceSupply.RemovePiece(piece);
+            BoardChangedEvent();
         }
 
         private void ReturnPieceToSupply()
@@ -96,6 +98,7 @@ namespace Core
             var piece = _handController.GetPiece();
             _pieceSupply.AddPiece(piece);
             _handController.FreePiece();
+            BoardChangedEvent();
         }
 
         public void BoardChangedEvent()
