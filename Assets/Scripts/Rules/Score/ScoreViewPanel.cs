@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace Score
+namespace Rules.Score
 {
     public class ScoreViewPanel : MonoBehaviour
     {
@@ -15,21 +15,21 @@ namespace Score
         private readonly Dictionary<ScoreRuleSO, ScoreViewEntry> _entries = new();
         [Inject] private DiContainer _container;
         [Inject] private ScenarioController _scenarioController;
-        [Inject] private ScoreController _scoreController;
+        [Inject] private RulesController rulesController;
 
         private void Update()
         {
-            total.text = _scoreController.TotalScore().ToString();
+            total.text = rulesController.TotalScore().ToString();
         }
 
         private void OnEnable()
         {
-            _scoreController.OnScoreRuleReset += OnScoreRuleReset;
+            rulesController.OnScoreRuleReset += OnScoreRuleReset;
         }
 
         private void OnDisable()
         {
-            _scoreController.OnScoreRuleReset -= OnScoreRuleReset;
+            rulesController.OnScoreRuleReset -= OnScoreRuleReset;
         }
 
         private void OnScoreRuleReset(List<ScoreRuleSO> scoreRules)

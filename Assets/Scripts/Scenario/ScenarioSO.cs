@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Piece;
-using Score;
+using Rules.Placement;
+using Rules.Score;
 using UnityEngine;
 
 namespace Scenario
@@ -10,6 +11,7 @@ namespace Scenario
     {
         public List<PieceSO> availablePieces;
         public List<ScoreRuleSO> scoreRules;
+        public List<PlacementRuleSO> placementRules;
         public ScenarioSO nextLevel;
     }
 }

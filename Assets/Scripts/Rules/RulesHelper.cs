@@ -4,9 +4,9 @@ using System.Linq;
 using Piece;
 using UnityEngine;
 
-namespace Score
+namespace Rules
 {
-    public static class ScoreHelper
+    public static class RulesHelper
     {
         public static PieceSO[,] ConvertTiles(Dictionary<Vector2Int, PlacedPiece> tiles, int width, int height)
         {

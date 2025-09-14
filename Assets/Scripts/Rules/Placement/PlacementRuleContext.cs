@@ -1,14 +1,14 @@
 ﻿using Core;
 using Piece;
 
-namespace Score
+namespace Rules.Placement
 {
-    public class ScoreContext
+    public class PlacementRuleContext
     {
         public GameState State { get; }
         public PieceSO[,] TileArray { get; }
 
-        public ScoreContext(GameState gameState, PieceSO[,] tileArray)
+        public PlacementRuleContext(GameState gameState, PieceSO[,] tileArray)
         {
             State = gameState;
             TileArray = tileArray;

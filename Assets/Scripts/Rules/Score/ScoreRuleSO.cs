@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Piece;
 using UnityEngine;
 
-namespace Score
+namespace Rules.Score
 {
     public abstract class ScoreRuleSO : ScriptableObject
     {

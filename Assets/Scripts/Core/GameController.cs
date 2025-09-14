@@ -3,8 +3,8 @@ using Board;
 using Piece;
 using Piece.hand;
 using Piece.Supply;
+using Rules;
 using Scenario;
-using Score;
 using UnityEngine;
 using Zenject;
 
@@ -16,7 +16,7 @@ namespace Core
 
         [Inject] private HandController _handController;
         [Inject] private PieceSupplyController _pieceSupply;
-        [Inject] private ScoreController _scoreController;
+        [Inject] private RulesController rulesController;
 
         public GameState CurrentState { get; private set; }
 
@@ -36,7 +36,7 @@ namespace Core
             _boardController.UpdateState(CurrentState);
             _handController.UpdateState(CurrentState);
             _pieceSupply.UpdateState(CurrentState);
-            _scoreController.UpdateState(CurrentState);
+            rulesController.UpdateState(CurrentState);
 
             BoardChangedEvent();
         }

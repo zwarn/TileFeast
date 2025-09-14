@@ -3,7 +3,7 @@ using System.Linq;
 using Piece.aspect;
 using UnityEngine;
 
-namespace Score
+namespace Rules.Score
 {
     [CreateAssetMenu(fileName = "ScoreRule", menuName = "ScoreRule/BiggestConnectedAspect", order = 0)]
     public class BiggestConnectedAspectScoreRuleSO : ScoreRuleSO
@@ -20,7 +20,7 @@ namespace Score
 
         public override void CalculateScore(ScoreContext context)
         {
-            var groups = ScoreHelper.GetGroups(context.TileArray, so => so != null && so.aspects.Contains(aspect));
+            var groups = RulesHelper.GetGroups(context.TileArray, so => so != null && so.aspects.Contains(aspect));
             var biggestGroup = groups.OrderByDescending(group => group.Count).FirstOrDefault();
             var count = biggestGroup?.Count ?? 0;
 

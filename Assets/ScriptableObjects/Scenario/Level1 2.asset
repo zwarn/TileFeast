@@ -22,4 +22,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eabe40432df69434d864826efaf2ad30, type: 2}
   scoreRules:
   - {fileID: 11400000, guid: 7b9dee74e5f95074194cdb504a6d5c1e, type: 2}
+  placementRules:
+  - {fileID: 11400000, guid: 3f780f7f0f6a8364daaf3b0b4b8c1a76, type: 2}
   nextLevel: {fileID: 0}

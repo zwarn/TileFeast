@@ -35,4 +35,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7b9dee74e5f95074194cdb504a6d5c1e, type: 2}
   - {fileID: 11400000, guid: 746233ee92d5bb34aa56832c945e53f9, type: 2}
   - {fileID: 11400000, guid: 8351ae4a741ce434c8bcdc571c737757, type: 2}
+  placementRules:
+  - {fileID: 11400000, guid: 3f780f7f0f6a8364daaf3b0b4b8c1a76, type: 2}
   nextLevel: {fileID: 11400000, guid: a2558fd68420fe840b4d6f046f7f7042, type: 2}
