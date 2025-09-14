@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Board;
-using Hand;
-using Piece.model;
-using State;
+using Core;
 using UnityEngine;
 using Zenject;
 
@@ -14,13 +12,13 @@ namespace Score
     {
         [Inject] private BoardController _boardController;
         [Inject] private GameController _gameController;
+        private int _height;
 
-        public Action<List<ScoreRule>> OnScoreRuleReset;
-
-        private List<ScoreRule> _scoreRules;
+        private List<ScoreRuleSO> _scoreRules;
 
         private int _width;
-        private int _height;
+
+        public Action<List<ScoreRuleSO>> OnScoreRuleReset;
 
         private void Start()
         {
@@ -45,7 +43,7 @@ namespace Score
             ScoreRuleResetEvent(_scoreRules);
         }
 
-        public List<ScoreRule> GetScoreRules()
+        public List<ScoreRuleSO> GetScoreRules()
         {
             return _scoreRules.ToList();
         }
@@ -59,12 +57,12 @@ namespace Score
         private void CalculateScore()
         {
             var tilesDictionary = _boardController.GetPieceByPosition();
-            PieceSO[,] tilesArray = ScoreHelper.ConvertTiles(tilesDictionary, _width, _height);
+            var tilesArray = ScoreHelper.ConvertTiles(tilesDictionary, _width, _height);
 
             _scoreRules.ForEach(rule => rule.CalculateScore(tilesArray));
         }
 
-        private void ScoreRuleResetEvent(List<ScoreRule> scoreRules)
+        private void ScoreRuleResetEvent(List<ScoreRuleSO> scoreRules)
         {
             OnScoreRuleReset?.Invoke(scoreRules);
         }

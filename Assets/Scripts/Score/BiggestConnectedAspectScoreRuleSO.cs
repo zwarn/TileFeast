@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Piece.model;
+using Piece;
+using Piece.aspect;
 using UnityEngine;
 
 namespace Score
 {
     [CreateAssetMenu(fileName = "ScoreRule", menuName = "ScoreRule/BiggestConnectedAspect", order = 0)]
-    public class BiggestConnectedAspectScoreRule : ScoreRule
+    public class BiggestConnectedAspectScoreRuleSO : ScoreRuleSO
     {
         public AspectSO aspect;
+        private int _score;
 
         private List<Vector2Int> _scoringTiles = new();
-        private int _score;
 
         public override int GetScore()
         {

@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Piece.model
+namespace Piece.aspect
 {
     [CreateAssetMenu(fileName = "Aspect", menuName = "Aspect", order = 0)]
     public class AspectSO : ScriptableObject
     {
         public Sprite image;
-        public String name;
+        public string name;
     }
 }

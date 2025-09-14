@@ -1,8 +1,7 @@
-﻿using Piece.model;
-using Piece.ui;
+﻿using Piece.aspect;
 using UnityEngine;
 
-namespace Piece.view
+namespace Piece
 {
     public class PieceView : MonoBehaviour
     {
@@ -10,6 +9,11 @@ namespace Piece.view
         [SerializeField] private AspectListView aspectListView;
 
         private PieceWithRotation _piece;
+
+        private void Update()
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 90 * _piece.Rotation);
+        }
 
         public void SetData(PieceWithRotation piece)
         {
@@ -23,11 +27,6 @@ namespace Piece.view
 
                 aspectListView.SetData(piece.Piece.aspects, piece.Piece);
             }
-        }
-
-        private void Update()
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 90 * _piece.Rotation);
         }
     }
 }

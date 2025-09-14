@@ -1,31 +1,31 @@
 ﻿using System;
 using Board;
-using Hand;
-using Piece.controller;
-using Piece.model;
+using Piece;
+using Piece.hand;
+using Piece.Supply;
 using Scenario;
 using Score;
 using UnityEngine;
 using Zenject;
 
-namespace State
+namespace Core
 {
     public class GameController : MonoBehaviour
     {
-        public GameState CurrentState
-        {
-            get => _gameCurrentState;
-            private set => _gameCurrentState = value;
-        }
-
-        public event Action OnBoardChanged;
-
         [Inject] private BoardController _boardController;
+
         [Inject] private HandController _handController;
         [Inject] private PieceSupplyController _pieceSupply;
         [Inject] private ScoreController _scoreController;
 
-        private GameState _gameCurrentState;
+        public GameState CurrentState { get; private set; }
+
+        private void Update()
+        {
+            HandleInput();
+        }
+
+        public event Action OnBoardChanged;
 
         public void LoadScenario(ScenarioSO scenario)
         {
@@ -41,45 +41,27 @@ namespace State
             BoardChangedEvent();
         }
 
-        private void Update()
-        {
-            HandleInput();
-        }
-
         private void HandleInput()
         {
-            if (Input.GetKeyUp(KeyCode.Q))
-            {
-                _handController.Rotate(1);
-            }
+            if (Input.GetKeyUp(KeyCode.Q)) _handController.Rotate(1);
 
-            if (Input.GetKeyUp(KeyCode.E))
-            {
-                _handController.Rotate(-1);
-            }
+            if (Input.GetKeyUp(KeyCode.E)) _handController.Rotate(-1);
 
-            if (Input.GetMouseButtonUp(1))
-            {
-                ReturnPieceToSupply();
-            }
+            if (Input.GetMouseButtonUp(1)) ReturnPieceToSupply();
         }
 
         public void BoardClicked(Vector2Int position)
         {
             if (_handController.IsEmpty())
-            {
                 GrabFromBoard(position);
-            }
             else
-            {
                 PutOnBoard(position);
-            }
         }
 
         private void PutOnBoard(Vector2Int position)
         {
             var piece = _handController.GetPiece();
-            bool success = _boardController.PlacePiece(piece, position);
+            var success = _boardController.PlacePiece(piece, position);
             if (success)
             {
                 _handController.FreePiece();

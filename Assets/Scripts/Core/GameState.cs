@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Piece.model;
+using Piece;
 using Scenario;
 using Score;
 
-namespace State
+namespace Core
 {
     public class GameState
     {
-        public List<PlacedPiece> PlacedPieces;
         public List<PieceSO> AvailablePieces;
         public PieceSO PieceInHand;
-        public List<ScoreRule> ScoreRules;
+        public List<PlacedPiece> PlacedPieces;
+        public List<ScoreRuleSO> ScoreRules;
 
         public GameState(List<PlacedPiece> placedPieces, List<PieceSO> availablePieces, PieceSO pieceInHand,
-            List<ScoreRule> scoreRules)
+            List<ScoreRuleSO> scoreRules)
         {
             PlacedPieces = placedPieces;
             AvailablePieces = availablePieces;
@@ -23,7 +23,7 @@ namespace State
         }
 
         public GameState(ScenarioSO scenarioSO) :
-            this(new(),
+            this(new List<PlacedPiece>(),
                 scenarioSO.availablePieces.ToList(),
                 null,
                 scenarioSO.scoreRules.ToList())

@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Piece.model
+namespace Piece
 {
     public class PlacedPiece
     {
@@ -13,10 +13,10 @@ namespace Piece.model
             Position = position;
         }
 
-        public int Rotation { get; private set; }
+        public int Rotation { get; }
 
         public Vector2Int Position { get; }
-        public PieceSO Piece { get; private set; }
+        public PieceSO Piece { get; }
 
         public List<Vector2Int> GetTilePosition()
         {

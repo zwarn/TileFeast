@@ -1,5 +1,4 @@
-﻿using System;
-using State;
+﻿using Core;
 using UnityEngine;
 using Zenject;
 
@@ -25,7 +24,7 @@ namespace Scenario
         public void LoadNextScenario()
         {
             if (scenario.nextLevel == null) return;
-            
+
             LoadScenario(scenario.nextLevel);
         }
     }

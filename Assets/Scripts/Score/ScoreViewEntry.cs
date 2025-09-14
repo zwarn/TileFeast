@@ -14,12 +14,7 @@ namespace Score
 
         [Inject] private HighlightController _highlightController;
 
-        private ScoreRule _rule;
-
-        public void SetData(ScoreRule rule)
-        {
-            _rule = rule;
-        }
+        private ScoreRuleSO _rule;
 
         private void Update()
         {
@@ -38,6 +33,11 @@ namespace Score
         public void OnPointerExit(PointerEventData eventData)
         {
             _highlightController.SetHighlight(new List<Vector2Int>(), Color.cyan);
+        }
+
+        public void SetData(ScoreRuleSO rule)
+        {
+            _rule = rule;
         }
     }
 }

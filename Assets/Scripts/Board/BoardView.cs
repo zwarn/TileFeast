@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Hand;
-using Piece.model;
-using Piece.view;
-using State;
+using Core;
+using Piece;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Board
 {
     public class BoardView : MonoBehaviour, IPointerClickHandler
     {
-        [Inject] private DiContainer _container;
-        [Inject] private BoardController _boardController;
-        [Inject] private GameController _gameController;
-
         [SerializeField] private PieceView pieceViewPrefab;
         [SerializeField] private Transform pieceViewParent;
 
-        private Dictionary<PlacedPiece, PieceView> _views = new();
+        private readonly Dictionary<PlacedPiece, PieceView> _views = new();
+        [Inject] private BoardController _boardController;
+        [Inject] private DiContainer _container;
+        [Inject] private GameController _gameController;
 
         private void OnEnable()
         {
@@ -37,12 +32,22 @@ namespace Board
             _boardController.OnBoardReset -= ResetPieces;
         }
 
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button != 0) return;
+
+            var worldClickPoint = Camera.main.ScreenToWorldPoint(eventData.position);
+            var position = Vector2Int.RoundToInt(worldClickPoint);
+
+            _gameController.BoardClicked(position);
+        }
+
         private void ResetPieces(List<PlacedPiece> newPieces)
         {
             _views.Keys.ToList().ForEach(PieceRemoved);
             newPieces.ForEach(PiecePlaced);
         }
-        
+
         private void PiecePlaced(PlacedPiece piece)
         {
             var viewObject = _container.InstantiatePrefab(pieceViewPrefab);
@@ -58,16 +63,6 @@ namespace Board
             var pieceView = _views[piece];
             _views.Remove(piece);
             Destroy(pieceView.gameObject);
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (eventData.button != 0) return;
-
-            var worldClickPoint = Camera.main.ScreenToWorldPoint(eventData.position);
-            var position = Vector2Int.RoundToInt(worldClickPoint);
-            
-            _gameController.BoardClicked(position);
         }
     }
 }

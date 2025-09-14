@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Piece.model;
-using State;
+using Core;
 using UnityEngine;
 
-namespace Piece.controller
+namespace Piece.Supply
 {
     public class PieceSupplyController : MonoBehaviour
     {

@@ -2,22 +2,25 @@
 using Scenario;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace Score
 {
     public class ScoreViewPanel : MonoBehaviour
     {
-        [Inject] private DiContainer _container;
-        [Inject] private ScoreController _scoreController;
-        [Inject] private ScenarioController _scenarioController;
-        
         [SerializeField] private ScoreViewEntry prefab;
         [SerializeField] private Transform parent;
         [SerializeField] private TMP_Text total;
 
-        private Dictionary<ScoreRule, ScoreViewEntry> _entries = new();
+        private readonly Dictionary<ScoreRuleSO, ScoreViewEntry> _entries = new();
+        [Inject] private DiContainer _container;
+        [Inject] private ScenarioController _scenarioController;
+        [Inject] private ScoreController _scoreController;
+
+        private void Update()
+        {
+            total.text = _scoreController.TotalScore().ToString();
+        }
 
         private void OnEnable()
         {
@@ -29,12 +32,7 @@ namespace Score
             _scoreController.OnScoreRuleReset -= OnScoreRuleReset;
         }
 
-        private void Update()
-        {
-            total.text = _scoreController.TotalScore().ToString();
-        }
-
-        private void OnScoreRuleReset(List<ScoreRule> scoreRules)
+        private void OnScoreRuleReset(List<ScoreRuleSO> scoreRules)
         {
             Clear();
             scoreRules.ForEach(AddEntry);
@@ -45,7 +43,7 @@ namespace Score
             _scenarioController.LoadNextScenario();
         }
 
-        private void AddEntry(ScoreRule rule)
+        private void AddEntry(ScoreRuleSO rule)
         {
             var scoreViewGameobject = _container.InstantiatePrefab(prefab, parent);
             var scoreViewEntry = scoreViewGameobject.GetComponent<ScoreViewEntry>();
@@ -55,10 +53,7 @@ namespace Score
 
         private void Clear()
         {
-            foreach (var scoreViewEntry in _entries.Values)
-            {
-                Destroy(scoreViewEntry.gameObject);
-            }
+            foreach (var scoreViewEntry in _entries.Values) Destroy(scoreViewEntry.gameObject);
 
             _entries.Clear();
         }

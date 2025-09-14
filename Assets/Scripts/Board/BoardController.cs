@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Piece.model;
-using Scenario;
-using State;
+using Core;
+using Piece;
 using UnityEngine;
-using Zenject;
 
 namespace Board
 {
@@ -13,15 +11,15 @@ namespace Board
     {
         [SerializeField] public int width;
         [SerializeField] public int height;
+        private readonly Dictionary<Vector2Int, PlacedPiece> _piecesByPosition = new();
 
         private List<PlacedPiece> _pieces = new();
-        private readonly Dictionary<Vector2Int, PlacedPiece> _piecesByPosition = new();
+
+        public List<PlacedPiece> Pieces => _pieces.ToList();
 
         public event Action<List<PlacedPiece>> OnBoardReset;
         public event Action<PlacedPiece> OnPiecePlaced;
         public event Action<PlacedPiece> OnPieceRemoved;
-
-        public List<PlacedPiece> Pieces => _pieces.ToList();
 
         public void UpdateState(GameState newState)
         {
@@ -39,10 +37,7 @@ namespace Board
         public bool PlacePiece(PieceWithRotation newPiece, Vector2Int position)
         {
             var piece = new PlacedPiece(newPiece.Piece, newPiece.Rotation, position);
-            if (!IsValid(piece.GetTilePosition()))
-            {
-                return false;
-            }
+            if (!IsValid(piece.GetTilePosition())) return false;
 
             _pieces.Add(piece);
             piece.GetTilePosition().ForEach(pos => _piecesByPosition[pos] = piece);
@@ -52,11 +47,8 @@ namespace Board
 
         public bool RemovePiece(PlacedPiece piece)
         {
-            bool removed = _pieces.Remove(piece);
-            if (!removed)
-            {
-                return false;
-            }
+            var removed = _pieces.Remove(piece);
+            if (!removed) return false;
 
             piece.GetTilePosition().ForEach(pos => _piecesByPosition.Remove(pos));
             RemovePieceEvent(piece);
@@ -65,10 +57,7 @@ namespace Board
 
         public PlacedPiece GetPiece(Vector2Int position)
         {
-            if (_piecesByPosition.TryGetValue(position, out var piece))
-            {
-                return piece;
-            }
+            if (_piecesByPosition.TryGetValue(position, out var piece)) return piece;
 
             return null;
         }

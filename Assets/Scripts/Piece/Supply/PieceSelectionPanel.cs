@@ -1,22 +1,17 @@
 using System.Collections.Generic;
-using Piece.controller;
-using Piece.model;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
-namespace Piece.ui
+namespace Piece.Supply
 {
     public class PieceSelectionPanel : MonoBehaviour
     {
-        [Inject] private DiContainer _container;
-        [Inject] private PieceSupplyController _pieceSupply;
-
-
         [SerializeField] private PieceSelectionEntry prefab;
         [SerializeField] private Transform entryParent;
 
         private readonly Dictionary<PieceSO, PieceSelectionEntry> _entries = new();
+        [Inject] private DiContainer _container;
+        [Inject] private PieceSupplyController _pieceSupply;
 
         private void OnEnable()
         {
@@ -34,10 +29,7 @@ namespace Piece.ui
 
         private void PiecesReplaced(List<PieceSO> pieces)
         {
-            foreach (var entry in _entries)
-            {
-                Destroy(entry.Value.gameObject);
-            }
+            foreach (var entry in _entries) Destroy(entry.Value.gameObject);
             _entries.Clear();
             pieces.ForEach(PieceAdded);
         }

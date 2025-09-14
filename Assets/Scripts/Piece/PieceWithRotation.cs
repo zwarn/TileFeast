@@ -1,4 +1,4 @@
-﻿namespace Piece.model
+﻿namespace Piece
 {
     public class PieceWithRotation
     {
@@ -15,15 +15,9 @@
         public void Rotate(int dir)
         {
             var rotation = Rotation + dir;
-            if (rotation < 0)
-            {
-                rotation += 4;
-            }
+            if (rotation < 0) rotation += 4;
 
-            if (rotation > 3)
-            {
-                rotation -= 4;
-            }
+            if (rotation > 3) rotation -= 4;
 
             Rotation = rotation;
         }

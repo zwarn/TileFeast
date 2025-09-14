@@ -1,12 +1,7 @@
-﻿using System;
-using Piece.model;
-using Piece.view;
-using Scenario;
-using State;
+﻿using Core;
 using UnityEngine;
-using Zenject;
 
-namespace Hand
+namespace Piece.hand
 {
     public class HandController : MonoBehaviour
     {
@@ -14,17 +9,17 @@ namespace Hand
 
         private PieceWithRotation _currentPiece;
 
-        public void UpdateState(GameState newState)
-        {
-            _currentPiece = newState.PieceInHand ? new PieceWithRotation(newState.PieceInHand, 0) : null;
-            pieceView.SetData(_currentPiece);
-        }
-
         private void Update()
         {
             var targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPosition.z = 0;
             transform.localPosition = targetPosition;
+        }
+
+        public void UpdateState(GameState newState)
+        {
+            _currentPiece = newState.PieceInHand ? new PieceWithRotation(newState.PieceInHand, 0) : null;
+            pieceView.SetData(_currentPiece);
         }
 
         public bool IsEmpty()

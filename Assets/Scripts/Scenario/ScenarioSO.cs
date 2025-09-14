@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Piece.model;
+using Piece;
 using Score;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace Scenario
     public class ScenarioSO : ScriptableObject
     {
         public List<PieceSO> availablePieces;
-        public List<ScoreRule> scoreRules;
+        public List<ScoreRuleSO> scoreRules;
         public ScenarioSO nextLevel;
     }
 }

@@ -1,30 +1,32 @@
 using Board;
-using Hand;
-using Piece.controller;
+using Core;
+using Piece.hand;
+using Piece.Supply;
 using Scenario;
 using Score;
-using State;
 using UnityEngine;
-using Zenject;
 
-public class MainInstaller : MonoInstaller
+namespace Zenject
 {
-    [SerializeField] private HandController handController;
-    [SerializeField] private BoardController boardController;
-    [SerializeField] private PieceSupplyController pieceSupplyController;
-    [SerializeField] private ScoreController scoreController;
-    [SerializeField] private ScenarioController scenarioController;
-    [SerializeField] private GameController gameController;
-    [SerializeField] private HighlightController highlightController;
-
-    public override void InstallBindings()
+    public class MainInstaller : MonoInstaller
     {
-        Container.Bind<HandController>().FromInstance(handController);
-        Container.Bind<BoardController>().FromInstance(boardController);
-        Container.Bind<PieceSupplyController>().FromInstance(pieceSupplyController);
-        Container.Bind<ScoreController>().FromInstance(scoreController);
-        Container.Bind<ScenarioController>().FromInstance(scenarioController);
-        Container.Bind<GameController>().FromInstance(gameController);
-        Container.Bind<HighlightController>().FromInstance(highlightController);
+        [SerializeField] private HandController handController;
+        [SerializeField] private BoardController boardController;
+        [SerializeField] private PieceSupplyController pieceSupplyController;
+        [SerializeField] private ScoreController scoreController;
+        [SerializeField] private ScenarioController scenarioController;
+        [SerializeField] private GameController gameController;
+        [SerializeField] private HighlightController highlightController;
+
+        public override void InstallBindings()
+        {
+            Container.Bind<HandController>().FromInstance(handController);
+            Container.Bind<BoardController>().FromInstance(boardController);
+            Container.Bind<PieceSupplyController>().FromInstance(pieceSupplyController);
+            Container.Bind<ScoreController>().FromInstance(scoreController);
+            Container.Bind<ScenarioController>().FromInstance(scenarioController);
+            Container.Bind<GameController>().FromInstance(gameController);
+            Container.Bind<HighlightController>().FromInstance(highlightController);
+        }
     }
 }

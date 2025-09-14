@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Piece.aspect;
 using UnityEngine;
 
-namespace Piece.model
+namespace Piece
 {
     [CreateAssetMenu(fileName = "Piece", menuName = "Piece", order = 0)]
     public class PieceSO : ScriptableObject
