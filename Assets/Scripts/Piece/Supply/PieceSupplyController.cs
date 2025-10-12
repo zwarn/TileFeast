@@ -7,11 +7,11 @@ namespace Piece.Supply
 {
     public class PieceSupplyController : MonoBehaviour
     {
-        [SerializeField] private List<PieceSO> pieces;
+        private List<Piece> pieces;
 
-        public event Action<PieceSO> OnPieceAdded;
-        public event Action<PieceSO> OnPieceRemoved;
-        public event Action<List<PieceSO>> OnPiecesReplaced;
+        public event Action<Piece> OnPieceAdded;
+        public event Action<Piece> OnPieceRemoved;
+        public event Action<List<Piece>> OnPiecesReplaced;
 
         public void UpdateState(GameState newState)
         {
@@ -19,7 +19,7 @@ namespace Piece.Supply
             ReplacePiecesEvent(pieces);
         }
 
-        public void RemovePiece(PieceSO piece)
+        public void RemovePiece(Piece piece)
         {
             pieces.Remove(piece);
             RemovePieceEvent(piece);
@@ -31,17 +31,17 @@ namespace Piece.Supply
             AddPieceEvent(piece.Piece);
         }
 
-        public void RemovePieceEvent(PieceSO piece)
+        public void RemovePieceEvent(Piece piece)
         {
             OnPieceRemoved?.Invoke(piece);
         }
 
-        public void AddPieceEvent(PieceSO piece)
+        public void AddPieceEvent(Piece piece)
         {
             OnPieceAdded?.Invoke(piece);
         }
 
-        public void ReplacePiecesEvent(List<PieceSO> newPieces)
+        public void ReplacePiecesEvent(List<Piece> newPieces)
         {
             OnPiecesReplaced?.Invoke(newPieces);
         }

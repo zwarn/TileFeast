@@ -6,9 +6,9 @@ namespace Piece.aspect
     {
         [SerializeField] private SpriteRenderer renderer;
 
-        public void SetData(AspectSO aspect)
+        public void SetData(Aspect aspect)
         {
-            renderer.sprite = aspect.image;
+            renderer.sprite = aspect.icon;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Piece
 {
     public class PlacedPiece
     {
-        public PlacedPiece(PieceSO piece, int rotation, Vector2Int position)
+        public PlacedPiece(Piece piece, int rotation, Vector2Int position)
         {
             Piece = piece;
             Rotation = rotation;
@@ -16,7 +16,7 @@ namespace Piece
         public int Rotation { get; }
 
         public Vector2Int Position { get; }
-        public PieceSO Piece { get; }
+        public Piece Piece { get; }
 
         public List<Vector2Int> GetTilePosition()
         {

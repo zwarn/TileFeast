@@ -9,13 +9,13 @@ namespace Core
 {
     public class GameState
     {
-        public List<PieceSO> AvailablePieces;
+        public List<Piece.Piece> AvailablePieces;
         public PieceWithRotation PieceInHand;
         public List<PlacedPiece> PlacedPieces;
         public List<ScoreRuleSO> ScoreRules;
         public List<PlacementRuleSO> PlacementRules;
 
-        public GameState(List<PlacedPiece> placedPieces, List<PieceSO> availablePieces, PieceWithRotation pieceInHand,
+        public GameState(List<PlacedPiece> placedPieces, List<Piece.Piece> availablePieces, PieceWithRotation pieceInHand,
             List<ScoreRuleSO> scoreRules, List<PlacementRuleSO> placementRules)
         {
             PlacedPieces = placedPieces;
@@ -27,7 +27,7 @@ namespace Core
 
         public GameState(ScenarioSO scenarioSO) :
             this(new List<PlacedPiece>(),
-                scenarioSO.availablePieces.ToList(),
+                scenarioSO.AvailablePieces(),
                 null,
                 scenarioSO.scoreRules.ToList(),
                 scenarioSO.placementRules.ToList())

@@ -2,7 +2,7 @@
 {
     public class PieceWithRotation
     {
-        public PieceWithRotation(PieceSO piece, int rotation)
+        public PieceWithRotation(Piece piece, int rotation)
         {
             Piece = piece;
             Rotation = rotation;
@@ -10,7 +10,7 @@
 
         public int Rotation { get; private set; }
 
-        public PieceSO Piece { get; private set; }
+        public Piece Piece { get; private set; }
 
         public void Rotate(int dir)
         {

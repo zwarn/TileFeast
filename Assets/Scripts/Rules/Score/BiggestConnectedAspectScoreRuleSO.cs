@@ -2,14 +2,17 @@
 using System.Linq;
 using Piece.aspect;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Rules.Score
 {
     [CreateAssetMenu(fileName = "ScoreRule", menuName = "ScoreRule/BiggestConnectedAspect", order = 0)]
     public class BiggestConnectedAspectScoreRuleSO : ScoreRuleSO
     {
-        public AspectSO aspect;
+        public AspectSO aspectSO;
         private int _score;
+
+        private Aspect Aspect => new(aspectSO);
 
         private List<Vector2Int> _scoringTiles = new();
 
@@ -20,7 +23,7 @@ namespace Rules.Score
 
         public override void CalculateScore(ScoreContext context)
         {
-            var groups = RulesHelper.GetGroups(context.TileArray, so => so != null && so.aspects.Contains(aspect));
+            var groups = RulesHelper.GetGroups(context.TileArray, piece => piece != null && piece.aspects.Contains(Aspect));
             var biggestGroup = groups.OrderByDescending(group => group.Count).FirstOrDefault();
             var count = biggestGroup?.Count ?? 0;
 
@@ -35,7 +38,7 @@ namespace Rules.Score
 
         public override string GetText()
         {
-            return $"Your biggest connected group of things {aspect.name}";
+            return $"Your biggest connected group of things {aspectSO.name}";
         }
     }
 }

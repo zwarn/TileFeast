@@ -11,7 +11,7 @@ namespace Piece.aspect
 
         private readonly List<AspectView> _aspectViews = new();
 
-        public void SetData(List<AspectSO> aspects, PieceSO piece)
+        public void SetData(List<Aspect> aspects, Piece piece)
         {
             var viewsNeeded = aspects.Count - _aspectViews.Count;
             for (var i = 0; i < viewsNeeded; i++)
@@ -34,7 +34,7 @@ namespace Piece.aspect
             }
         }
 
-        private void SetPosition(int index, AspectView aspectView, PieceSO piece)
+        private void SetPosition(int index, AspectView aspectView, Piece piece)
         {
             var position = piece.shape.tilePosition.OrderBy(pos => pos.x).ThenByDescending(pos => pos.y).First();
 

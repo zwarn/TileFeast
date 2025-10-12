@@ -9,7 +9,7 @@ namespace Piece.Supply
         [SerializeField] private PieceSelectionEntry prefab;
         [SerializeField] private Transform entryParent;
 
-        private readonly Dictionary<PieceSO, PieceSelectionEntry> _entries = new();
+        private readonly Dictionary<Piece, PieceSelectionEntry> _entries = new();
         [Inject] private DiContainer _container;
         [Inject] private PieceSupplyController _pieceSupply;
 
@@ -27,21 +27,21 @@ namespace Piece.Supply
             _pieceSupply.OnPiecesReplaced -= PiecesReplaced;
         }
 
-        private void PiecesReplaced(List<PieceSO> pieces)
+        private void PiecesReplaced(List<Piece> pieces)
         {
             foreach (var entry in _entries) Destroy(entry.Value.gameObject);
             _entries.Clear();
             pieces.ForEach(PieceAdded);
         }
 
-        private void PieceRemoved(PieceSO piece)
+        private void PieceRemoved(Piece piece)
         {
             var entry = _entries[piece];
             Destroy(entry.gameObject);
             _entries.Remove(piece);
         }
 
-        private void PieceAdded(PieceSO piece)
+        private void PieceAdded(Piece piece)
         {
             var entryObject = _container.InstantiatePrefab(prefab, entryParent);
             var entry = entryObject.GetComponent<PieceSelectionEntry>();

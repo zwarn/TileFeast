@@ -6,9 +6,9 @@ namespace Rules.Score
     public class ScoreContext
     {
         public GameState State { get; }
-        public PieceSO[,] TileArray { get; }
+        public Piece.Piece[,] TileArray { get; }
 
-        public ScoreContext(GameState gameState, PieceSO[,] tileArray)
+        public ScoreContext(GameState gameState, Piece.Piece[,] tileArray)
         {
             State = gameState;
             TileArray = tileArray;

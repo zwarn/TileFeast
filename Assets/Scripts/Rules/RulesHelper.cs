@@ -8,9 +8,9 @@ namespace Rules
 {
     public static class RulesHelper
     {
-        public static PieceSO[,] ConvertTiles(Dictionary<Vector2Int, PlacedPiece> tiles, int width, int height)
+        public static Piece.Piece[,] ConvertTiles(Dictionary<Vector2Int, PlacedPiece> tiles, int width, int height)
         {
-            var result = new PieceSO[width, height];
+            var result = new Piece.Piece[width, height];
 
             tiles.ToList().ForEach(pair =>
             {
@@ -21,7 +21,7 @@ namespace Rules
             return result;
         }
 
-        public static List<List<Vector2Int>> GetGroups(PieceSO[,] tilesArray, Func<PieceSO, bool> check)
+        public static List<List<Vector2Int>> GetGroups(Piece.Piece[,] tilesArray, Func<Piece.Piece, bool> check)
         {
             var groups = new List<List<Vector2Int>>();
             var visited = new List<Vector2Int>();
@@ -38,7 +38,7 @@ namespace Rules
             return groups;
         }
 
-        private static List<Vector2Int> FillGroup(PieceSO[,] tilesArray, Func<PieceSO, bool> check, int x, int y,
+        private static List<Vector2Int> FillGroup(Piece.Piece[,] tilesArray, Func<Piece.Piece, bool> check, int x, int y,
             List<Vector2Int> visited)
         {
             var tiles = new List<Vector2Int>();
@@ -63,7 +63,7 @@ namespace Rules
             return tiles;
         }
 
-        private static void FindCandidates(PieceSO[,] tilesArray, Func<PieceSO, bool> check, List<Vector2Int> visited,
+        private static void FindCandidates(Piece.Piece[,] tilesArray, Func<Piece.Piece, bool> check, List<Vector2Int> visited,
             Vector2Int position, Queue<Vector2Int> candidates)
         {
             foreach (var candidate in Neighbors(tilesArray, position.x, position.y).Where(pos => !visited.Contains(pos))
@@ -72,7 +72,7 @@ namespace Rules
                 candidates.Enqueue(candidate);
         }
 
-        private static List<Vector2Int> Neighbors(PieceSO[,] tiles, int x, int y)
+        private static List<Vector2Int> Neighbors(Piece.Piece[,] tiles, int x, int y)
         {
             var result = new List<Vector2Int>();
 

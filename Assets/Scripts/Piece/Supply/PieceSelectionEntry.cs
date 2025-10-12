@@ -11,7 +11,7 @@ namespace Piece.Supply
         [SerializeField] private Image image;
         [Inject] private GameController _gameController;
 
-        private PieceSO _piece;
+        private Piece _piece;
 
 
         public void OnPointerClick(PointerEventData eventData)
@@ -19,7 +19,7 @@ namespace Piece.Supply
             _gameController.GrabPieceFromSupply(_piece);
         }
 
-        public void SetData(PieceSO piece)
+        public void SetData(Piece piece)
         {
             _piece = piece;
 

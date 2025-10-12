@@ -82,7 +82,7 @@ namespace Core
             BoardChangedEvent();
         }
 
-        public void GrabPieceFromSupply(PieceSO piece)
+        public void GrabPieceFromSupply(Piece.Piece piece)
         {
             if (!_handController.IsEmpty()) return;
 
