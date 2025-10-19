@@ -4,20 +4,23 @@ using Piece;
 using Rules.Placement;
 using Rules.Score;
 using Scenario;
+using UnityEngine;
 
 namespace Core
 {
     public class GameState
     {
+        public Vector2Int GridSize;
         public List<Piece.Piece> AvailablePieces;
         public PieceWithRotation PieceInHand;
         public List<PlacedPiece> PlacedPieces;
         public List<ScoreRuleSO> ScoreRules;
         public List<PlacementRuleSO> PlacementRules;
 
-        public GameState(List<PlacedPiece> placedPieces, List<Piece.Piece> availablePieces, PieceWithRotation pieceInHand,
-            List<ScoreRuleSO> scoreRules, List<PlacementRuleSO> placementRules)
+        public GameState(Vector2Int gridSize, List<PlacedPiece> placedPieces, List<Piece.Piece> availablePieces,
+            PieceWithRotation pieceInHand, List<ScoreRuleSO> scoreRules, List<PlacementRuleSO> placementRules)
         {
+            GridSize = gridSize;
             PlacedPieces = placedPieces;
             AvailablePieces = availablePieces;
             PieceInHand = pieceInHand;
@@ -26,7 +29,8 @@ namespace Core
         }
 
         public GameState(ScenarioSO scenarioSO) :
-            this(new List<PlacedPiece>(),
+            this(scenarioSO.gridSize,
+                new List<PlacedPiece>(),
                 scenarioSO.AvailablePieces(),
                 null,
                 scenarioSO.scoreRules.ToList(),

@@ -10,6 +10,7 @@ namespace Scenario
     [CreateAssetMenu(fileName = "Scenario", menuName = "Scenario", order = 0)]
     public class ScenarioSO : ScriptableObject
     {
+        public Vector2Int gridSize = new Vector2Int(9, 9);
         [SerializeField] private List<PieceSO> availablePieces;
         public List<ScoreRuleSO> scoreRules;
         public List<PlacementRuleSO> placementRules;

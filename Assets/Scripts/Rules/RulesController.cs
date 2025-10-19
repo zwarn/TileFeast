@@ -18,6 +18,8 @@ namespace Rules
         private List<ScoreRuleSO> _scoreRules;
         private List<PlacementRuleSO> _placementRules;
 
+        private Vector2Int _gridSize;
+
         public Action<List<ScoreRuleSO>> OnScoreRuleReset;
         public Action<List<PlacementRuleSO>> OnPlacementRuleReset;
 
@@ -35,6 +37,7 @@ namespace Rules
         {
             _scoreRules = gameState.ScoreRules;
             _placementRules = gameState.PlacementRules;
+            _gridSize = gameState.GridSize;
             CalculateRules();
             ScoreRuleResetEvent(_scoreRules);
             PlacementRuleResetEvent(_placementRules);
@@ -60,7 +63,7 @@ namespace Rules
         private void CalculateScoreRules()
         {
             var tilesDictionary = _boardController.GetPieceByPosition();
-            var tileArray = RulesHelper.ConvertTiles(tilesDictionary, _boardController.width, _boardController.height);
+            var tileArray = RulesHelper.ConvertTiles(tilesDictionary, _gridSize.x, _gridSize.y);
 
             var context = new ScoreContext(_gameController.CurrentState, tileArray);
 
@@ -70,8 +73,8 @@ namespace Rules
         private void CalculatePlacementRules()
         {
             var tilesDictionary = _boardController.GetPieceByPosition();
-            var tileArray = RulesHelper.ConvertTiles(tilesDictionary, _boardController.width, _boardController.height);
-            
+            var tileArray = RulesHelper.ConvertTiles(tilesDictionary, _gridSize.x, _gridSize.y);
+
             var context = new PlacementRuleContext(_gameController.CurrentState, tileArray);
 
             _placementRules.ForEach(rule => rule.Calculate(context));

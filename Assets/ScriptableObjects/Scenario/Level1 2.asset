@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6ea39cb86f48948228dc942f4fdb44, type: 3}
   m_Name: Level1 2
   m_EditorClassIdentifier: 
+  gridSize: {x: 7, y: 7}
   availablePieces:
   - {fileID: 11400000, guid: d3c83bd4b67171240acc1b3ceebaa487, type: 2}
   - {fileID: 11400000, guid: d6999263c242366429778c8a327e4db7, type: 2}
@@ -24,4 +25,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7b9dee74e5f95074194cdb504a6d5c1e, type: 2}
   placementRules:
   - {fileID: 11400000, guid: 3f780f7f0f6a8364daaf3b0b4b8c1a76, type: 2}
-  nextLevel: {fileID: 0}
+  nextLevel: {fileID: 11400000, guid: e1fffa51900c914448808b83c5f14f71, type: 2}

@@ -4,13 +4,16 @@ using System.Linq;
 using Core;
 using Piece;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Board
 {
     public class BoardController : MonoBehaviour
     {
-        [SerializeField] public int width;
-        [SerializeField] public int height;
+        [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private BoxCollider2D boxCollider;
+        private int width;
+        private int height;
         private readonly Dictionary<Vector2Int, PlacedPiece> _piecesByPosition = new();
 
         private List<PlacedPiece> _pieces = new();
@@ -24,8 +27,26 @@ namespace Board
         public void UpdateState(GameState newState)
         {
             _pieces = newState.PlacedPieces;
+            ResetBoardSize(newState.GridSize);
             RebuildPiecesByPosition();
             BoardResetEvent(Pieces);
+        }
+
+        private void ResetBoardSize(Vector2Int gridSize)
+        {
+            width = gridSize.x;
+            height = gridSize.y;
+
+            transform.position = new Vector3((width - 1) / 2, (height - 1) / 2, 0);
+
+            spriteRenderer.size = gridSize;
+            boxCollider.size = gridSize;
+
+            var maxSize = Math.Max(width, height);
+
+            var camera = Camera.main;
+            camera.orthographicSize = 1f + maxSize / 2f;
+            camera.transform.position = new Vector3((width - 1) / 2, (height - 1) / 2, camera.transform.position.z);
         }
 
         private void RebuildPiecesByPosition()
