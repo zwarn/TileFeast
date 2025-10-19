@@ -75,10 +75,11 @@ namespace Core
 
             var placedPiece = _boardController.GetPiece(position);
             if (placedPiece == null) return;
+            if (placedPiece.IsLocked()) return;
 
             _boardController.RemovePiece(placedPiece);
             _handController.SetPiece(new PieceWithRotation(placedPiece.Piece, placedPiece.Rotation));
-            
+
             BoardChangedEvent();
         }
 

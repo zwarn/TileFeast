@@ -12,13 +12,19 @@ namespace Scenario
     {
         public Vector2Int gridSize = new Vector2Int(9, 9);
         [SerializeField] private List<PieceSO> availablePieces;
+        [SerializeField] private LockedPieceList lockedPieces;
         public List<ScoreRuleSO> scoreRules;
         public List<PlacementRuleSO> placementRules;
         public ScenarioSO nextLevel;
 
         public List<Piece.Piece> AvailablePieces()
         {
-            return availablePieces.Select(so => new Piece.Piece(so)).ToList();
+            return availablePieces.Select(so => new Piece.Piece(so, false)).ToList();
+        }
+
+        public List<PlacedPiece> LockedPieces()
+        {
+            return lockedPieces.LockedPieces();
         }
     }
 }

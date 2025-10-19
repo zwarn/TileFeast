@@ -30,7 +30,7 @@ namespace Core
 
         public GameState(ScenarioSO scenarioSO) :
             this(scenarioSO.gridSize,
-                new List<PlacedPiece>(),
+                scenarioSO.LockedPieces(),
                 scenarioSO.AvailablePieces(),
                 null,
                 scenarioSO.scoreRules.ToList(),
