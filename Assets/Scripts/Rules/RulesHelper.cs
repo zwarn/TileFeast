@@ -32,13 +32,14 @@ namespace Rules
                 var current = new Vector2Int(x, y);
                 if (visited.Contains(current)) continue;
 
-                if (check.Invoke(tilesArray[x, y])) groups.Add(FillGroup(tilesArray, check, x, y, visited));
+                var currentTile = tilesArray[x, y];
+                if (check.Invoke(currentTile)) groups.Add(FloodGroup(tilesArray, check, x, y, visited));
             }
 
             return groups;
         }
 
-        private static List<Vector2Int> FillGroup(Piece.Piece[,] tilesArray, Func<Piece.Piece, bool> check, int x, int y,
+        private static List<Vector2Int> FloodGroup(Piece.Piece[,] tilesArray, Func<Piece.Piece, bool> check, int x, int y,
             List<Vector2Int> visited)
         {
             var tiles = new List<Vector2Int>();

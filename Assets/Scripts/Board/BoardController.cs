@@ -37,7 +37,7 @@ namespace Board
             width = gridSize.x;
             height = gridSize.y;
 
-            transform.position = new Vector3((width - 1) / 2, (height - 1) / 2, 0);
+            transform.position = new Vector3((width - 1) / 2f, (height - 1) / 2f, 0);
 
             spriteRenderer.size = gridSize;
             boxCollider.size = gridSize;
@@ -46,7 +46,7 @@ namespace Board
 
             var camera = Camera.main;
             camera.orthographicSize = 1f + maxSize / 2f;
-            camera.transform.position = new Vector3((width - 1) / 2, (height - 1) / 2, camera.transform.position.z);
+            camera.transform.position = new Vector3((width - 1) / 2f, (height - 1) / 2f, camera.transform.position.z);
         }
 
         private void RebuildPiecesByPosition()
