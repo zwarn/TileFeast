@@ -7,12 +7,12 @@ namespace Piece
 {
     public class Piece
     {
-        public ShapeSO shape;
+        public List<Vector2Int> shape;
         public Sprite sprite;
         public List<Aspect> aspects;
         public bool locked;
 
-        public Piece(ShapeSO shape, Sprite sprite, List<Aspect> aspects, bool locked)
+        public Piece(List<Vector2Int> shape, Sprite sprite, List<Aspect> aspects, bool locked)
         {
             this.shape = shape;
             this.sprite = sprite;

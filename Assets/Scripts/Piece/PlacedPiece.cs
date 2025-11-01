@@ -20,7 +20,7 @@ namespace Piece
 
         public List<Vector2Int> GetTilePosition()
         {
-            return Piece.shape.tilePosition.Select(pos =>
+            return Piece.shape.Select(pos =>
             {
                 switch (Rotation)
                 {

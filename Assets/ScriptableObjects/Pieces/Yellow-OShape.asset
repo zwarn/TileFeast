@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62e16a8951ea40e9aa428fed7175b894, type: 3}
   m_Name: Yellow-OShape
   m_EditorClassIdentifier: 
-  shape: {fileID: 11400000, guid: 8d343c8f31ed2c946a3fbc080c2c247f, type: 2}
+  shape:
+  - {x: 0, y: -1}
+  - {x: 1, y: -1}
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
   sprite: {fileID: 21300000, guid: 0bee534f1b375d54885f885b66d384c2, type: 3}
   aspects:
   - {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}

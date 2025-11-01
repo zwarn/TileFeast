@@ -36,7 +36,7 @@ namespace Piece.aspect
 
         private void SetPosition(int index, AspectView aspectView, Piece piece)
         {
-            var position = piece.shape.tilePosition.OrderBy(pos => pos.x).ThenByDescending(pos => pos.y).First();
+            var position = piece.shape.OrderBy(pos => pos.x).ThenByDescending(pos => pos.y).First();
 
             var delta = index switch
             {
