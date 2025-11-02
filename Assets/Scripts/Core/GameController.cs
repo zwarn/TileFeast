@@ -18,6 +18,9 @@ namespace Core
         [Inject] private PieceSupplyController _pieceSupply;
         [Inject] private RulesController rulesController;
 
+        public event Action<GameState> OnChangeGameState;
+        public event Action OnBoardChanged;
+
         public GameState CurrentState { get; private set; }
 
         private void Update()
@@ -25,19 +28,15 @@ namespace Core
             HandleInput();
         }
 
-        public event Action OnBoardChanged;
 
         public void LoadScenario(ScenarioSO scenario)
         {
-            CurrentState = new GameState(scenario);
+            var newState = new GameState(scenario);
 
             //TODO: verify the new state is valid
 
-            _boardController.UpdateState(CurrentState);
-            _handController.UpdateState(CurrentState);
-            _pieceSupply.UpdateState(CurrentState);
-            rulesController.UpdateState(CurrentState);
-
+            CurrentState = newState;
+            ChangeGameStateEvent(CurrentState);
             BoardChangedEvent();
         }
 
@@ -105,6 +104,11 @@ namespace Core
         public void BoardChangedEvent()
         {
             OnBoardChanged?.Invoke();
+        }
+
+        public void ChangeGameStateEvent(GameState newState)
+        {
+            OnChangeGameState?.Invoke(newState);
         }
     }
 }

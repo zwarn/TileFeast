@@ -1,14 +1,26 @@
 ﻿using Core;
 using UnityEngine;
+using Zenject;
 
 namespace Piece.hand
 {
     public class HandController : MonoBehaviour
     {
         [SerializeField] private PieceView pieceView;
+        [Inject] private GameController _gameController;
 
         private GameState _gameState;
 
+        
+        private void OnEnable()
+        {
+            _gameController.OnChangeGameState += UpdateState;
+        }
+
+        private void OnDisable()
+        {
+            _gameController.OnChangeGameState -= UpdateState;
+        }
         private void Update()
         {
             var targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

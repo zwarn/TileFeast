@@ -4,14 +4,12 @@ using System.Linq;
 using Core;
 using Piece;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Zenject;
 
 namespace Board
 {
     public class BoardController : MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer spriteRenderer;
-        [SerializeField] private BoxCollider2D boxCollider;
         private int width;
         private int height;
         private readonly Dictionary<Vector2Int, PlacedPiece> _piecesByPosition = new();
@@ -20,9 +18,21 @@ namespace Board
 
         public List<PlacedPiece> Pieces => _pieces.ToList();
 
+        [Inject] private GameController _gameController;
+
         public event Action<List<PlacedPiece>> OnBoardReset;
         public event Action<PlacedPiece> OnPiecePlaced;
         public event Action<PlacedPiece> OnPieceRemoved;
+
+        private void OnEnable()
+        {
+            _gameController.OnChangeGameState += UpdateState;
+        }
+
+        private void OnDisable()
+        {
+            _gameController.OnChangeGameState -= UpdateState;
+        }
 
         public void UpdateState(GameState newState)
         {
@@ -36,17 +46,6 @@ namespace Board
         {
             width = gridSize.x;
             height = gridSize.y;
-
-            transform.position = new Vector3((width - 1) / 2f, (height - 1) / 2f, 0);
-
-            spriteRenderer.size = gridSize;
-            boxCollider.size = gridSize;
-
-            var maxSize = Math.Max(width, height);
-
-            var camera = Camera.main;
-            camera.orthographicSize = 1f + maxSize / 2f;
-            camera.transform.position = new Vector3((width - 1) / 2f, (height - 1) / 2f, camera.transform.position.z);
         }
 
         private void RebuildPiecesByPosition()

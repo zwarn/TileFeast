@@ -25,11 +25,13 @@ namespace Rules
 
         private void OnEnable()
         {
+            _gameController.OnChangeGameState += UpdateState;
             _gameController.OnBoardChanged += CalculateRules;
         }
 
         private void OnDisable()
         {
+            _gameController.OnChangeGameState += UpdateState;
             _gameController.OnBoardChanged -= CalculateRules;
         }
 
