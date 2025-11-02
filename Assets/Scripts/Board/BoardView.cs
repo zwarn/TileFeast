@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -40,11 +39,17 @@ namespace Board
             {
                 for (int y = 0; y < height; y++)
                 {
-                    tileChanges.Add(new TileChangeData(new Vector3Int(x, y, 0), tile, Color.white, Matrix4x4.identity));
+                    Vector2Int current = new Vector2Int(x, y);
+                    tileChanges.Add(new TileChangeData((Vector3Int) current, IncludeTile(gameState, current), Color.white, Matrix4x4.identity));
                 }
             }
 
             tilemap.SetTiles(tileChanges.ToArray(), true);
+        }
+
+        private TileBase IncludeTile(GameState gameState, Vector2Int current)
+        {
+            return !gameState.BlockedPositions.Contains(current) ? tile : null;
         }
 
         public void OnPointerClick(PointerEventData eventData)
