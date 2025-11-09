@@ -42,9 +42,11 @@ namespace Core
 
         private void HandleInput()
         {
-            if (Input.GetKeyUp(KeyCode.Q)) _handController.Rotate(1);
+            var mouseScroll = Input.mouseScrollDelta.y;
+            
+            if (Input.GetKeyUp(KeyCode.Q) || mouseScroll > 0.5f) _handController.Rotate(1);
 
-            if (Input.GetKeyUp(KeyCode.E)) _handController.Rotate(-1);
+            if (Input.GetKeyUp(KeyCode.E) || mouseScroll < -0.5f) _handController.Rotate(-1);
 
             if (Input.GetMouseButtonUp(1)) ReturnPieceToSupply();
         }
