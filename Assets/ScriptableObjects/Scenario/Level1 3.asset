@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d6ea39cb86f48948228dc942f4fdb44, type: 3}
-  m_Name: Level1 2
+  m_Name: Level1 3
   m_EditorClassIdentifier: 
   gridSize: {x: 8, y: 8}
   availablePieces:
@@ -44,10 +44,10 @@ MonoBehaviour:
   - {x: 1, y: 6}
   - {x: 6, y: 1}
   - {x: 6, y: 6}
-  scoreRules:
-  - {fileID: 11400000, guid: 746233ee92d5bb34aa56832c945e53f9, type: 2}
-  - {fileID: 11400000, guid: 7b9dee74e5f95074194cdb504a6d5c1e, type: 2}
-  - {fileID: 11400000, guid: 8351ae4a741ce434c8bcdc571c737757, type: 2}
+  scoreRules: []
   placementRules:
   - {fileID: 11400000, guid: 3f780f7f0f6a8364daaf3b0b4b8c1a76, type: 2}
-  nextLevel: {fileID: 11400000, guid: 78d1f350342dbee459d2b10c69100e7e, type: 2}
+  - {fileID: 11400000, guid: 43a0dbb8519da1748ae293e3f310b612, type: 2}
+  - {fileID: 11400000, guid: 944888e37d78c494382c3c1044cc977c, type: 2}
+  - {fileID: 11400000, guid: 3afa0bd4187aba940bb3712ab2d2c77f, type: 2}
+  nextLevel: {fileID: 11400000, guid: e1fffa51900c914448808b83c5f14f71, type: 2}

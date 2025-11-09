@@ -684,7 +684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3cf7636e942434785bce730eae5911e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenario: {fileID: 11400000, guid: a2558fd68420fe840b4d6f046f7f7042, type: 2}
+  scenario: {fileID: 11400000, guid: e1fffa51900c914448808b83c5f14f71, type: 2}
 --- !u!4 &411974770
 Transform:
   m_ObjectHideFlags: 0

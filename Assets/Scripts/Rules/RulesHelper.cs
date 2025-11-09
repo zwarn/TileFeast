@@ -8,6 +8,31 @@ namespace Rules
 {
     public static class RulesHelper
     {
+        public static List<Piece.Piece> GetNeighborPieces(PlacedPiece piece, Piece.Piece[,] tilesArray)
+        {
+            return piece.GetTilePosition().SelectMany(pos => GetNeighborTiles(pos)).Distinct()
+                .Where(pos => InBounds(pos, tilesArray)).Where(pos => !piece.GetTilePosition().Contains(pos))
+                .Where(pos => tilesArray[pos.x, pos.y] != null)
+                .Select(pos => tilesArray[pos.x, pos.y]).Distinct().ToList();
+        }
+
+        private static bool InBounds(Vector2Int pos, Piece.Piece[,] tilesArray)
+        {
+            return pos.x >= 0 && pos.x < tilesArray.GetLength(0)
+                              && pos.y >= 0 && pos.y < tilesArray.GetLength(1);
+        }
+
+        private static List<Vector2Int> GetNeighborTiles(Vector2Int pos)
+        {
+            return new List<Vector2Int>
+            {
+                new Vector2Int(pos.x + 1, pos.y),
+                new Vector2Int(pos.x - 1, pos.y),
+                new Vector2Int(pos.x, pos.y + 1),
+                new Vector2Int(pos.x, pos.y - 1),
+            };
+        }
+
         public static Piece.Piece[,] ConvertTiles(Dictionary<Vector2Int, PlacedPiece> tiles, int width, int height)
         {
             var result = new Piece.Piece[width, height];
@@ -39,7 +64,8 @@ namespace Rules
             return groups;
         }
 
-        private static List<Vector2Int> FloodGroup(Piece.Piece[,] tilesArray, Func<Piece.Piece, bool> check, int x, int y,
+        private static List<Vector2Int> FloodGroup(Piece.Piece[,] tilesArray, Func<Piece.Piece, bool> check, int x,
+            int y,
             List<Vector2Int> visited)
         {
             var tiles = new List<Vector2Int>();
@@ -64,7 +90,8 @@ namespace Rules
             return tiles;
         }
 
-        private static void FindCandidates(Piece.Piece[,] tilesArray, Func<Piece.Piece, bool> check, List<Vector2Int> visited,
+        private static void FindCandidates(Piece.Piece[,] tilesArray, Func<Piece.Piece, bool> check,
+            List<Vector2Int> visited,
             Vector2Int position, Queue<Vector2Int> candidates)
         {
             foreach (var candidate in Neighbors(tilesArray, position.x, position.y).Where(pos => !visited.Contains(pos))
