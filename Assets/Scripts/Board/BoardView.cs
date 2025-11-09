@@ -12,6 +12,7 @@ namespace Board
         [SerializeField] private Tilemap tilemap;
         [SerializeField] private TileBase tile;
         [SerializeField] private Grid grid;
+        [SerializeField] private BoxCollider2D gridCollider;
 
         [Inject] private GameController _gameController;
 
@@ -31,6 +32,9 @@ namespace Board
             var height = gameState.GridSize.y;
 
             grid.transform.position = new Vector3(width / 2f, height / 2f, 0);
+
+            gridCollider.size = new Vector2(width, height);
+            gridCollider.offset = new Vector2(width, height);
 
             tilemap.ClearAllTiles();
 
