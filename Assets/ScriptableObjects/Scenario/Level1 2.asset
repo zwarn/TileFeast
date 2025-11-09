@@ -12,19 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6ea39cb86f48948228dc942f4fdb44, type: 3}
   m_Name: Level1 2
   m_EditorClassIdentifier: 
-  gridSize: {x: 6, y: 6}
+  gridSize: {x: 8, y: 8}
   availablePieces:
-  - {fileID: 11400000, guid: d3c83bd4b67171240acc1b3ceebaa487, type: 2}
-  - {fileID: 11400000, guid: d6999263c242366429778c8a327e4db7, type: 2}
-  - {fileID: 11400000, guid: 4d604a18122ded84c9cd2d99d20ebe42, type: 2}
-  - {fileID: 11400000, guid: 300739c99b9fa8042bc17eb786d2358b, type: 2}
-  - {fileID: 11400000, guid: 0cb2f417cba292a43bdf7342d51c7cb5, type: 2}
-  - {fileID: 11400000, guid: 683050d6f4f358840a83d5935314951e, type: 2}
-  - {fileID: 11400000, guid: eabe40432df69434d864826efaf2ad30, type: 2}
+  - {fileID: 11400000, guid: a106876c8e8209d4d9dc635420574a4c, type: 2}
+  - {fileID: 11400000, guid: 5c305baddf7add94f835c1de77003fe2, type: 2}
+  - {fileID: 11400000, guid: 232317cc2efc05343911cf3896d024f8, type: 2}
+  - {fileID: 11400000, guid: 83a70b8f7c95ee14093f95fd91761020, type: 2}
+  - {fileID: 11400000, guid: f471bf4eb397abf4998417fad845e8d7, type: 2}
+  - {fileID: 11400000, guid: 83b722603781845449cf592a59da2e34, type: 2}
+  - {fileID: 11400000, guid: a106876c8e8209d4d9dc635420574a4c, type: 2}
+  - {fileID: 11400000, guid: 3fcdc76c9a9f07a4ea05360c2afb1062, type: 2}
+  - {fileID: 11400000, guid: fde23fb1c0d9f404cae1baf7286c9980, type: 2}
+  - {fileID: 11400000, guid: fef73a3b0fd826049ae9c84b09ff9d27, type: 2}
+  - {fileID: 11400000, guid: 222c256883cee384ba3716fc4ea8c33a, type: 2}
+  - {fileID: 11400000, guid: 733874eaca6aea046abf35951f4ef541, type: 2}
   lockedPieces:
-    data: []
+    data:
+    - type:
+        piece: {fileID: 11400000, guid: 1d0d2be8daec17f4198f9ce588276351, type: 2}
+      instances:
+      - position: {x: 1, y: 1}
+        rotation: 0
+      - position: {x: 1, y: 6}
+        rotation: 0
+      - position: {x: 6, y: 1}
+        rotation: 0
+      - position: {x: 6, y: 6}
+        rotation: 0
+  blockedPositions:
+  - {x: 1, y: 1}
+  - {x: 1, y: 6}
+  - {x: 6, y: 1}
+  - {x: 6, y: 6}
   scoreRules:
+  - {fileID: 11400000, guid: 746233ee92d5bb34aa56832c945e53f9, type: 2}
   - {fileID: 11400000, guid: 7b9dee74e5f95074194cdb504a6d5c1e, type: 2}
+  - {fileID: 11400000, guid: 8351ae4a741ce434c8bcdc571c737757, type: 2}
   placementRules:
   - {fileID: 11400000, guid: 3f780f7f0f6a8364daaf3b0b4b8c1a76, type: 2}
   nextLevel: {fileID: 11400000, guid: e1fffa51900c914448808b83c5f14f71, type: 2}

@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d6ea39cb86f48948228dc942f4fdb44, type: 3}
-  m_Name: Level1
+  m_Name: Level 1
   m_EditorClassIdentifier: 
   gridSize: {x: 7, y: 7}
   availablePieces:
   - {fileID: 11400000, guid: 19a9629f65aebb442aae8bb5907c9c9e, type: 2}
   - {fileID: 11400000, guid: 86eadc1e6ec7b5d438432fd0b9bc6cdd, type: 2}
   - {fileID: 11400000, guid: ac213c468d9a50d499c10d08c1df8c62, type: 2}
-  - {fileID: 11400000, guid: 3d94b1ed39f74264a9e09362a4707f2b, type: 2}
+  - {fileID: 11400000, guid: 15f218341685c614987477f6beb06c15, type: 2}
   - {fileID: 11400000, guid: 0bb162a1668fe2b439ca339a47d89026, type: 2}
   - {fileID: 11400000, guid: ec2b5eddbf4c27e48a6cd65957a24c8b, type: 2}
   - {fileID: 11400000, guid: fef73a3b0fd826049ae9c84b09ff9d27, type: 2}
