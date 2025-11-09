@@ -11,7 +11,7 @@ namespace Piece.hand
 
         private GameState _gameState;
 
-        
+
         private void OnEnable()
         {
             _gameController.OnChangeGameState += UpdateState;
@@ -21,6 +21,7 @@ namespace Piece.hand
         {
             _gameController.OnChangeGameState -= UpdateState;
         }
+
         private void Update()
         {
             var targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -64,7 +65,10 @@ namespace Piece.hand
 
         public void Rotate(int direction)
         {
-            _gameState.PieceInHand.Rotate(direction);
+            if (!IsEmpty())
+            {
+                _gameState.PieceInHand.Rotate(direction);
+            }
         }
     }
 }
