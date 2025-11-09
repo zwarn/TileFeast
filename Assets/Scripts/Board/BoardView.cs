@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Board
 {
-    public class BoardView : MonoBehaviour, IPointerClickHandler
+    public class BoardView : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
     {
         [SerializeField] private Tilemap tilemap;
         [SerializeField] private TileBase tile;
@@ -64,6 +64,30 @@ namespace Board
             var position = (Vector2Int) grid.WorldToCell(worldClickPoint);
 
             _gameController.BoardClicked(position);
+        }
+
+        public void OnDrop(PointerEventData eventData)
+        {
+            var worldClickPoint = Camera.main.ScreenToWorldPoint(eventData.position);
+            var position = (Vector2Int) grid.WorldToCell(worldClickPoint);
+
+            _gameController.BoardClicked(position);
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            var worldClickPoint = Camera.main.ScreenToWorldPoint(eventData.position);
+            var position = (Vector2Int) grid.WorldToCell(worldClickPoint);
+
+            _gameController.BoardClicked(position);
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
         }
     }
 }

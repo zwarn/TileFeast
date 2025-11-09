@@ -93,7 +93,7 @@ namespace Core
             BoardChangedEvent();
         }
 
-        private void ReturnPieceToSupply()
+        public void ReturnPieceToSupply()
         {
             if (_handController.IsEmpty()) return;
 
