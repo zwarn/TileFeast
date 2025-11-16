@@ -36,9 +36,9 @@ namespace Rules.Placement
             });
         }
 
-        public override List<Vector2Int> GetViolationSpots()
+        public override HighlightData GetViolationSpots()
         {
-            return _offendingTiles;
+            return new HighlightData(Color.red, _offendingTiles);
         }
 
         public override string GetText()

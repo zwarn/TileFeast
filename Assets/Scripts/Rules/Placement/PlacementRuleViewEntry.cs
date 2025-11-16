@@ -27,12 +27,12 @@ namespace Rules.Placement
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _highlightController.SetHighlight(_rule.GetViolationSpots(), Color.red);
+            _highlightController.SetHighlight(_rule.GetViolationSpots());
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            _highlightController.SetHighlight(new List<Vector2Int>(), Color.red);
+            _highlightController.SetHighlight(HighlightData.Empty());
         }
 
         public void SetData(PlacementRuleSO rule)

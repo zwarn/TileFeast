@@ -2,7 +2,6 @@
 using System.Linq;
 using Piece.aspect;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Rules.Score
 {
@@ -23,7 +22,8 @@ namespace Rules.Score
 
         public override void CalculateScore(ScoreContext context)
         {
-            var groups = RulesHelper.GetGroups(context.TileArray, piece => piece != null && piece.aspects.Contains(Aspect));
+            var groups = RulesHelper.GetGroups(context.TileArray,
+                piece => piece != null && piece.aspects.Contains(Aspect));
             var biggestGroup = groups.OrderByDescending(group => group.Count).FirstOrDefault();
             var count = biggestGroup?.Count ?? 0;
 
@@ -31,9 +31,9 @@ namespace Rules.Score
             _score = count;
         }
 
-        public override List<Vector2Int> GetScoreArea()
+        public override HighlightData GetScoreArea()
         {
-            return _scoringTiles;
+            return new(Color.cyan, _scoringTiles.ToList());
         }
 
         public override string GetText()

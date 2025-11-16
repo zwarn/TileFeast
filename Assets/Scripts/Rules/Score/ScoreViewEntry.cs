@@ -27,12 +27,12 @@ namespace Rules.Score
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _highlightController.SetHighlight(_rule.GetScoreArea(), Color.cyan);
+            _highlightController.SetHighlight(_rule.GetScoreArea());
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            _highlightController.SetHighlight(new List<Vector2Int>(), Color.cyan);
+            _highlightController.SetHighlight(HighlightData.Empty());
         }
 
         public void SetData(ScoreRuleSO rule)

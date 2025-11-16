@@ -8,7 +8,7 @@ namespace Rules.Placement
         public abstract bool IsSatisfied();
         public abstract void Calculate(PlacementRuleContext ruleContext);
 
-        public abstract List<Vector2Int> GetViolationSpots();
+        public abstract HighlightData GetViolationSpots();
 
         public abstract string GetText();
     }

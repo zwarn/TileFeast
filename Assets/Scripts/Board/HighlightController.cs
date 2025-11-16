@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Core;
+using Rules;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
@@ -24,20 +25,20 @@ namespace Board
             _gameController.OnBoardChanged -= ResetHighlight;
         }
 
-        public void SetHighlight(List<Vector2Int> positions, Color color)
+        public void SetHighlight(HighlightData highlightData)
         {
             tilemap.ClearAllTiles();
-            if (positions == null || positions.Count == 0) return;
+            if (highlightData.Positions == null || highlightData.Positions.Count == 0) return;
 
             tilemap.SetTiles(
-                positions.Select(pos =>
-                        new TileChangeData(new Vector3Int(pos.x, pos.y, 0), highlightTile, color, Matrix4x4.identity))
+                highlightData.Positions.Select(pos =>
+                        new TileChangeData(new Vector3Int(pos.x, pos.y, 0), highlightTile, highlightData.Color, Matrix4x4.identity))
                     .ToArray(), true);
         }
 
         private void ResetHighlight()
         {
-            SetHighlight(new List<Vector2Int>(), Color.black);
+            SetHighlight(HighlightData.Empty());
         }
     }
 }

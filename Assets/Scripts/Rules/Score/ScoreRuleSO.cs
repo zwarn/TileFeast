@@ -8,7 +8,7 @@ namespace Rules.Score
         public abstract int GetScore();
         public abstract void CalculateScore(ScoreContext scoreContext);
 
-        public abstract List<Vector2Int> GetScoreArea();
+        public abstract HighlightData GetScoreArea();
 
         public abstract string GetText();
     }

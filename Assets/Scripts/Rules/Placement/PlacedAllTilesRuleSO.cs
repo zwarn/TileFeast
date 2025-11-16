@@ -19,9 +19,9 @@ namespace Rules.Placement
             _satisfied = state.PieceInHand == null && state.AvailablePieces.Count == 0;
         }
 
-        public override List<Vector2Int> GetViolationSpots()
+        public override HighlightData GetViolationSpots()
         {
-            return new List<Vector2Int>();
+            return HighlightData.Empty();
         }
 
         public override string GetText()
