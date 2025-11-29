@@ -30,4 +30,16 @@ MonoBehaviour:
   scoreRules: []
   placementRules:
   - {fileID: 11400000, guid: 3f780f7f0f6a8364daaf3b0b4b8c1a76, type: 2}
+  zones:
+  - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
+    positions:
+    - {x: 0, y: 0}
+  - zoneType: {fileID: 11400000, guid: 068dd79abbfe4734c9e272c51207353b, type: 2}
+    positions:
+    - {x: 3, y: 3}
+    - {x: 3, y: 4}
+    - {x: 4, y: 3}
+  - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
+    positions:
+    - {x: 6, y: 6}
   nextLevel: {fileID: 11400000, guid: a2558fd68420fe840b4d6f046f7f7042, type: 2}

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Board.Zone;
 using Piece;
 using Rules.Placement;
 using Rules.Score;
@@ -17,9 +18,10 @@ namespace Core
         public List<PlacedPiece> PlacedPieces;
         public List<ScoreRuleSO> ScoreRules;
         public List<PlacementRuleSO> PlacementRules;
+        public List<Zone> Zones;
 
         public GameState(Vector2Int gridSize, List<Vector2Int> blockedPositions, List<PlacedPiece> placedPieces, List<Piece.Piece> availablePieces,
-            PieceWithRotation pieceInHand, List<ScoreRuleSO> scoreRules, List<PlacementRuleSO> placementRules)
+            PieceWithRotation pieceInHand, List<ScoreRuleSO> scoreRules, List<PlacementRuleSO> placementRules, List<Zone> zones)
         {
             GridSize = gridSize;
             BlockedPositions = blockedPositions;
@@ -28,6 +30,7 @@ namespace Core
             PieceInHand = pieceInHand;
             ScoreRules = scoreRules;
             PlacementRules = placementRules;
+            Zones = zones;
         }
 
         public GameState(ScenarioSO scenarioSO) :
@@ -37,7 +40,8 @@ namespace Core
                 scenarioSO.AvailablePieces(),
                 null,
                 scenarioSO.scoreRules.ToList(),
-                scenarioSO.placementRules.ToList())
+                scenarioSO.placementRules.ToList(),
+                scenarioSO.zones.ToList())
         {
         }
     }

@@ -9,8 +9,9 @@ namespace Board
 {
     public class BoardView : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
     {
-        [SerializeField] private Tilemap tilemap;
-        [SerializeField] private TileBase tile;
+        [SerializeField] private Tilemap boardTilemap;
+        [SerializeField] private Tilemap zoneTilemap;
+        [SerializeField] private TileBase boardTile;
         [SerializeField] private Grid grid;
         [SerializeField] private BoxCollider2D gridCollider;
 
@@ -36,7 +37,28 @@ namespace Board
             gridCollider.size = new Vector2(width, height);
             gridCollider.offset = new Vector2(width, height);
 
-            tilemap.ClearAllTiles();
+            UpdateBoardTilemap(gameState, width, height);
+            UpdateZoneTilemap(gameState);
+        }
+
+        private void UpdateZoneTilemap(GameState gameState)
+        {
+            zoneTilemap.ClearAllTiles();
+            
+            gameState.Zones.ForEach(zone =>
+            {
+                zone.positions.ForEach(pos =>
+                {
+                    zoneTilemap.SetTile((Vector3Int)pos, zone.zoneType.zoneTile);
+                });
+            });
+            
+            
+        }
+
+        private void UpdateBoardTilemap(GameState gameState, int width, int height)
+        {
+            boardTilemap.ClearAllTiles();
 
             List<TileChangeData> tileChanges = new List<TileChangeData>();
             for (int x = 0; x < width; x++)
@@ -44,16 +66,17 @@ namespace Board
                 for (int y = 0; y < height; y++)
                 {
                     Vector2Int current = new Vector2Int(x, y);
-                    tileChanges.Add(new TileChangeData((Vector3Int) current, IncludeTile(gameState, current), Color.white, Matrix4x4.identity));
+                    tileChanges.Add(new TileChangeData((Vector3Int)current, IncludeTile(gameState, current), Color.white,
+                        Matrix4x4.identity));
                 }
             }
 
-            tilemap.SetTiles(tileChanges.ToArray(), true);
+            boardTilemap.SetTiles(tileChanges.ToArray(), true);
         }
 
         private TileBase IncludeTile(GameState gameState, Vector2Int current)
         {
-            return !gameState.BlockedPositions.Contains(current) ? tile : null;
+            return !gameState.BlockedPositions.Contains(current) ? boardTile : null;
         }
 
         public void OnPointerClick(PointerEventData eventData)

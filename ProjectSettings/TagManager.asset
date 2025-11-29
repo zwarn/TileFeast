@@ -47,6 +47,9 @@ TagManager:
   - name: Board
     uniqueID: 1212338339
     locked: 0
+  - name: Zones
+    uniqueID: 657659737
+    locked: 0
   - name: OnBoard
     uniqueID: 4257436147
     locked: 0

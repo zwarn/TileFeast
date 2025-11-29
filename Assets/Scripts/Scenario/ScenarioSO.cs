@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Board.Zone;
 using Piece;
 using Rules.Placement;
 using Rules.Score;
@@ -16,6 +17,7 @@ namespace Scenario
         public List<Vector2Int> blockedPositions;
         public List<ScoreRuleSO> scoreRules;
         public List<PlacementRuleSO> placementRules;
+        public List<Zone> zones;
         public ScenarioSO nextLevel;
 
         public List<Piece.Piece> AvailablePieces()
