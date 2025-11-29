@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Board;
+using Board.Zone;
 using Core;
-using Rules.Placement;
-using Rules.Score;
+using Rules.PlacementRules;
+using Rules.ScoreRules;
 using UnityEngine;
 using Zenject;
 
@@ -17,6 +18,7 @@ namespace Rules
 
         private List<ScoreRuleSO> _scoreRules;
         private List<PlacementRuleSO> _placementRules;
+        private List<Zone> _zones;
 
         private Vector2Int _gridSize;
 
@@ -39,6 +41,7 @@ namespace Rules
         {
             _scoreRules = gameState.ScoreRules;
             _placementRules = gameState.PlacementRules;
+            _zones = gameState.Zones;
             _gridSize = gameState.GridSize;
             CalculateRules();
             ScoreRuleResetEvent(_scoreRules);
@@ -47,12 +50,12 @@ namespace Rules
 
         public bool SatisfiesRules()
         {
-            return _placementRules.All(rule => rule.IsSatisfied());
+            return _placementRules.All(rule => rule.IsSatisfied()) && _zones.All(zone => zone.IsSatisfied());
         }
 
         public int TotalScore()
         {
-            var total = _scoreRules.Sum(rule => rule.GetScore());
+            var total = _scoreRules.Sum(rule => rule.GetScore()) + _zones.Sum(zone => zone.GetScore());
             return total;
         }
 
@@ -60,6 +63,17 @@ namespace Rules
         {
             CalculateScoreRules();
             CalculatePlacementRules();
+            CalculateZones();
+        }
+
+        private void CalculateZones()
+        {
+            var tilesDictionary = _boardController.GetPieceByPosition();
+            var tileArray = RulesHelper.ConvertTiles(tilesDictionary, _gridSize.x, _gridSize.y);
+
+            var context = new RuleContext(_gameController.CurrentState, tileArray);
+
+            _zones.ForEach(zone => zone.Calculate(context));
         }
 
         private void CalculateScoreRules()
@@ -67,7 +81,7 @@ namespace Rules
             var tilesDictionary = _boardController.GetPieceByPosition();
             var tileArray = RulesHelper.ConvertTiles(tilesDictionary, _gridSize.x, _gridSize.y);
 
-            var context = new ScoreContext(_gameController.CurrentState, tileArray);
+            var context = new RuleContext(_gameController.CurrentState, tileArray);
 
             _scoreRules.ForEach(rule => rule.CalculateScore(context));
         }
@@ -77,7 +91,7 @@ namespace Rules
             var tilesDictionary = _boardController.GetPieceByPosition();
             var tileArray = RulesHelper.ConvertTiles(tilesDictionary, _gridSize.x, _gridSize.y);
 
-            var context = new PlacementRuleContext(_gameController.CurrentState, tileArray);
+            var context = new RuleContext(_gameController.CurrentState, tileArray);
 
             _placementRules.ForEach(rule => rule.Calculate(context));
         }

@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Piece.aspect
+namespace Piece.Aspect
 {
     public class AspectListView : MonoBehaviour
     {

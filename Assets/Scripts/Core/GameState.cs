@@ -2,8 +2,8 @@
 using System.Linq;
 using Board.Zone;
 using Piece;
-using Rules.Placement;
-using Rules.Score;
+using Rules.PlacementRules;
+using Rules.ScoreRules;
 using Scenario;
 using UnityEngine;
 

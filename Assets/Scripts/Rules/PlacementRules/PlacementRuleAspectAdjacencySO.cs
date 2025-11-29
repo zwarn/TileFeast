@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ModestTree;
-using Piece.aspect;
+using Piece.Aspect;
 using UnityEngine;
 
-namespace Rules.Placement
+namespace Rules.PlacementRules
 {
     [CreateAssetMenu(menuName = "PlacementRule/ColorAdjacency", fileName = "ColorAdjacencyPlacementRuleSO", order = 0)]
     class PlacementRuleColorAdjacency : PlacementRuleSO
@@ -19,14 +19,14 @@ namespace Rules.Placement
             return _offendingTiles.IsEmpty();
         }
 
-        public override void Calculate(PlacementRuleContext ruleContext)
+        public override void Calculate(RuleContext context)
         {
             _offendingTiles.Clear();
-            ruleContext.State.PlacedPieces.ForEach(piece =>
+            context.State.PlacedPieces.ForEach(piece =>
             {
                 if (piece.Piece.aspects.Contains(new Aspect(applyTo)))
                 {
-                    var neighborPieces = RulesHelper.GetNeighborPieces(piece, ruleContext.TileArray);
+                    var neighborPieces = RulesHelper.GetNeighborPieces(piece, context.TileArray);
                     if (neighborPieces.Any(neighborPiece =>
                             neighborPiece.aspects.Contains(new Aspect(forbidAdjacency))))
                     {

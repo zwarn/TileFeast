@@ -3,7 +3,7 @@ using UI;
 using UnityEngine;
 using Zenject;
 
-namespace Rules.Placement
+namespace Rules.PlacementRules
 {
     public class PlacementRuleViewPanel : MonoBehaviour
     {

@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Rules.Placement
+namespace Rules.PlacementRules
 {
     public abstract class PlacementRuleSO : ScriptableObject
     {
         public abstract bool IsSatisfied();
-        public abstract void Calculate(PlacementRuleContext ruleContext);
+        public abstract void Calculate(RuleContext context);
 
         public abstract HighlightData GetViolationSpots();
 

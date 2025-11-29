@@ -1,6 +1,6 @@
 using Board;
 using Core;
-using Piece.hand;
+using Piece.Hand;
 using Piece.Supply;
 using Rules;
 using Scenario;

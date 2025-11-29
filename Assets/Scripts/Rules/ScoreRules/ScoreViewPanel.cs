@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace Rules.Score
+namespace Rules.ScoreRules
 {
     public class ScoreViewPanel : MonoBehaviour
     {

@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Piece.hand
+namespace Piece.Hand
 {
     public class HandController : MonoBehaviour
     {

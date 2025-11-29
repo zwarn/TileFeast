@@ -1,7 +1,7 @@
 ﻿using System;
 using Board;
 using Piece;
-using Piece.hand;
+using Piece.Hand;
 using Piece.Supply;
 using Rules;
 using Scenario;

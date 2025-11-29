@@ -1,33 +1,32 @@
-﻿using System.Collections.Generic;
-using Board;
+﻿using Board;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace Rules.Score
+namespace Rules.PlacementRules
 {
-    public class ScoreViewEntry : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class PlacementRuleViewEntry : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private TMP_Text descriptionLabel;
-        [SerializeField] private TMP_Text scoreLabel;
+        [SerializeField] private Checkmark checkmark;
 
         [Inject] private HighlightController _highlightController;
 
-        private ScoreRuleSO _rule;
+        private PlacementRuleSO _rule;
 
         private void Update()
         {
-            var score = _rule.GetScore();
             var text = _rule.GetText();
 
             descriptionLabel.text = text;
-            scoreLabel.text = score.ToString();
+            checkmark.SetState(_rule.IsSatisfied());
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _highlightController.SetHighlight(_rule.GetScoreArea());
+            _highlightController.SetHighlight(_rule.GetViolationSpots());
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -35,7 +34,7 @@ namespace Rules.Score
             _highlightController.SetHighlight(HighlightData.Empty());
         }
 
-        public void SetData(ScoreRuleSO rule)
+        public void SetData(PlacementRuleSO rule)
         {
             _rule = rule;
         }

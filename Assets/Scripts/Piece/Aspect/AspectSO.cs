@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Piece.aspect
+namespace Piece.Aspect
 {
     [CreateAssetMenu(fileName = "Aspect", menuName = "Aspect", order = 0)]
     public class AspectSO : ScriptableObject

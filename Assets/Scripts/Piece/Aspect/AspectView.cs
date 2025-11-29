@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Piece.aspect
+namespace Piece.Aspect
 {
     public class AspectView : MonoBehaviour
     {

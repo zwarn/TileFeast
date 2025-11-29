@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Rules.Score
+namespace Rules.ScoreRules
 {
     public abstract class ScoreRuleSO : ScriptableObject
     {
         public abstract int GetScore();
-        public abstract void CalculateScore(ScoreContext scoreContext);
+        public abstract void CalculateScore(RuleContext context);
 
         public abstract HighlightData GetScoreArea();
 

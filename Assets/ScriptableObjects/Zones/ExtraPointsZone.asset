@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneTile: {fileID: 11400000, guid: 1191aa47f278d4b4b93db1c87b9f84e4, type: 2}
   zoneImage: {fileID: 8644282460927414975, guid: 1b3acafedd747a14da4eb650537feba5, type: 3}
+  zoneRuleSO: {fileID: 11400000, guid: db0bb018b228e1848a6a3e92979ea108, type: 2}

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Rules.ZoneRules;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace Board.Zone
@@ -8,5 +9,6 @@ namespace Board.Zone
     {
         public TileBase zoneTile;
         public Sprite zoneImage;
+        public ZoneRuleSO zoneRuleSO;
     }
 }

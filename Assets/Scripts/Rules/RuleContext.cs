@@ -1,14 +1,13 @@
 ﻿using Core;
-using Piece;
 
-namespace Rules.Score
+namespace Rules
 {
-    public class ScoreContext
+    public class RuleContext
     {
         public GameState State { get; }
         public Piece.Piece[,] TileArray { get; }
 
-        public ScoreContext(GameState gameState, Piece.Piece[,] tileArray)
+        public RuleContext(GameState gameState, Piece.Piece[,] tileArray)
         {
             State = gameState;
             TileArray = tileArray;

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Rules.Placement
+namespace Rules.PlacementRules
 {
     [CreateAssetMenu(menuName = "PlacementRule/PlacedAllTiles", fileName = "PlacedAllTilesRuleSO", order = 0)]
     class PlacedAllTilesRuleSO : PlacementRuleSO
@@ -13,9 +12,9 @@ namespace Rules.Placement
             return _satisfied;
         }
 
-        public override void Calculate(PlacementRuleContext ruleContext)
+        public override void Calculate(RuleContext context)
         {
-            var state = ruleContext.State;
+            var state = context.State;
             _satisfied = state.PieceInHand == null && state.AvailablePieces.Count == 0;
         }
 
