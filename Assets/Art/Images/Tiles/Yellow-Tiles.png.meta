@@ -799,6 +799,30 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      Yellow-2Line: 8134920638661874528
+      Yellow-2x3: -7703903079040647261
+      Yellow-3Line: -5426537243334295799
+      Yellow-4Line: 6773581330184058308
+      Yellow-5Line: 8402200061498317942
+      Yellow-BigBridge: -5721949793078401462
+      Yellow-BigT: 3823440638487423690
+      Yellow-BigTriangle: 8213208613261112029
+      Yellow-Bridge: -5026728819027522427
+      Yellow-Dot: -148225917284706854
+      Yellow-Fish: -7797924843254474363
+      Yellow-Hook: 8919094519761069253
+      Yellow-Horse: 4875009543940434205
+      Yellow-House: -9175688076800473508
+      Yellow-J: -7321672615202393616
+      Yellow-L: 7236440044622522249
+      Yellow-LeftThumps: 7718688240528091871
+      Yellow-N: -4243615713599342527
+      Yellow-Pants: 1285771843143497694
+      Yellow-Rifle: 171584334997220452
+      Yellow-RightThumps: -2778039217017409081
+      Yellow-Square: 4968444012711991822
+      Yellow-Stairs: -4230160775339371947
+      Yellow-T: 8347939953437170741
       Yellow-Tiles_0: -148225917284706854
       Yellow-Tiles_1: -68552185202441358
       Yellow-Tiles_10: -4230160775339371947
@@ -825,6 +849,8 @@ TextureImporter:
       Yellow-Tiles_7: -7797924843254474363
       Yellow-Tiles_8: 171584334997220452
       Yellow-Tiles_9: 8134920638661874528
+      Yellow-Triangle: -68552185202441358
+      Yellow-Z: 7229843584933326880
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

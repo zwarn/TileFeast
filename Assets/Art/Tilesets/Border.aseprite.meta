@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -83,6 +84,8 @@ ScriptedImporter:
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
+    generateIndividualEvents: 1
+    generateSpriteAtlas: 1
   asepriteImporterSettings:
     fileImportMode: 0
     importHiddenLayers: 0
@@ -96,6 +99,8 @@ ScriptedImporter:
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
+    generateIndividualEvents: 1
+    generateSpriteAtlas: 1
   importFileNodeState: 1
   platformSettingsDirtyTick: 638841209328578193
   textureAssetName: 
@@ -1299,9 +1304,15 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
+  tileSetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -1021105588
+    uuid:
+      value0: 2604700284
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: -1690267012
     name: Border
     layerFlags: 0
     layerType: 0
@@ -1317,7 +1328,89 @@ ScriptedImporter:
         height: 224
       spriteId: 871e50ab67e5ffe42a0586558d4e438f
     linkedCells: []
+    tileCells: []
+    tileSetIndex: 0
     parentIndex: -1
+  tileSets:
+  - id: 0
+    name: 47TileBlob
+    tileSize:
+      x: 16
+      y: 16
+    tiles:
+    - tileId: 1
+      size:
+        x: 16
+        y: 16
+      name: 47TileBlob_1
+      spriteId: f1201377bacec7c489a9df3113070560
+    - tileId: 2
+      size:
+        x: 16
+        y: 16
+      name: 47TileBlob_2
+      spriteId: ba8df4f19de3ae14984c302600158762
+    - tileId: 3
+      size:
+        x: 16
+        y: 16
+      name: 47TileBlob_3
+      spriteId: ef1797e2eff2b7d4c80e0efbc09b15d1
+    - tileId: 4
+      size:
+        x: 16
+        y: 16
+      name: 47TileBlob_4
+      spriteId: ebd038d92c8fad341afa034d20e6a14e
+    - tileId: 5
+      size:
+        x: 16
+        y: 16
+      name: 47TileBlob_5
+      spriteId: 8b41368b49100b743b0efd9f9c024497
+    - tileId: 6
+      size:
+        x: 16
+        y: 16
+      name: 47TileBlob_6
+      spriteId: 913c1e7715377564faef1faa9ae6ca5e
+    - tileId: 7
+      size:
+        x: 16
+        y: 16
+      name: 47TileBlob_7
+      spriteId: 4602c3c162e54294cb48ebb1971234e7
+    - tileId: 9
+      size:
+        x: 16
+        y: 16
+      name: 47TileBlob_9
+      spriteId: 7d4add11c3082c24499cd1a419c429f8
+    - tileId: 10
+      size:
+        x: 16
+        y: 16
+      name: 47TileBlob_10
+      spriteId: 15ca30cde04cd324989188c371e64074
+    - tileId: 11
+      size:
+        x: 16
+        y: 16
+      name: 47TileBlob_11
+      spriteId: e451219a2b92a4f49a5a315719eef188
+    - tileId: 12
+      size:
+        x: 16
+        y: 16
+      name: 47TileBlob_12
+      spriteId: 9c4a9566a59623740bafad46658efa69
+    - tileId: 13
+      size:
+        x: 16
+        y: 16
+      name: 47TileBlob_13
+      spriteId: cc4d9213d041b0b48b387c7629f589e3
+    guid: -989315356
   platformSettings:
   - name: Default
     overridden: 0
@@ -1383,3 +1476,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 288, y: 288}
+  previousTextureSize: {x: 512, y: 256}

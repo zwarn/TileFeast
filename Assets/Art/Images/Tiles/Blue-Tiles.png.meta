@@ -799,6 +799,30 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      Blue-2Line: -2761364776588947436
+      Blue-2x3: 6039756732765846330
+      Blue-3Line: 7863998712778649391
+      Blue-4Line: 2641272925677912609
+      Blue-5Line: -1511427974588483258
+      Blue-BigBridge: -4487061939965083679
+      Blue-BigT: 8689944002726943669
+      Blue-BigTriangle: -5164236718091365443
+      Blue-Bridge: -176670986263470003
+      Blue-Dot: -4347807266116952380
+      Blue-Fish: -5273857173647239234
+      Blue-Hook: -8597434220867217997
+      Blue-Horse: -892434013476716252
+      Blue-House: 1873347427764928316
+      Blue-J: 9031319657536176466
+      Blue-L: 7841597329808715623
+      Blue-LeftThumps: -7949053487155842369
+      Blue-N: -2785921626971085804
+      Blue-Pants: 8638398532840038234
+      Blue-Rifle: -7071697869870880282
+      Blue-RightThumps: -2592389485175923680
+      Blue-Square: 1891452506475739854
+      Blue-Stairs: -6409956235523039254
+      Blue-T: 7941757489564125958
       Blue-Tiles_0: -4347807266116952380
       Blue-Tiles_1: 7099361306648434601
       Blue-Tiles_10: -6409956235523039254
@@ -825,6 +849,8 @@ TextureImporter:
       Blue-Tiles_7: -5273857173647239234
       Blue-Tiles_8: -7071697869870880282
       Blue-Tiles_9: -2761364776588947436
+      Blue-Triangle: 7099361306648434601
+      Blue-Z: 1021870953887449992
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
