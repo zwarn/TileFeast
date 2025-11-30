@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Rules.ZoneRules
 {
-    public abstract class ZoneRuleSO : ScriptableObject
+    [Serializable]
+    public abstract class ZoneRule
     {
         public abstract int GetScore();
         public abstract void Calculate(ZoneContext context);

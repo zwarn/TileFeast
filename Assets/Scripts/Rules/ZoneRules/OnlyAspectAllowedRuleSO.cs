@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ModestTree;
 using Piece.Aspect;
@@ -6,10 +7,10 @@ using UnityEngine;
 
 namespace Rules.ZoneRules
 {
-    [CreateAssetMenu(fileName = "ZoneRule", menuName = "ZoneRule/OnlyAspectAllowedRuleSO", order = 0)]
-    public class OnlyAspectAllowedRuleSO : ZoneRuleSO
+    [Serializable]
+    public class OnlyAspectAllowedRule : ZoneRule
     {
-        public AspectSO allowedAspect;
+        public AspectSO AllowedAspect;
 
         private List<Vector2Int> _position;
         private List<Vector2Int> _offendingTiles;
@@ -26,7 +27,7 @@ namespace Rules.ZoneRules
                 .Where(pos =>
                 {
                     var placedTile = context.TileArray[pos.x, pos.y];
-                    return placedTile != null && !placedTile.aspects.Contains(new Aspect(allowedAspect));
+                    return placedTile != null && !placedTile.aspects.Contains(new Aspect(AllowedAspect));
                 }).ToList();
         }
 
@@ -47,7 +48,7 @@ namespace Rules.ZoneRules
 
         public override string GetText()
         {
-            return $"Can only be covered by {allowedAspect.name} Tiles. Can be left empty.";
+            return $"Can only be covered by {AllowedAspect.name} Tiles. Can be left empty.";
         }
     }
 }

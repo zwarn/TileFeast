@@ -1,19 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Rules.ZoneRules
 {
-    [CreateAssetMenu(fileName = "ZoneRule", menuName = "ZoneRule/LeaveEmptyForBonus", order = 0)]
-    public class LeaveEmptyForBonusRuleSO : ZoneRuleSO
+    [Serializable]
+    public class LeaveEmptyForBonusRule : ZoneRule
     {
+        public int Points = 1;
+        
         private bool _isFree;
         private List<Vector2Int> _position;
         private List<Vector2Int> _covered;
 
         public override int GetScore()
         {
-            return _isFree ? 1 : 0;
+            return _isFree ? Points : 0;
         }
 
         public override void Calculate(ZoneContext context)

@@ -9,6 +9,5 @@ namespace Board.Zone
     {
         public TileBase zoneTile;
         public Sprite zoneImage;
-        public ZoneRuleSO zoneRuleSO;
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Rules;
 using Rules.ZoneRules;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace Board.Zone
@@ -11,29 +12,30 @@ namespace Board.Zone
     {
         [SerializeReference] public ZoneSO zoneType;
         public List<Vector2Int> positions;
+        [SerializeReference] [OdinSerialize] public ZoneRule ZoneRule;
 
         public bool IsSatisfied()
         {
-            if (zoneType.zoneRuleSO == null) return true;
+            if (ZoneRule == null) return true;
 
-            return zoneType.zoneRuleSO.IsSatisfied();
+            return ZoneRule.IsSatisfied();
         }
 
         public int GetScore()
         {
-            if (zoneType.zoneRuleSO == null) return 0;
+            if (ZoneRule == null) return 0;
 
-            return zoneType.zoneRuleSO.GetScore();
+            return ZoneRule.GetScore();
         }
 
         public void Calculate(RuleContext context)
         {
-            if (zoneType.zoneRuleSO == null)
+            if (ZoneRule == null)
             {
                 return;
             }
 
-            zoneType.zoneRuleSO.Calculate(new ZoneContext(positions, context.State, context.TileArray));
+            ZoneRule.Calculate(new ZoneContext(positions, context.State, context.TileArray));
         }
     }
 }
