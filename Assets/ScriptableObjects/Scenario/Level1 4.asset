@@ -1,0 +1,228 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d6ea39cb86f48948228dc942f4fdb44, type: 3}
+  m_Name: Level1 4
+  m_EditorClassIdentifier: 
+  gridSize: {x: 10, y: 10}
+  availablePieces:
+  - {fileID: 11400000, guid: a7e57e7ca45d0ab498860e40dc5fd7c7, type: 2}
+  - {fileID: 11400000, guid: dd3347f58e5462343852e84b6ea8b478, type: 2}
+  - {fileID: 11400000, guid: 83a70b8f7c95ee14093f95fd91761020, type: 2}
+  - {fileID: 11400000, guid: a106876c8e8209d4d9dc635420574a4c, type: 2}
+  - {fileID: 11400000, guid: f8fd1705ec8328741a6d5909d0ebac23, type: 2}
+  - {fileID: 11400000, guid: 3fcdc76c9a9f07a4ea05360c2afb1062, type: 2}
+  - {fileID: 11400000, guid: 14eaa3b88b503bd43b35b2e918fb812c, type: 2}
+  - {fileID: 11400000, guid: ddd570f5fd9a5b6488ef2524ca1e3306, type: 2}
+  - {fileID: 11400000, guid: 6a8a0d7e883dcae4792aca9e457891bd, type: 2}
+  - {fileID: 11400000, guid: a0bb78f07d60ee64086646c471413ee3, type: 2}
+  - {fileID: 11400000, guid: 232317cc2efc05343911cf3896d024f8, type: 2}
+  - {fileID: 11400000, guid: 43accc91827a216438eb3a7ad8a279a0, type: 2}
+  lockedPieces:
+    data:
+    - type:
+        piece: {fileID: 11400000, guid: 55d6a3d2e653e4d43a0e97a79f0b2a26, type: 2}
+      instances:
+      - position: {x: 5, y: 0}
+        rotation: 0
+    - type:
+        piece: {fileID: 11400000, guid: 3e8d45ed764c9a740958a57268152b29, type: 2}
+      instances:
+      - position: {x: 7, y: 7}
+        rotation: 0
+    - type:
+        piece: {fileID: 11400000, guid: 0bb162a1668fe2b439ca339a47d89026, type: 2}
+      instances:
+      - position: {x: 1, y: 4}
+        rotation: 0
+    - type:
+        piece: {fileID: 11400000, guid: 1d0d2be8daec17f4198f9ce588276351, type: 2}
+      instances:
+      - position: {x: 0, y: 0}
+        rotation: 0
+      - position: {x: 0, y: 1}
+        rotation: 0
+      - position: {x: 1, y: 0}
+        rotation: 0
+      - position: {x: 1, y: 1}
+        rotation: 0
+      - position: {x: 0, y: 2}
+        rotation: 0
+      - position: {x: 0, y: 3}
+        rotation: 0
+      - position: {x: 2, y: 0}
+        rotation: 0
+      - position: {x: 3, y: 0}
+        rotation: 0
+      - position: {x: 4, y: 4}
+        rotation: 0
+      - position: {x: 4, y: 5}
+        rotation: 0
+      - position: {x: 5, y: 4}
+        rotation: 0
+      - position: {x: 5, y: 5}
+        rotation: 0
+      - position: {x: 0, y: 6}
+        rotation: 0
+      - position: {x: 0, y: 7}
+        rotation: 0
+      - position: {x: 0, y: 8}
+        rotation: 0
+      - position: {x: 0, y: 9}
+        rotation: 0
+      - position: {x: 1, y: 8}
+        rotation: 0
+      - position: {x: 1, y: 9}
+        rotation: 0
+      - position: {x: 2, y: 9}
+        rotation: 0
+      - position: {x: 3, y: 9}
+        rotation: 0
+      - position: {x: 6, y: 0}
+        rotation: 0
+      - position: {x: 7, y: 0}
+        rotation: 0
+      - position: {x: 8, y: 0}
+        rotation: 0
+      - position: {x: 9, y: 0}
+        rotation: 0
+      - position: {x: 8, y: 1}
+        rotation: 0
+      - position: {x: 9, y: 1}
+        rotation: 0
+      - position: {x: 9, y: 2}
+        rotation: 0
+      - position: {x: 9, y: 3}
+        rotation: 0
+      - position: {x: 9, y: 6}
+        rotation: 0
+      - position: {x: 9, y: 7}
+        rotation: 0
+      - position: {x: 9, y: 8}
+        rotation: 0
+      - position: {x: 9, y: 9}
+        rotation: 0
+      - position: {x: 8, y: 8}
+        rotation: 0
+      - position: {x: 8, y: 9}
+        rotation: 0
+      - position: {x: 7, y: 9}
+        rotation: 0
+      - position: {x: 6, y: 9}
+        rotation: 0
+  blockedPositions:
+  - {x: 0, y: 0}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  - {x: 1, y: 1}
+  - {x: 0, y: 2}
+  - {x: 0, y: 3}
+  - {x: 2, y: 0}
+  - {x: 3, y: 0}
+  - {x: 4, y: 4}
+  - {x: 4, y: 5}
+  - {x: 5, y: 4}
+  - {x: 5, y: 5}
+  - {x: 0, y: 6}
+  - {x: 0, y: 7}
+  - {x: 0, y: 8}
+  - {x: 0, y: 9}
+  - {x: 1, y: 8}
+  - {x: 1, y: 9}
+  - {x: 2, y: 9}
+  - {x: 3, y: 9}
+  - {x: 6, y: 0}
+  - {x: 7, y: 0}
+  - {x: 8, y: 0}
+  - {x: 9, y: 0}
+  - {x: 8, y: 1}
+  - {x: 9, y: 1}
+  - {x: 9, y: 2}
+  - {x: 9, y: 3}
+  - {x: 9, y: 6}
+  - {x: 9, y: 7}
+  - {x: 9, y: 8}
+  - {x: 9, y: 9}
+  - {x: 8, y: 8}
+  - {x: 8, y: 9}
+  - {x: 7, y: 9}
+  - {x: 6, y: 9}
+  scoreRules:
+  - {fileID: 11400000, guid: 7b9dee74e5f95074194cdb504a6d5c1e, type: 2}
+  - {fileID: 11400000, guid: 746233ee92d5bb34aa56832c945e53f9, type: 2}
+  - {fileID: 11400000, guid: 8351ae4a741ce434c8bcdc571c737757, type: 2}
+  placementRules:
+  - {fileID: 11400000, guid: 3f780f7f0f6a8364daaf3b0b4b8c1a76, type: 2}
+  zones:
+  - zoneType: {fileID: 11400000, guid: 068dd79abbfe4734c9e272c51207353b, type: 2}
+    positions:
+    - {x: 4, y: 3}
+    - {x: 5, y: 3}
+    ZoneRule:
+      rid: 7128803614124933494
+  - zoneType: {fileID: 11400000, guid: 068dd79abbfe4734c9e272c51207353b, type: 2}
+    positions:
+    - {x: 4, y: 7}
+    - {x: 5, y: 7}
+    ZoneRule:
+      rid: 7128803614124933508
+  - zoneType: {fileID: 11400000, guid: 49cda274e4138f945a9c4f3079b1005d, type: 2}
+    positions:
+    - {x: 6, y: 4}
+    - {x: 6, y: 5}
+    ZoneRule:
+      rid: 7128803614124933495
+  - zoneType: {fileID: 11400000, guid: 49cda274e4138f945a9c4f3079b1005d, type: 2}
+    positions:
+    - {x: 4, y: 2}
+    - {x: 5, y: 2}
+    ZoneRule:
+      rid: 7128803614124933507
+  - zoneType: {fileID: 11400000, guid: db8122c8371d85844809d96def040564, type: 2}
+    positions:
+    - {x: 4, y: 6}
+    - {x: 5, y: 6}
+    ZoneRule:
+      rid: 7128803614124933496
+  - zoneType: {fileID: 11400000, guid: db8122c8371d85844809d96def040564, type: 2}
+    positions:
+    - {x: 7, y: 4}
+    - {x: 7, y: 5}
+    ZoneRule:
+      rid: 7128803614124933506
+  nextLevel: {fileID: 11400000, guid: e1fffa51900c914448808b83c5f14f71, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7128803614124933494
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+      data:
+        AllowedAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+    - rid: 7128803614124933495
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+      data:
+        AllowedAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+    - rid: 7128803614124933496
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+      data:
+        AllowedAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
+    - rid: 7128803614124933506
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+      data:
+        AllowedAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
+    - rid: 7128803614124933507
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+      data:
+        AllowedAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+    - rid: 7128803614124933508
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+      data:
+        AllowedAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}

@@ -71,7 +71,7 @@ MonoBehaviour:
     - {x: 7, y: 7}
     ZoneRule:
       rid: 252681647385739849
-  nextLevel: {fileID: 11400000, guid: e1fffa51900c914448808b83c5f14f71, type: 2}
+  nextLevel: {fileID: 11400000, guid: b9728e7cf1611024b9361aa1b4138818, type: 2}
   references:
     version: 2
     RefIds:
