@@ -15,6 +15,7 @@ namespace Board
         private readonly Dictionary<Vector2Int, PlacedPiece> _piecesByPosition = new();
 
         private List<PlacedPiece> _pieces = new();
+        private List<Vector2Int> _blockPositions = new();
 
         public List<PlacedPiece> Pieces => _pieces.ToList();
 
@@ -37,6 +38,7 @@ namespace Board
         public void UpdateState(GameState newState)
         {
             _pieces = newState.PlacedPieces;
+            _blockPositions = newState.BlockedPositions;
             ResetBoardSize(newState.GridSize);
             RebuildPiecesByPosition();
             BoardResetEvent(Pieces);
@@ -94,7 +96,12 @@ namespace Board
 
         private bool IsValid(Vector2Int position)
         {
-            return InBounds(position) && IsEmpty(position);
+            return InBounds(position) && !IsBlocked(position) && IsEmpty(position);
+        }
+
+        private bool IsBlocked(Vector2Int position)
+        {
+            return _blockPositions.Contains(position);
         }
 
         private bool InBounds(Vector2Int position)
