@@ -8,11 +8,13 @@ namespace Piece.Aspect
     {
         [SerializeField] private AspectView prefab;
         [SerializeField] private Transform parent;
+        [SerializeField] private AspectSO lockedAspect;
 
         private readonly List<AspectView> _aspectViews = new();
 
-        public void SetData(List<Aspect> aspects, Piece piece)
+        public void SetData(Piece piece)
         {
+            var aspects = AddSpecialAspects(piece);
             var viewsNeeded = aspects.Count - _aspectViews.Count;
             for (var i = 0; i < viewsNeeded; i++)
             {
@@ -32,6 +34,18 @@ namespace Piece.Aspect
                 _aspectViews[i].gameObject.SetActive(true);
                 SetPosition(i, _aspectViews[i], piece);
             }
+        }
+
+        private List<Aspect> AddSpecialAspects(Piece piece)
+        {
+            List<Aspect> aspects = new List<Aspect>();
+            if (piece.locked)
+            {
+                aspects.Add(new Aspect(lockedAspect));
+            }
+
+            aspects.AddRange(piece.aspects);
+            return aspects;
         }
 
         private void SetPosition(int index, AspectView aspectView, Piece piece)

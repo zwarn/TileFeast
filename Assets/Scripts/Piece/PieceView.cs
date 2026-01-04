@@ -25,7 +25,7 @@ namespace Piece
                 spriteRenderer.sprite = piece.Piece.sprite;
                 transform.rotation = Quaternion.Euler(0, 0, 90 * _piece.Rotation);
 
-                aspectListView.SetData(piece.Piece.aspects, piece.Piece);
+                aspectListView.SetData(piece.Piece);
             }
         }
     }
