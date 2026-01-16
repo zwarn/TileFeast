@@ -12,7 +12,7 @@ namespace Piece
 
         private void Update()
         {
-            transform.rotation = Quaternion.Euler(0, 0, 90 * _piece.Rotation);
+            transform.rotation = Quaternion.Euler(0, 0, 90 * _piece?.Rotation ?? 0);
         }
 
         public void SetData(PieceWithRotation piece)

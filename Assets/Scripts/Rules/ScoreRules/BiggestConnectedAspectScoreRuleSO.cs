@@ -24,7 +24,7 @@ namespace Rules.ScoreRules
         {
             var groups = RulesHelper.GetGroups(context.TileArray,
                 piece => piece != null && piece.aspects.Contains(Aspect));
-            var biggestGroup = groups.OrderByDescending(group => group.Count).FirstOrDefault();
+            var biggestGroup = groups.OrderByDescending(group => group.Count).FirstOrDefault() ?? new List<Vector2Int>();
             var count = biggestGroup?.Count ?? 0;
 
             _scoringTiles = biggestGroup;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core;
+using Hand.Tool;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,7 +8,8 @@ using Zenject;
 
 namespace Piece.Supply
 {
-    public class PieceSelectionPanel : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+    public class PieceSelectionPanel : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler,
+        IDragHandler, IDropHandler
     {
         [SerializeField] private PieceSelectionEntry prefab;
         [SerializeField] private Transform entryParent;
@@ -16,6 +18,7 @@ namespace Piece.Supply
         [Inject] private DiContainer _container;
         [Inject] private PieceSupplyController _pieceSupply;
         [Inject] private GameController _gameController;
+        [Inject] private ToolController _toolController;
 
         public GraphicRaycaster raycaster;
 
@@ -54,7 +57,7 @@ namespace Piece.Supply
             entry.SetData(piece);
             _entries.Add(piece, entry);
         }
-        
+
         public PieceSelectionEntry GetPieceSelectionEntryPointedAt()
         {
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
@@ -92,12 +95,24 @@ namespace Piece.Supply
 
         public void OnDrop(PointerEventData eventData)
         {
-            _gameController.ReturnPieceToSupply();
+            if (!_toolController.IsHoldingGrabTool())
+            {
+                return;
+            }
+
+            var grabTool = _toolController.grabTool;
+            grabTool.ReturnPieceToSupply();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _gameController.ReturnPieceToSupply();
+            if (!_toolController.IsHoldingGrabTool())
+            {
+                return;
+            }
+
+            var grabTool = _toolController.grabTool;
+            grabTool.ReturnPieceToSupply();
         }
     }
 }
