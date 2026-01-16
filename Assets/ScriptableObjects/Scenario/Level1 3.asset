@@ -50,4 +50,44 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 43a0dbb8519da1748ae293e3f310b612, type: 2}
   - {fileID: 11400000, guid: 944888e37d78c494382c3c1044cc977c, type: 2}
   - {fileID: 11400000, guid: 3afa0bd4187aba940bb3712ab2d2c77f, type: 2}
+  zones:
+  - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
+    positions:
+    - {x: 0, y: 0}
+    ZoneRule:
+      rid: 252681647385739846
+  - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
+    positions:
+    - {x: 0, y: 7}
+    ZoneRule:
+      rid: 252681647385739847
+  - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
+    positions:
+    - {x: 7, y: 0}
+    ZoneRule:
+      rid: 252681647385739848
+  - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
+    positions:
+    - {x: 7, y: 7}
+    ZoneRule:
+      rid: 252681647385739849
   nextLevel: {fileID: 11400000, guid: e1fffa51900c914448808b83c5f14f71, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 252681647385739846
+      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+      data:
+        Points: 1
+    - rid: 252681647385739847
+      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+      data:
+        Points: 1
+    - rid: 252681647385739848
+      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+      data:
+        Points: 1
+    - rid: 252681647385739849
+      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+      data:
+        Points: 1
