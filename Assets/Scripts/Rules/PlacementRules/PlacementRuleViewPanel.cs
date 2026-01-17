@@ -13,21 +13,21 @@ namespace Rules.PlacementRules
 
         private readonly Dictionary<PlacementRuleSO, PlacementRuleViewEntry> _entries = new();
         [Inject] private DiContainer _container;
-        [Inject] private RulesController rulesController;
+        [Inject] private RulesController _rulesController;
 
         private void Update()
         {
-            checkmark.SetState(rulesController.SatisfiesRules());
+            checkmark.SetState(_rulesController.SatisfiesRules());
         }
 
         private void OnEnable()
         {
-            rulesController.OnPlacementRuleReset += OnPlacementRuleReset;
+            _rulesController.OnPlacementRuleReset += OnPlacementRuleReset;
         }
 
         private void OnDisable()
         {
-            rulesController.OnPlacementRuleReset -= OnPlacementRuleReset;
+            _rulesController.OnPlacementRuleReset -= OnPlacementRuleReset;
         }
 
         private void OnPlacementRuleReset(List<PlacementRuleSO> placementRules)

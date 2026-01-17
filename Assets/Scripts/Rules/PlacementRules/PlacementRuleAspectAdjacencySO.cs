@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Rules.PlacementRules
 {
     [CreateAssetMenu(menuName = "PlacementRule/ColorAdjacency", fileName = "ColorAdjacencyPlacementRuleSO", order = 0)]
-    class PlacementRuleColorAdjacency : PlacementRuleSO
+    public class PlacementRuleColorAdjacency : PlacementRuleSO
     {
         public AspectSO applyTo;
         public AspectSO forbidAdjacency;

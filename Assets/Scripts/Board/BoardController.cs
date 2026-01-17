@@ -10,8 +10,8 @@ namespace Board
 {
     public class BoardController : MonoBehaviour
     {
-        private int width;
-        private int height;
+        private int _width;
+        private int _height;
         private readonly Dictionary<Vector2Int, PlacedPiece> _piecesByPosition = new();
 
         private List<PlacedPiece> _pieces = new();
@@ -46,8 +46,8 @@ namespace Board
 
         private void ResetBoardSize(Vector2Int gridSize)
         {
-            width = gridSize.x;
-            height = gridSize.y;
+            _width = gridSize.x;
+            _height = gridSize.y;
         }
 
         private void RebuildPiecesByPosition()
@@ -106,8 +106,8 @@ namespace Board
 
         private bool InBounds(Vector2Int position)
         {
-            return position.x >= 0 && position.x < width &&
-                   position.y >= 0 && position.y < height;
+            return position.x >= 0 && position.x < _width &&
+                   position.y >= 0 && position.y < _height;
         }
 
         private bool IsEmpty(Vector2Int position)

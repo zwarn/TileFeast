@@ -33,7 +33,7 @@ namespace Rules
 
         private void OnDisable()
         {
-            _gameController.OnChangeGameState += UpdateState;
+            _gameController.OnChangeGameState -= UpdateState;
             _gameController.OnBoardChanged -= CalculateRules;
         }
 

@@ -3,7 +3,7 @@
 namespace Rules.PlacementRules
 {
     [CreateAssetMenu(menuName = "PlacementRule/PlacedAllTiles", fileName = "PlacedAllTilesRuleSO", order = 0)]
-    class PlacedAllTilesRuleSO : PlacementRuleSO
+    public class PlacedAllTilesRuleSO : PlacementRuleSO
     {
         private bool _satisfied;
 
