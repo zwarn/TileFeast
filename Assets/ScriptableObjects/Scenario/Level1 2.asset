@@ -27,18 +27,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 222c256883cee384ba3716fc4ea8c33a, type: 2}
   - {fileID: 11400000, guid: 733874eaca6aea046abf35951f4ef541, type: 2}
   lockedPieces:
-    data:
-    - type:
-        piece: {fileID: 11400000, guid: 1d0d2be8daec17f4198f9ce588276351, type: 2}
-      instances:
-      - position: {x: 1, y: 1}
-        rotation: 0
-      - position: {x: 1, y: 6}
-        rotation: 0
-      - position: {x: 6, y: 1}
-        rotation: 0
-      - position: {x: 6, y: 6}
-        rotation: 0
+    data: []
   blockedPositions:
   - {x: 1, y: 1}
   - {x: 1, y: 6}

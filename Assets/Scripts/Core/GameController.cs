@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Board;
 using Hand.Tool;
-using Piece;
 using Piece.Supply;
 using Scenario;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using Zenject;
 
@@ -32,7 +31,13 @@ namespace Core
         {
             var newState = new GameState(scenario);
 
-            //TODO: verify the new state is valid
+            var validationResult = GameStateValidator.Validate(newState);
+            if (!validationResult.IsValid)
+            {
+                Debug.LogError($"Invalid scenario '{scenario.name}':\n" +
+                               string.Join("\n", (IEnumerable<string>)validationResult.Errors));
+                return;
+            }
 
             CurrentState = newState;
             ChangeGameStateEvent(CurrentState);
