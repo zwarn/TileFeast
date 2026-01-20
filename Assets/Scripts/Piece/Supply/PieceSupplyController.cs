@@ -39,8 +39,13 @@ namespace Piece.Supply
 
         public void AddPiece(PieceWithRotation piece)
         {
-            pieces.Add(piece.Piece);
-            AddPieceEvent(piece.Piece);
+            AddPiece(piece.Piece);
+        }
+
+        public void AddPiece(Piece piece)
+        {
+            pieces.Add(piece);
+            AddPieceEvent(piece);
         }
 
         public void RemovePieceEvent(Piece piece)

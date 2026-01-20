@@ -1,4 +1,4 @@
-﻿using Board;
+using Board;
 using Core;
 using Piece;
 using Piece.Supply;
@@ -10,11 +10,15 @@ namespace Hand.Tool
     public class GrabTool : MonoBehaviour, ITool
     {
         [SerializeField] private PieceView pieceView;
+        [SerializeField] private Grid grid;
+
         [Inject] private GameController _gameController;
         [Inject] private BoardController _boardController;
         [Inject] private PieceSupplyController _pieceSupply;
 
         private GameState _gameState;
+        private bool _isSelected;
+        private bool _isDragging;
 
         private void OnEnable()
         {
@@ -26,6 +30,72 @@ namespace Hand.Tool
             _gameController.OnChangeGameState -= UpdateState;
         }
 
+        private void Update()
+        {
+            if (!_isSelected) return;
+
+            HandleClickInput();
+            HandleRotationInput();
+        }
+
+        private void HandleClickInput()
+        {
+            // Start drag - grab piece from board
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (IsEmpty())
+                {
+                    var position = GetBoardPosition();
+                    GrabFromBoard(position);
+                    _isDragging = !IsEmpty(); // Started dragging if we grabbed something
+                }
+            }
+
+            // End drag or click - place piece
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (_isDragging)
+                {
+                    // End of drag - place piece
+                    if (!IsEmpty())
+                    {
+                        var position = GetBoardPosition();
+                        PutOnBoard(position);
+                    }
+                    _isDragging = false;
+                }
+                else if (!IsEmpty())
+                {
+                    // Regular click while holding - place piece
+                    var position = GetBoardPosition();
+                    PutOnBoard(position);
+                }
+            }
+
+            // Right click - return piece to supply
+            if (Input.GetMouseButtonUp(1))
+            {
+                if (!IsEmpty())
+                {
+                    ReturnPieceToSupply();
+                    _isDragging = false;
+                }
+            }
+        }
+
+        private void HandleRotationInput()
+        {
+            if (IsEmpty()) return;
+
+            var mouseScroll = Input.mouseScrollDelta.y;
+
+            if (Input.GetKeyUp(KeyCode.Q) || mouseScroll > 0.5f)
+                GetPiece().Rotate(1);
+
+            if (Input.GetKeyUp(KeyCode.E) || mouseScroll < -0.5f)
+                GetPiece().Rotate(-1);
+        }
+
         public void UpdateState(GameState newState)
         {
             _gameState = newState;
@@ -34,38 +104,26 @@ namespace Hand.Tool
 
         public void OnSelect()
         {
+            _isSelected = true;
             pieceView.SetData(GetPiece());
+            gameObject.SetActive(true);
         }
 
         public void OnDeselect()
         {
-            pieceView.SetData(null);
-        }
-
-        public void OnLeftClick(Vector2Int position)
-        {
-            if (GetPiece() == null)
-                GrabFromBoard(position);
-            else
-                PutOnBoard(position);
-        }
-
-        public void OnRightClick(Vector2Int position)
-        {
-            if (IsEmpty()) return;
-
-            var piece = GetPiece();
-            _pieceSupply.AddPiece(piece);
-            FreePiece();
-            _gameController.BoardChangedEvent();
-        }
-
-        public void OnRotate(int direction)
-        {
+            _isSelected = false;
+            _isDragging = false;
             if (!IsEmpty())
             {
-                GetPiece().Rotate(direction);
+                ReturnPieceToSupply();
             }
+            gameObject.SetActive(false);
+        }
+
+        private Vector2Int GetBoardPosition()
+        {
+            var worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            return (Vector2Int)grid.WorldToCell(worldPos);
         }
 
         private void PutOnBoard(Vector2Int position)
@@ -112,7 +170,7 @@ namespace Hand.Tool
 
         private PieceWithRotation GetPiece()
         {
-            return _gameState.PieceInHand;
+            return _gameState?.PieceInHand;
         }
 
         private void FreePiece()

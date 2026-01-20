@@ -1,51 +1,50 @@
-﻿using UnityEngine;
+using System;
+using UnityEngine;
 
 namespace Hand.Tool
 {
     public class ToolController : MonoBehaviour
     {
         [SerializeField] public GrabTool grabTool;
+        [SerializeField] public DrawAvailableTiles drawAvailableTiles;
 
-        private ITool currentTool;
+        private ITool _currentTool;
+
+        public event Action<ITool> OnToolChanged;
+
+        public ITool CurrentTool => _currentTool;
 
         private void Start()
         {
             ChangeTool(grabTool);
         }
-        
+
         private void Update()
         {
             var targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPosition.z = 0;
             transform.localPosition = targetPosition;
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                ChangeTool(grabTool);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                ChangeTool(drawAvailableTiles);
+            }
         }
 
         public void ChangeTool(ITool newTool)
         {
-            currentTool?.OnDeselect();
-            currentTool = newTool;
-            currentTool?.OnSelect();
-        }
+            if (ReferenceEquals(_currentTool, newTool)) return;
 
-        public void LeftClicked(Vector2Int position)
-        {
-            if (currentTool == null) return;
+            _currentTool?.OnDeselect();
+            _currentTool = newTool;
+            _currentTool?.OnSelect();
 
-            currentTool.OnLeftClick(position);
-        }
-
-        public void RightClicked(Vector2Int position)
-        {
-            if (currentTool == null) return;
-
-            currentTool.OnRightClick(position);
-        }
-
-        public void Rotate(int direction)
-        {
-            if (currentTool == null) return;
-
-            currentTool.OnRotate(direction);
+            OnToolChanged?.Invoke(_currentTool);
         }
 
         public GrabTool SelectGrabTool()
@@ -60,7 +59,7 @@ namespace Hand.Tool
 
         public bool IsHoldingGrabTool()
         {
-            return ReferenceEquals(currentTool, grabTool);
+            return ReferenceEquals(_currentTool, grabTool);
         }
     }
 }

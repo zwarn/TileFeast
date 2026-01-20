@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Core;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using Zenject;
 
 namespace Board
 {
-    public class BoardView : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+    public class BoardView : MonoBehaviour
     {
         [SerializeField] private Tilemap boardTilemap;
         [SerializeField] private Tilemap zoneTilemap;
@@ -17,18 +16,26 @@ namespace Board
 
         [Inject] private GameController _gameController;
 
+        private GameState _gameState;
+
         private void OnEnable()
         {
             _gameController.OnChangeGameState += UpdateState;
+            _gameController.OnBoardChanged += RefreshBoardTilemap;
+            _gameController.OnTileChanged += UpdateSingleTile;
         }
 
         private void OnDisable()
         {
             _gameController.OnChangeGameState -= UpdateState;
+            _gameController.OnBoardChanged -= RefreshBoardTilemap;
+            _gameController.OnTileChanged -= UpdateSingleTile;
         }
 
         private void UpdateState(GameState gameState)
         {
+            _gameState = gameState;
+
             var width = gameState.GridSize.x;
             var height = gameState.GridSize.y;
 
@@ -37,26 +44,33 @@ namespace Board
             gridCollider.size = new Vector2(width, height);
             gridCollider.offset = new Vector2(width, height);
 
-            UpdateBoardTilemap(gameState, width, height);
-            UpdateZoneTilemap(gameState);
+            UpdateBoardTilemap(width, height);
+            UpdateZoneTilemap();
         }
 
-        private void UpdateZoneTilemap(GameState gameState)
+        private void RefreshBoardTilemap()
+        {
+            if (_gameState == null) return;
+            UpdateBoardTilemap(_gameState.GridSize.x, _gameState.GridSize.y);
+        }
+
+        private void UpdateSingleTile(Vector2Int position)
+        {
+            if (_gameState == null) return;
+            boardTilemap.SetTile((Vector3Int)position, GetTileAt(position));
+        }
+
+        private void UpdateZoneTilemap()
         {
             zoneTilemap.ClearAllTiles();
-            
-            gameState.Zones.ForEach(zone =>
+
+            _gameState.Zones.ForEach(zone =>
             {
-                zone.positions.ForEach(pos =>
-                {
-                    zoneTilemap.SetTile((Vector3Int)pos, zone.zoneType.zoneTile);
-                });
+                zone.positions.ForEach(pos => { zoneTilemap.SetTile((Vector3Int)pos, zone.zoneType.zoneTile); });
             });
-            
-            
         }
 
-        private void UpdateBoardTilemap(GameState gameState, int width, int height)
+        private void UpdateBoardTilemap(int width, int height)
         {
             boardTilemap.ClearAllTiles();
 
@@ -66,7 +80,7 @@ namespace Board
                 for (int y = 0; y < height; y++)
                 {
                     Vector2Int current = new Vector2Int(x, y);
-                    tileChanges.Add(new TileChangeData((Vector3Int)current, IncludeTile(gameState, current), Color.white,
+                    tileChanges.Add(new TileChangeData((Vector3Int)current, GetTileAt(current), Color.white,
                         Matrix4x4.identity));
                 }
             }
@@ -74,43 +88,9 @@ namespace Board
             boardTilemap.SetTiles(tileChanges.ToArray(), true);
         }
 
-        private TileBase IncludeTile(GameState gameState, Vector2Int current)
+        private TileBase GetTileAt(Vector2Int position)
         {
-            return !gameState.BlockedPositions.Contains(current) ? boardTile : null;
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (eventData.button != 0) return;
-
-            var worldClickPoint = Camera.main.ScreenToWorldPoint(eventData.position);
-            var position = (Vector2Int) grid.WorldToCell(worldClickPoint);
-
-            _gameController.BoardClicked(position);
-        }
-
-        public void OnDrop(PointerEventData eventData)
-        {
-            var worldClickPoint = Camera.main.ScreenToWorldPoint(eventData.position);
-            var position = (Vector2Int) grid.WorldToCell(worldClickPoint);
-
-            _gameController.BoardClicked(position);
-        }
-
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-            var worldClickPoint = Camera.main.ScreenToWorldPoint(eventData.position);
-            var position = (Vector2Int) grid.WorldToCell(worldClickPoint);
-
-            _gameController.BoardClicked(position);
-        }
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
-        }
-
-        public void OnDrag(PointerEventData eventData)
-        {
+            return !_gameState.BlockedPositions.Contains(position) ? boardTile : null;
         }
     }
 }
