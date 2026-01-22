@@ -11,6 +11,9 @@ namespace Hand.Tool
         [SerializeField] private PieceView pieceView;
         [SerializeField] private Grid grid;
         [SerializeField] private float dragThreshold = 0.5f; // Grid cells moved before considered a drag
+        [SerializeField] protected Sprite icon;
+
+        public Sprite Icon => icon;
 
         [Inject] private GameController _gameController;
 

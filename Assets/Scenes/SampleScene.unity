@@ -637,6 +637,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Hand.Tool.GrabTool
   pieceView: {fileID: 210057641}
   grid: {fileID: 737069547}
+  dragThreshold: 0.5
+  icon: {fileID: 1161201145128540330, guid: de56fb665e169d340b4f857a9e503a5d, type: 3}
 --- !u!1 &398579453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,6 +1392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 737069547}
+  icon: {fileID: 206457744, guid: de56fb665e169d340b4f857a9e503a5d, type: 3}
 --- !u!1 &737069545
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,9 @@ namespace Hand.Tool
     public abstract class ModeTool : MonoBehaviour, ITool
     {
         [SerializeField] protected GameObject modePanel;
+        [SerializeField] protected Sprite icon;
+
+        public Sprite Icon => icon;
 
         public virtual void OnSelect()
         {

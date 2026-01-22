@@ -9,10 +9,13 @@ namespace Hand.Tool
     public abstract class DrawTool : MonoBehaviour, ITool
     {
         [SerializeField] protected Grid grid;
+        [SerializeField] protected Sprite icon;
+        public Sprite Icon => icon;
 
         private bool _isSelected;
         private bool _isPainting;
         private bool _isErasing;
+
 
         private void Update()
         {
