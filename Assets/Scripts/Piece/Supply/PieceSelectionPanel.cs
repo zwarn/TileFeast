@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Core;
-using Hand.Tool;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,7 +17,6 @@ namespace Piece.Supply
         [Inject] private DiContainer _container;
         [Inject] private PieceSupplyController _pieceSupply;
         [Inject] private GameController _gameController;
-        [Inject] private ToolController _toolController;
 
         public GraphicRaycaster raycaster;
 
@@ -95,24 +93,12 @@ namespace Piece.Supply
 
         public void OnDrop(PointerEventData eventData)
         {
-            if (!_toolController.IsHoldingGrabTool())
-            {
-                return;
-            }
-
-            var grabTool = _toolController.grabTool;
-            grabTool.ReturnPieceToSupply();
+            _gameController.RequestReturnPieceInHand();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (!_toolController.IsHoldingGrabTool())
-            {
-                return;
-            }
-
-            var grabTool = _toolController.grabTool;
-            grabTool.ReturnPieceToSupply();
+            _gameController.RequestReturnPieceInHand();
         }
     }
 }
