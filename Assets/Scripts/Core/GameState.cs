@@ -35,7 +35,7 @@ namespace Core
 
         public GameState(ScenarioSO scenarioSO) :
             this(scenarioSO.gridSize,
-                scenarioSO.blockedPositions,
+                scenarioSO.blockedPositions.ToList(),
                 scenarioSO.LockedPieces(),
                 scenarioSO.AvailablePieces(),
                 null,
