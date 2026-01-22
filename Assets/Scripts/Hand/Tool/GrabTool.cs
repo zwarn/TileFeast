@@ -10,11 +10,15 @@ namespace Hand.Tool
     {
         [SerializeField] private PieceView pieceView;
         [SerializeField] private Grid grid;
+        [SerializeField] private float dragThreshold = 0.5f; // Grid cells moved before considered a drag
 
         [Inject] private GameController _gameController;
 
         private bool _isSelected;
         private bool _isDragging;
+        private bool _mouseDown;
+        private bool _grabbedThisClick;
+        private Vector2Int _mouseDownPosition;
 
         private void OnEnable()
         {
@@ -36,14 +40,29 @@ namespace Hand.Tool
 
         private void HandleClickInput()
         {
-            // Start drag - grab piece from board
+            // Start potential drag - grab piece from board
             if (Input.GetMouseButtonDown(0))
             {
+                _mouseDownPosition = GetBoardPosition();
+                _mouseDown = true;
+                _isDragging = false;
+                _grabbedThisClick = false;
+
                 if (_gameController.IsHandEmpty())
                 {
-                    var position = GetBoardPosition();
-                    _gameController.GrabPieceFromBoardInHand(position);
-                    _isDragging = !_gameController.IsHandEmpty();
+                    _gameController.GrabPieceFromBoardInHand(_mouseDownPosition);
+                    _grabbedThisClick = !_gameController.IsHandEmpty();
+                }
+            }
+
+            // Check if we've moved enough to consider it a drag
+            if (_mouseDown && !_isDragging && !_gameController.IsHandEmpty())
+            {
+                var currentPosition = GetBoardPosition();
+                var distance = Vector2Int.Distance(_mouseDownPosition, currentPosition);
+                if (distance >= dragThreshold)
+                {
+                    _isDragging = true;
                 }
             }
 
@@ -52,19 +71,27 @@ namespace Hand.Tool
             {
                 if (_isDragging)
                 {
+                    // Was a drag - place piece at current position
                     if (!_gameController.IsHandEmpty())
                     {
                         var position = GetBoardPosition();
                         _gameController.PutPieceInHandOnBoard(position);
                     }
-
-                    _isDragging = false;
                 }
-                else if (!_gameController.IsHandEmpty())
+                else if (!_grabbedThisClick)
                 {
-                    var position = GetBoardPosition();
-                    _gameController.PutPieceInHandOnBoard(position);
+                    // Click to place (hand already had a piece before this click)
+                    if (!_gameController.IsHandEmpty())
+                    {
+                        var position = GetBoardPosition();
+                        _gameController.PutPieceInHandOnBoard(position);
+                    }
                 }
+                // else: was a click to pick up without dragging - keep in hand
+
+                _isDragging = false;
+                _mouseDown = false;
+                _grabbedThisClick = false;
             }
 
             // Right click - return piece to supply
@@ -74,6 +101,8 @@ namespace Hand.Tool
                 {
                     _gameController.ReturnPieceInHandToSupply();
                     _isDragging = false;
+                    _mouseDown = false;
+                    _grabbedThisClick = false;
                 }
             }
         }
@@ -103,6 +132,8 @@ namespace Hand.Tool
         {
             _isSelected = false;
             _isDragging = false;
+            _mouseDown = false;
+            _grabbedThisClick = false;
             if (!_gameController.IsHandEmpty())
             {
                 _gameController.ReturnPieceInHandToSupply();
