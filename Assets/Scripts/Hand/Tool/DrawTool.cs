@@ -6,11 +6,9 @@ namespace Hand.Tool
     /// Base class for tools that paint/draw on the grid.
     /// Left mouse paints, right mouse erases. Both support dragging.
     /// </summary>
-    public abstract class DrawTool : MonoBehaviour, ITool
+    public abstract class DrawTool : ToolBase
     {
         [SerializeField] protected Grid grid;
-        [SerializeField] protected Sprite icon;
-        public Sprite Icon => icon;
 
         private bool _isSelected;
         private bool _isPainting;
@@ -64,13 +62,13 @@ namespace Hand.Tool
             }
         }
 
-        public virtual void OnSelect()
+        public override void OnSelect()
         {
             _isSelected = true;
             gameObject.SetActive(true);
         }
 
-        public virtual void OnDeselect()
+        public override void OnDeselect()
         {
             _isSelected = false;
             _isPainting = false;

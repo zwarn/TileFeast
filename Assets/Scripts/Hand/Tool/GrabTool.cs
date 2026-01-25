@@ -6,14 +6,11 @@ using Zenject;
 
 namespace Hand.Tool
 {
-    public class GrabTool : MonoBehaviour, ITool
+    public class GrabTool : ToolBase
     {
         [SerializeField] private PieceView pieceView;
         [SerializeField] private Grid grid;
         [SerializeField] private float dragThreshold = 0.5f; // Grid cells moved before considered a drag
-        [SerializeField] protected Sprite icon;
-
-        public Sprite Icon => icon;
 
         [Inject] private GameController _gameController;
 
@@ -124,14 +121,14 @@ namespace Hand.Tool
                 piece.Rotate(-1);
         }
 
-        public void OnSelect()
+        public override void OnSelect()
         {
             _isSelected = true;
             pieceView.SetData(_gameController.GetPieceInHand());
             gameObject.SetActive(true);
         }
 
-        public void OnDeselect()
+        public override void OnDeselect()
         {
             _isSelected = false;
             _isDragging = false;

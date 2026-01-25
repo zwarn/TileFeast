@@ -7,20 +7,17 @@ namespace Hand.Tool
     /// Shows the mode panel on select, hides on deselect.
     /// Override Update() if the mode needs custom input handling.
     /// </summary>
-    public abstract class ModeTool : MonoBehaviour, ITool
+    public abstract class ModeTool : ToolBase
     {
         [SerializeField] protected GameObject modePanel;
-        [SerializeField] protected Sprite icon;
 
-        public Sprite Icon => icon;
-
-        public virtual void OnSelect()
+        public override void OnSelect()
         {
             if (modePanel != null)
                 modePanel.SetActive(true);
         }
 
-        public virtual void OnDeselect()
+        public override void OnDeselect()
         {
             if (modePanel != null)
                 modePanel.SetActive(false);

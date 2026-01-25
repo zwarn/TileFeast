@@ -36,6 +36,7 @@ namespace Core
             }
 
             CurrentState = newState;
+            _toolController.ChangeTool(ToolType.GrabTool);
             OnChangeGameState?.Invoke(CurrentState);
             OnBoardChanged?.Invoke();
         }
@@ -142,7 +143,7 @@ namespace Core
 
         public void RequestReturnPieceInHand()
         {
-            if (!_toolController.IsHoldingGrabTool())
+            if (_toolController.CurrentTool.Data.type != ToolType.GrabTool)
             {
                 return;
             }
@@ -157,10 +158,7 @@ namespace Core
 
         public void RequestGrabPieceFromSupply(Piece.Piece piece)
         {
-            if (!_toolController.IsHoldingGrabTool())
-            {
-                _toolController.SelectGrabTool();
-            }
+            _toolController.ChangeTool(ToolType.GrabTool);
 
             if (!IsHandEmpty())
             {

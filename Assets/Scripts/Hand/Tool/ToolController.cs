@@ -1,22 +1,26 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Hand.Tool
 {
     public class ToolController : MonoBehaviour
     {
-        [SerializeField] public GrabTool grabTool;
-        [SerializeField] public DrawAvailableTiles drawAvailableTiles;
+        [SerializeField] private List<ToolBase> allTools = new List<ToolBase>();
 
-        private ITool _currentTool;
+        private ToolBase _currentTool;
+        private Dictionary<ToolType, ToolBase> _toolsByType;
 
-        public event Action<ITool> OnToolChanged;
+        public event Action<ToolType> OnToolChanged;
 
-        public ITool CurrentTool => _currentTool;
+        public ToolBase CurrentTool => _currentTool;
+        public List<ToolSO> AllToolData => allTools.Select(tool => tool.Data).ToList();
 
-        private void Start()
+        private void Awake()
         {
-            ChangeTool(grabTool);
+            _toolsByType = BuildToolsByType();
+            ChangeTool(ToolType.GrabTool);
         }
 
         private void Update()
@@ -27,39 +31,32 @@ namespace Hand.Tool
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                ChangeTool(grabTool);
+                ChangeTool(ToolType.GrabTool);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                ChangeTool(drawAvailableTiles);
+                ChangeTool(ToolType.AvailableTilesTool);
             }
         }
 
-        public void ChangeTool(ITool newTool)
+        public void ChangeTool(ToolType newToolType)
         {
-            if (ReferenceEquals(_currentTool, newTool)) return;
+            if (_currentTool != null && _currentTool.Data.type == newToolType) return;
 
             _currentTool?.OnDeselect();
-            _currentTool = newTool;
+            _currentTool = _toolsByType[newToolType];
             _currentTool?.OnSelect();
 
-            OnToolChanged?.Invoke(_currentTool);
-        }
-
-        public GrabTool SelectGrabTool()
-        {
-            if (!IsHoldingGrabTool())
+            if (_currentTool != null)
             {
-                ChangeTool(grabTool);
+                OnToolChanged?.Invoke(_currentTool.Data.type);
             }
-
-            return grabTool;
         }
 
-        public bool IsHoldingGrabTool()
+        private Dictionary<ToolType, ToolBase> BuildToolsByType()
         {
-            return ReferenceEquals(_currentTool, grabTool);
+            return allTools.ToDictionary(tool => tool.Data.type, tool => tool);
         }
     }
 }

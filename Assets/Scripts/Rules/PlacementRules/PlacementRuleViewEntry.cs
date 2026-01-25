@@ -1,6 +1,7 @@
 ﻿using Board;
 using TMPro;
 using UI;
+using UI.General;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
