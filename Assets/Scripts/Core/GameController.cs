@@ -41,6 +41,18 @@ namespace Core
             OnBoardChanged?.Invoke();
         }
 
+
+        public void LockTile(Vector2Int position, bool locked)
+        {
+            var pieceAtPosition = _boardController.GetPiece(position);
+            if (pieceAtPosition == null)
+            {
+                return;
+            }
+
+            pieceAtPosition.Lock(locked);
+        }
+
         public void BlockTile(Vector2Int position)
         {
             if (!IsWithinBounds(position)) return;
@@ -48,8 +60,13 @@ namespace Core
 
             // Remove any piece at this position and return to supply
             var placedPiece = _boardController.GetPiece(position);
-            if (placedPiece != null && !placedPiece.IsLocked())
+            if (placedPiece != null)
             {
+                if (placedPiece.IsLocked())
+                {
+                    return;
+                }
+                
                 _boardController.RemovePiece(placedPiece);
                 _pieceSupply.AddPiece(placedPiece.Piece);
             }

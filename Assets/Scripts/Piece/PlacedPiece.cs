@@ -32,6 +32,11 @@ namespace Piece
             }).Select(rotatedPos => rotatedPos += Position).ToList();
         }
 
+        public void Lock(bool locked)
+        {
+            Piece.locked = locked;
+        }
+        
         public bool IsLocked()
         {
             return Piece.locked;

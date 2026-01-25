@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,14 +10,27 @@ namespace Piece
         public List<Vector2Int> shape;
         public Sprite sprite;
         public List<Aspect.Aspect> aspects;
-        public bool locked;
+
+        private bool _locked;
+        public bool locked
+        {
+            get => _locked;
+            set
+            {
+                if (_locked == value) return;
+                _locked = value;
+                OnChanged?.Invoke();
+            }
+        }
+
+        public event Action OnChanged;
 
         public Piece(List<Vector2Int> shape, Sprite sprite, List<Aspect.Aspect> aspects, bool locked)
         {
             this.shape = shape;
             this.sprite = sprite;
             this.aspects = aspects;
-            this.locked = locked;
+            _locked = locked;
         }
 
         public Piece(PieceSO pieceSO, bool locked) : this(pieceSO.shape, pieceSO.sprite,

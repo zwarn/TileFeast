@@ -99,7 +99,7 @@ MonoBehaviour:
   allTools:
   - {fileID: 2173764912647236278}
   - {fileID: 5926346368921528274}
-  - {fileID: 3262171594567147198}
+  - {fileID: 4645495449054095517}
   - {fileID: 2409808354141523726}
   - {fileID: 405965324652599669}
   - {fileID: 6111558349948850196}
@@ -112,7 +112,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1534950502772256941}
-  - component: {fileID: 3262171594567147198}
+  - component: {fileID: 4645495449054095517}
   m_Layer: 0
   m_Name: LockTool
   m_TagString: Untagged
@@ -135,7 +135,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3865401884092228143}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3262171594567147198
+--- !u!114 &4645495449054095517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3436663882488151547}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e75a36236d7f43b1aa945da49d399b6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 06bc4111d0c94f02baab5ce779846419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: b4cb0f803f82d7d448daad15897c490c, type: 2}
