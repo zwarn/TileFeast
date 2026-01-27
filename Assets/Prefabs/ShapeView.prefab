@@ -60,7 +60,6 @@ SortingGroup:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_SortAtRoot: 0
-  m_Sort3DAs2D: 0
 --- !u!1 &5452547252447558390
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +121,6 @@ SortingGroup:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_SortAtRoot: 0
-  m_Sort3DAs2D: 0
 --- !u!1 &6156505267427490114
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +155,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6392780574851368562
 SpriteRenderer:
-  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -176,8 +173,6 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -199,11 +194,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -37531149
   m_SortingLayer: 3
   m_SortingOrder: 1
-  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 0a37e813209f73346889f398755654ef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -213,4 +206,5 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
