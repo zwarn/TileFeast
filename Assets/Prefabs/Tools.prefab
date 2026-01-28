@@ -101,7 +101,7 @@ MonoBehaviour:
   - {fileID: 5926346368921528274}
   - {fileID: 4645495449054095517}
   - {fileID: 2409808354141523726}
-  - {fileID: 405965324652599669}
+  - {fileID: 2437495481199557984}
   - {fileID: 6111558349948850196}
 --- !u!1 &3436663882488151547
 GameObject:
@@ -299,7 +299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8689047648199583087}
-  - component: {fileID: 405965324652599669}
+  - component: {fileID: 2437495481199557984}
   m_Layer: 0
   m_Name: ResizeTool
   m_TagString: Untagged
@@ -322,7 +322,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3865401884092228143}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &405965324652599669
+--- !u!114 &2437495481199557984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -331,11 +331,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8627536613319126395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e75a36236d7f43b1aa945da49d399b6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 50a364ab13514bbcb1b1af92a2f1375e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 730a016ab90f8b243a2819af06ea65b3, type: 2}
-  grid: {fileID: 0}
 --- !u!1001 &8975567246948872543
 PrefabInstance:
   m_ObjectHideFlags: 0

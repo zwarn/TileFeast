@@ -219,5 +219,11 @@ namespace Core
             return position.x >= 0 && position.x < CurrentState.GridSize.x &&
                    position.y >= 0 && position.y < CurrentState.GridSize.y;
         }
+
+        public void ChangeBoardSize(Vector2Int deltaSize, Vector2Int translate)
+        {
+            CurrentState.GridSize += deltaSize;
+            OnChangeGameState?.Invoke(CurrentState);
+        }
     }
 }
