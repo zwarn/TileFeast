@@ -15,7 +15,7 @@ namespace Piece
 
         public int Rotation { get; }
 
-        public Vector2Int Position { get; }
+        public Vector2Int Position { get; private set; }
         public Piece Piece { get; }
 
         public List<Vector2Int> GetTilePosition()
@@ -36,10 +36,15 @@ namespace Piece
         {
             Piece.locked = locked;
         }
-        
+
         public bool IsLocked()
         {
             return Piece.locked;
+        }
+
+        public void Move(Vector2Int translate)
+        {
+            Position += translate;
         }
     }
 }

@@ -24,15 +24,18 @@ namespace Board
         public event Action<List<PlacedPiece>> OnBoardReset;
         public event Action<PlacedPiece> OnPiecePlaced;
         public event Action<PlacedPiece> OnPieceRemoved;
+        public event Action<List<PlacedPiece>, Vector2Int> OnPiecesMoved;
 
         private void OnEnable()
         {
             _gameController.OnChangeGameState += UpdateState;
+            _gameController.OnChangeBoardSize += ReactToBoardSizeChange;
         }
 
         private void OnDisable()
         {
             _gameController.OnChangeGameState -= UpdateState;
+            _gameController.OnChangeBoardSize -= ReactToBoardSizeChange;
         }
 
         public void UpdateState(GameState newState)
@@ -42,6 +45,33 @@ namespace Board
             ResetBoardSize(newState.GridSize);
             RebuildPiecesByPosition();
             BoardResetEvent(Pieces);
+        }
+
+        public void ReactToBoardSizeChange(Vector2Int newSize, Vector2Int translate)
+        {
+            ResetBoardSize(newSize);
+
+            if (translate.magnitude > 0)
+            {
+                MovePieces(translate);
+            }
+            
+            Pieces.ForEach(piece =>
+            {
+                if (!IsValid(piece.GetTilePosition()))
+                {
+                    _gameController.ReturnPieceOnBoardToSupply(piece);
+                }
+            });
+        }
+
+        private void MovePieces(Vector2Int translate)
+        {
+            Pieces.ForEach(piece =>
+            {
+                piece.Move(translate);
+            });
+            OnPiecesMoved?.Invoke(Pieces, translate);
         }
 
         private void ResetBoardSize(Vector2Int gridSize)
@@ -72,6 +102,7 @@ namespace Board
             var removed = _pieces.Remove(piece);
             if (!removed) return false;
 
+            piece.Lock(false);
             piece.GetTilePosition().ForEach(pos => _piecesByPosition.Remove(pos));
             RemovePieceEvent(piece);
             return true;

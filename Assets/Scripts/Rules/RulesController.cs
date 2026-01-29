@@ -28,24 +28,15 @@ namespace Rules
         private void OnEnable()
         {
             _gameController.OnChangeGameState += UpdateState;
+            _gameController.OnChangeBoardSize += OnBoardSizeChanged;
             _gameController.OnBoardChanged += CalculateRules;
         }
 
         private void OnDisable()
         {
             _gameController.OnChangeGameState -= UpdateState;
+            _gameController.OnChangeBoardSize -= OnBoardSizeChanged;
             _gameController.OnBoardChanged -= CalculateRules;
-        }
-
-        public void UpdateState(GameState gameState)
-        {
-            _scoreRules = gameState.ScoreRules;
-            _placementRules = gameState.PlacementRules;
-            _zones = gameState.Zones;
-            _gridSize = gameState.GridSize;
-            CalculateRules();
-            ScoreRuleResetEvent(_scoreRules);
-            PlacementRuleResetEvent(_placementRules);
         }
 
         public bool SatisfiesRules()
@@ -57,6 +48,43 @@ namespace Rules
         {
             var total = _scoreRules.Sum(rule => rule.GetScore()) + _zones.Sum(zone => zone.GetScore());
             return total;
+        }
+
+        private void OnBoardSizeChanged(Vector2Int size, Vector2Int translate)
+        {
+            _gridSize = size;
+
+            if (translate.magnitude > 0)
+            {
+                _zones.ForEach(zone =>
+                {
+                    zone.positions = zone.positions.Select(oldPos => oldPos + translate).ToList();
+                });
+            }
+
+            _zones.ToList().ForEach(zone =>
+            {
+                zone.positions.RemoveAll(pos => pos.x >= size.x || pos.y >= size.y);
+                if (zone.positions.Count == 0)
+                {
+                    _zones.Remove(zone);
+                }
+            });
+
+            CalculateRules();
+            ScoreRuleResetEvent(_scoreRules);
+            PlacementRuleResetEvent(_placementRules);
+        }
+
+        private void UpdateState(GameState gameState)
+        {
+            _scoreRules = gameState.ScoreRules;
+            _placementRules = gameState.PlacementRules;
+            _zones = gameState.Zones;
+            _gridSize = gameState.GridSize;
+            CalculateRules();
+            ScoreRuleResetEvent(_scoreRules);
+            PlacementRuleResetEvent(_placementRules);
         }
 
         private void CalculateRules()

@@ -557,17 +557,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a345415388240458d766104b9de1674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1868772923 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2437495481199557984, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
-  m_PrefabInstance: {fileID: 6166601787790805258}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50a364ab13514bbcb1b1af92a2f1375e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3973940216367268355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -718,10 +707,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 405965324652599669, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
-      propertyPath: grid
-      value: 
-      objectReference: {fileID: 737069547}
     - target: {fileID: 2173764912647236278, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
       propertyPath: grid
       value: 
@@ -730,10 +715,6 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 737069547}
-    - target: {fileID: 3077955860448957653, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
-      propertyPath: 'allTools.Array.data[4]'
-      value: 
-      objectReference: {fileID: 1868772923}
     - target: {fileID: 3090848029978753039, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
       propertyPath: m_Name
       value: Tools

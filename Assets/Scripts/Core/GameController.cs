@@ -17,6 +17,7 @@ namespace Core
         [Inject] private ToolController _toolController;
 
         public event Action<GameState> OnChangeGameState;
+        public event Action<Vector2Int, Vector2Int> OnChangeBoardSize;
         public event Action OnBoardChanged;
         public event Action<Vector2Int> OnTileChanged;
         public event Action OnHandChanged;
@@ -66,7 +67,7 @@ namespace Core
                 {
                     return;
                 }
-                
+
                 _boardController.RemovePiece(placedPiece);
                 _pieceSupply.AddPiece(placedPiece.Piece);
             }
@@ -172,6 +173,12 @@ namespace Core
 
             ReturnPieceInHandToSupply();
         }
+        
+        public void ReturnPieceOnBoardToSupply(PlacedPiece piece)
+        {
+            _boardController.RemovePiece(piece);
+            _pieceSupply.AddPiece(piece.Piece);
+        }
 
         public void RequestGrabPieceFromSupply(Piece.Piece piece)
         {
@@ -223,6 +230,7 @@ namespace Core
         public void ChangeBoardSize(Vector2Int deltaSize, Vector2Int translate)
         {
             CurrentState.GridSize += deltaSize;
+            OnChangeBoardSize?.Invoke(CurrentState.GridSize, translate);
             OnChangeGameState?.Invoke(CurrentState);
         }
     }

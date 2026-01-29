@@ -41,7 +41,7 @@ namespace Core
                 null,
                 scenarioSO.scoreRules.ToList(),
                 scenarioSO.placementRules.ToList(),
-                scenarioSO.zones.ToList())
+                scenarioSO.Zones())
         {
         }
     }

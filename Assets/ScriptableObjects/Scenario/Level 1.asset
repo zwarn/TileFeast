@@ -33,12 +33,12 @@ MonoBehaviour:
   zones:
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
-    - {x: 6, y: 6}
+    - {x: 3, y: 0}
     ZoneRule:
       rid: 252681647385739819
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
-    - {x: 3, y: 0}
+    - {x: 6, y: 6}
     ZoneRule:
       rid: 252681647385739820
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}

@@ -22,6 +22,7 @@ namespace Board
             _boardController.OnPiecePlaced += PiecePlaced;
             _boardController.OnPieceRemoved += PieceRemoved;
             _boardController.OnBoardReset += ResetPieces;
+            _boardController.OnPiecesMoved += MovePieces;
         }
 
         private void OnDisable()
@@ -29,6 +30,12 @@ namespace Board
             _boardController.OnPiecePlaced -= PiecePlaced;
             _boardController.OnPieceRemoved -= PieceRemoved;
             _boardController.OnBoardReset -= ResetPieces;
+            _boardController.OnPiecesMoved -= MovePieces;
+        }
+
+        private void MovePieces(List<PlacedPiece> pieces, Vector2Int delta)
+        {
+            pieces.ForEach(piece => { _views[piece].transform.localPosition += new Vector3(delta.x, delta.y); });
         }
 
         private void ResetPieces(List<PlacedPiece> newPieces)

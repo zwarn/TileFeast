@@ -12,20 +12,34 @@ namespace Core
         private void OnEnable()
         {
             _gameController.OnChangeGameState += OnStateChange;
+            _gameController.OnChangeBoardSize += OnChangeBoardSize;
         }
 
         private void OnDisable()
         {
             _gameController.OnChangeGameState -= OnStateChange;
+            _gameController.OnChangeBoardSize -= OnChangeBoardSize;
         }
 
         private void OnStateChange(GameState gameState)
         {
-            var width = gameState.GridSize.x;
-            var height = gameState.GridSize.y;
+            UpdateState(gameState.GridSize);
+        }
+
+        private void OnChangeBoardSize(Vector2Int gridSize, Vector2Int translate)
+        {
+            UpdateState(gridSize);
+        }
+
+
+        private void UpdateState(Vector2Int gridSize)
+        {
+            var width = gridSize.x;
+            var height = gridSize.y;
 
             var maxSize = Math.Max(width, height);
 
+            // this is overwritten by the pixel perfect camera and needs to be rethought if we want boards with sizes above 10
             camera.orthographicSize = 1f + maxSize / 2f;
             camera.transform.position = new Vector3(width, height, camera.transform.position.z);
         }

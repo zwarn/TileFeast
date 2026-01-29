@@ -29,5 +29,10 @@ namespace Scenario
         {
             return lockedPieces.LockedPieces();
         }
+
+        public List<Zone> Zones()
+        {
+            return zones.Select(zone => zone.Clone()).ToList();
+        }
     }
 }
