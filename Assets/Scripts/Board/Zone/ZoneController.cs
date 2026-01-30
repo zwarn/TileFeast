@@ -108,6 +108,8 @@ namespace Board.Zone
                     _zones.Remove(zone);
                 }
             }
+            
+            OnZoneTilesChanged?.Invoke(positions);
         }
 
         private void UpdateZones(GameState gameState)

@@ -76,6 +76,8 @@ namespace Core
                 _pieceSupply.AddPiece(placedPiece.Piece);
             }
 
+            _zoneController.RemoveTilesFromZones(new List<Vector2Int> { position });
+
             CurrentState.BlockedPositions.Add(position);
             OnTileChanged?.Invoke(position);
         }
@@ -238,7 +240,7 @@ namespace Core
             {
                 return;
             }
-            
+
             CurrentState.GridSize += deltaSize;
 
             _boardController.HandleBoardResize(CurrentState.GridSize, translate);
