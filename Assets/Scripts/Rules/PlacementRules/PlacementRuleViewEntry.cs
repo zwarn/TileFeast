@@ -19,9 +19,7 @@ namespace Rules.PlacementRules
 
         private void Update()
         {
-            var text = _rule.GetText();
-
-            descriptionLabel.text = text;
+            descriptionLabel.text = _rule.GetText();
             checkmark.SetState(_rule.IsSatisfied());
         }
 
@@ -38,6 +36,9 @@ namespace Rules.PlacementRules
         public void SetData(PlacementRuleSO rule)
         {
             _rule = rule;
+
+            descriptionLabel.text = _rule.GetText();
+            checkmark.SetState(_rule.IsSatisfied());
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Core
             var maxSize = Math.Max(width, height);
 
             // this is overwritten by the pixel perfect camera and needs to be rethought if we want boards with sizes above 10
-            camera.orthographicSize = 1f + maxSize / 2f;
+            // camera.orthographicSize = 1f + maxSize / 2f;
             camera.transform.position = new Vector3(width, height, camera.transform.position.z);
         }
     }
