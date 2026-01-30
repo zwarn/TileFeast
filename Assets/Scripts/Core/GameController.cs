@@ -233,6 +233,12 @@ namespace Core
 
         public void ChangeBoardSize(Vector2Int deltaSize, Vector2Int translate)
         {
+            var targetGridSize = (CurrentState.GridSize + deltaSize);
+            if (targetGridSize.x <= 0 || targetGridSize.y <= 0)
+            {
+                return;
+            }
+            
             CurrentState.GridSize += deltaSize;
 
             _boardController.HandleBoardResize(CurrentState.GridSize, translate);
