@@ -25,6 +25,7 @@ namespace Board
         public event Action<PlacedPiece> OnPiecePlaced;
         public event Action<PlacedPiece> OnPieceRemoved;
         public event Action<List<PlacedPiece>, Vector2Int> OnPiecesMoved;
+        public event Action OnBoardResize;
 
         private void OnEnable()
         {
@@ -62,7 +63,7 @@ namespace Board
                 }
             });
             
-            
+            OnBoardResize?.Invoke();
         }
 
         private void MovePieces(Vector2Int translate)

@@ -14,6 +14,7 @@ namespace Board
         [SerializeField] private BoxCollider2D gridCollider;
 
         [Inject] private GameController _gameController;
+        [Inject] private BoardController _boardController;
 
         private GameState _gameState;
 
@@ -22,6 +23,7 @@ namespace Board
             _gameController.OnChangeGameState += UpdateState;
             _gameController.OnBoardChanged += RefreshBoardTilemap;
             _gameController.OnTileChanged += UpdateSingleTile;
+            _boardController.OnBoardResize += ResizeBoard;
         }
 
         private void OnDisable()
@@ -29,14 +31,19 @@ namespace Board
             _gameController.OnChangeGameState -= UpdateState;
             _gameController.OnBoardChanged -= RefreshBoardTilemap;
             _gameController.OnTileChanged -= UpdateSingleTile;
+            _boardController.OnBoardResize -= ResizeBoard;
         }
 
         private void UpdateState(GameState gameState)
         {
             _gameState = gameState;
+            ResizeBoard();
+        }
 
-            var width = gameState.GridSize.x;
-            var height = gameState.GridSize.y;
+        private void ResizeBoard()
+        {
+            var width = _gameState.GridSize.x;
+            var height = _gameState.GridSize.y;
 
             grid.transform.position = new Vector3(width / 2f, height / 2f, 0);
 
