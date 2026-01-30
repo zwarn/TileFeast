@@ -1,4 +1,5 @@
 using Board;
+using Board.Zone;
 using Core;
 using Hand.Tool;
 using Piece.Supply;
@@ -17,6 +18,8 @@ namespace Zenject
         [SerializeField] private ScenarioController scenarioController;
         [SerializeField] private GameController gameController;
         [SerializeField] private HighlightController highlightController;
+        [SerializeField] private ZoneController zoneController;
+        [SerializeField] private CameraController cameraController;
 
         public override void InstallBindings()
         {
@@ -27,6 +30,8 @@ namespace Zenject
             Container.Bind<ScenarioController>().FromInstance(scenarioController);
             Container.Bind<GameController>().FromInstance(gameController);
             Container.Bind<HighlightController>().FromInstance(highlightController);
+            Container.Bind<ZoneController>().FromInstance(zoneController);
+            Container.Bind<CameraController>().FromInstance(cameraController);
         }
     }
 }

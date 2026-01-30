@@ -631,6 +631,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1362100616}
     - target: {fileID: 946102014491244084, guid: f84ac95eb881b9e46b096d1297905b23, type: 3}
+      propertyPath: zoneController
+      value: 
+      objectReference: {fileID: 7131457861256526943}
+    - target: {fileID: 946102014491244084, guid: f84ac95eb881b9e46b096d1297905b23, type: 3}
       propertyPath: boardController
       value: 
       objectReference: {fileID: 847352921}
@@ -638,6 +642,10 @@ PrefabInstance:
       propertyPath: rulesController
       value: 
       objectReference: {fileID: 758885932}
+    - target: {fileID: 946102014491244084, guid: f84ac95eb881b9e46b096d1297905b23, type: 3}
+      propertyPath: cameraController
+      value: 
+      objectReference: {fileID: 519420034}
     - target: {fileID: 946102014491244084, guid: f84ac95eb881b9e46b096d1297905b23, type: 3}
       propertyPath: scenarioController
       value: 
@@ -833,6 +841,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a84983633161ca4d90192202acf4d94, type: 3}
+--- !u!114 &7131457861256526943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4352147590226187443, guid: 2a84983633161ca4d90192202acf4d94, type: 3}
+  m_PrefabInstance: {fileID: 7131457861256526942}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9a2619efd1f4ba0aa289bbee15cd429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7950942346861113795
 PrefabInstance:
   m_ObjectHideFlags: 0

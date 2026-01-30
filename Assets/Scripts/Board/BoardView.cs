@@ -9,7 +9,6 @@ namespace Board
     public class BoardView : MonoBehaviour
     {
         [SerializeField] private Tilemap boardTilemap;
-        [SerializeField] private Tilemap zoneTilemap;
         [SerializeField] private TileBase boardTile;
         [SerializeField] private Grid grid;
         [SerializeField] private BoxCollider2D gridCollider;
@@ -45,7 +44,6 @@ namespace Board
             gridCollider.offset = new Vector2(width, height);
 
             UpdateBoardTilemap(width, height);
-            UpdateZoneTilemap();
         }
 
         private void RefreshBoardTilemap()
@@ -58,16 +56,6 @@ namespace Board
         {
             if (_gameState == null) return;
             boardTilemap.SetTile((Vector3Int)position, GetTileAt(position));
-        }
-
-        private void UpdateZoneTilemap()
-        {
-            zoneTilemap.ClearAllTiles();
-
-            _gameState.Zones.ForEach(zone =>
-            {
-                zone.positions.ForEach(pos => { zoneTilemap.SetTile((Vector3Int)pos, zone.zoneType.zoneTile); });
-            });
         }
 
         private void UpdateBoardTilemap(int width, int height)

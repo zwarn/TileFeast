@@ -29,13 +29,11 @@ namespace Board
         private void OnEnable()
         {
             _gameController.OnChangeGameState += UpdateState;
-            _gameController.OnChangeBoardSize += ReactToBoardSizeChange;
         }
 
         private void OnDisable()
         {
             _gameController.OnChangeGameState -= UpdateState;
-            _gameController.OnChangeBoardSize -= ReactToBoardSizeChange;
         }
 
         public void UpdateState(GameState newState)
@@ -47,7 +45,7 @@ namespace Board
             BoardResetEvent(Pieces);
         }
 
-        public void ReactToBoardSizeChange(Vector2Int newSize, Vector2Int translate)
+        public void HandleBoardResize(Vector2Int newSize, Vector2Int translate)
         {
             ResetBoardSize(newSize);
 
@@ -55,7 +53,7 @@ namespace Board
             {
                 MovePieces(translate);
             }
-            
+
             Pieces.ForEach(piece =>
             {
                 if (!IsValid(piece.GetTilePosition()))
@@ -63,14 +61,13 @@ namespace Board
                     _gameController.ReturnPieceOnBoardToSupply(piece);
                 }
             });
+            
+            
         }
 
         private void MovePieces(Vector2Int translate)
         {
-            Pieces.ForEach(piece =>
-            {
-                piece.Move(translate);
-            });
+            Pieces.ForEach(piece => { piece.Move(translate); });
             OnPiecesMoved?.Invoke(Pieces, translate);
         }
 

@@ -15,10 +15,10 @@ namespace Rules
     {
         [Inject] private BoardController _boardController;
         [Inject] private GameController _gameController;
+        [Inject] private ZoneController _zoneController;
 
         private List<ScoreRuleSO> _scoreRules;
         private List<PlacementRuleSO> _placementRules;
-        private List<Zone> _zones;
 
         private Vector2Int _gridSize;
 
@@ -28,49 +28,29 @@ namespace Rules
         private void OnEnable()
         {
             _gameController.OnChangeGameState += UpdateState;
-            _gameController.OnChangeBoardSize += OnBoardSizeChanged;
             _gameController.OnBoardChanged += CalculateRules;
         }
 
         private void OnDisable()
         {
             _gameController.OnChangeGameState -= UpdateState;
-            _gameController.OnChangeBoardSize -= OnBoardSizeChanged;
             _gameController.OnBoardChanged -= CalculateRules;
         }
 
         public bool SatisfiesRules()
         {
-            return _placementRules.All(rule => rule.IsSatisfied()) && _zones.All(zone => zone.IsSatisfied());
+            return _placementRules.All(rule => rule.IsSatisfied()) && _zoneController.Zones.All(zone => zone.IsSatisfied());
         }
 
         public int TotalScore()
         {
-            var total = _scoreRules.Sum(rule => rule.GetScore()) + _zones.Sum(zone => zone.GetScore());
+            var total = _scoreRules.Sum(rule => rule.GetScore()) + _zoneController.Zones.Sum(zone => zone.GetScore());
             return total;
         }
 
-        private void OnBoardSizeChanged(Vector2Int size, Vector2Int translate)
+        public void HandleBoardResize(Vector2Int size)
         {
             _gridSize = size;
-
-            if (translate.magnitude > 0)
-            {
-                _zones.ForEach(zone =>
-                {
-                    zone.positions = zone.positions.Select(oldPos => oldPos + translate).ToList();
-                });
-            }
-
-            _zones.ToList().ForEach(zone =>
-            {
-                zone.positions.RemoveAll(pos => pos.x >= size.x || pos.y >= size.y);
-                if (zone.positions.Count == 0)
-                {
-                    _zones.Remove(zone);
-                }
-            });
-
             CalculateRules();
             ScoreRuleResetEvent(_scoreRules);
             PlacementRuleResetEvent(_placementRules);
@@ -80,7 +60,6 @@ namespace Rules
         {
             _scoreRules = gameState.ScoreRules;
             _placementRules = gameState.PlacementRules;
-            _zones = gameState.Zones;
             _gridSize = gameState.GridSize;
             CalculateRules();
             ScoreRuleResetEvent(_scoreRules);
@@ -101,7 +80,7 @@ namespace Rules
 
             var context = new RuleContext(_gameController.CurrentState, tileArray);
 
-            _zones.ForEach(zone => zone.Calculate(context));
+            _zoneController.Zones.ForEach(zone => zone.Calculate(context));
         }
 
         private void CalculateScoreRules()

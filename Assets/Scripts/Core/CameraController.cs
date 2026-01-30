@@ -12,13 +12,11 @@ namespace Core
         private void OnEnable()
         {
             _gameController.OnChangeGameState += OnStateChange;
-            _gameController.OnChangeBoardSize += OnChangeBoardSize;
         }
 
         private void OnDisable()
         {
             _gameController.OnChangeGameState -= OnStateChange;
-            _gameController.OnChangeBoardSize -= OnChangeBoardSize;
         }
 
         private void OnStateChange(GameState gameState)
@@ -26,7 +24,7 @@ namespace Core
             UpdateState(gameState.GridSize);
         }
 
-        private void OnChangeBoardSize(Vector2Int gridSize, Vector2Int translate)
+        public void HandleBoardResize(Vector2Int gridSize)
         {
             UpdateState(gridSize);
         }

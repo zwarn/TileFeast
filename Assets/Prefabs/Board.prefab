@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 892625330420500416}
   - component: {fileID: 3596888433806183615}
   - component: {fileID: 2611023064902135844}
+  - component: {fileID: 4352147590226187443}
+  - component: {fileID: 2311180838559965874}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -60,7 +62,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardTilemap: {fileID: 2273204086679349304}
-  zoneTilemap: {fileID: 9011966612816036747}
   boardTile: {fileID: 11400000, guid: efaf2d74367a1724ca6b913c03873ea5, type: 2}
   grid: {fileID: 2473419221183869572}
   gridCollider: {fileID: 2611023064902135844}
@@ -110,6 +111,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 9, y: 9}
   m_EdgeRadius: 0
+--- !u!114 &4352147590226187443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478933076220200154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9a2619efd1f4ba0aa289bbee15cd429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2311180838559965874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478933076220200154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2108d8fa0c65436ab110e38efffb630c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoneTilemap: {fileID: 9011966612816036747}
 --- !u!1 &809139314025264732
 GameObject:
   m_ObjectHideFlags: 0

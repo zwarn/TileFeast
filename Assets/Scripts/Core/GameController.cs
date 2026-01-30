@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Board;
+using Board.Zone;
 using Hand.Tool;
 using Piece;
 using Piece.Supply;
+using Rules;
 using Scenario;
 using UnityEngine;
 using Zenject;
@@ -15,9 +17,11 @@ namespace Core
         [Inject] private BoardController _boardController;
         [Inject] private PieceSupplyController _pieceSupply;
         [Inject] private ToolController _toolController;
+        [Inject] private ZoneController _zoneController;
+        [Inject] private RulesController _rulesController;
+        [Inject] private CameraController _cameraController;
 
         public event Action<GameState> OnChangeGameState;
-        public event Action<Vector2Int, Vector2Int> OnChangeBoardSize;
         public event Action OnBoardChanged;
         public event Action<Vector2Int> OnTileChanged;
         public event Action OnHandChanged;
@@ -173,7 +177,7 @@ namespace Core
 
             ReturnPieceInHandToSupply();
         }
-        
+
         public void ReturnPieceOnBoardToSupply(PlacedPiece piece)
         {
             _boardController.RemovePiece(piece);
@@ -230,8 +234,13 @@ namespace Core
         public void ChangeBoardSize(Vector2Int deltaSize, Vector2Int translate)
         {
             CurrentState.GridSize += deltaSize;
-            OnChangeBoardSize?.Invoke(CurrentState.GridSize, translate);
-            OnChangeGameState?.Invoke(CurrentState);
+
+            _boardController.HandleBoardResize(CurrentState.GridSize, translate);
+            _cameraController.HandleBoardResize(CurrentState.GridSize);
+            _zoneController.HandleBoardResize(CurrentState.GridSize, translate);
+            _rulesController.HandleBoardResize(CurrentState.GridSize);
+
+            OnBoardChanged?.Invoke();
         }
     }
 }
