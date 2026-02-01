@@ -80,6 +80,7 @@ namespace Core
 
             CurrentState.BlockedPositions.Add(position);
             OnTileChanged?.Invoke(position);
+            OnBoardChanged?.Invoke();
         }
 
         public void UnblockTile(Vector2Int position)
@@ -89,6 +90,7 @@ namespace Core
 
             CurrentState.BlockedPositions.Remove(position);
             OnTileChanged?.Invoke(position);
+            OnBoardChanged?.Invoke();
         }
 
 

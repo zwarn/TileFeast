@@ -21,7 +21,6 @@ namespace Board
         private void OnEnable()
         {
             _gameController.OnChangeGameState += UpdateState;
-            _gameController.OnBoardChanged += RefreshBoardTilemap;
             _gameController.OnTileChanged += UpdateSingleTile;
             _boardController.OnBoardResize += ResizeBoard;
         }
@@ -29,7 +28,6 @@ namespace Board
         private void OnDisable()
         {
             _gameController.OnChangeGameState -= UpdateState;
-            _gameController.OnBoardChanged -= RefreshBoardTilemap;
             _gameController.OnTileChanged -= UpdateSingleTile;
             _boardController.OnBoardResize -= ResizeBoard;
         }
