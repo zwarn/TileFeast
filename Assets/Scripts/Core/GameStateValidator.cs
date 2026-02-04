@@ -24,6 +24,7 @@ namespace Core
             ValidateGridSize(state, result);
             ValidateBlockedPositions(state, result);
             ValidatePlacedPieces(state, result);
+            ValidateZones(state, result);
 
             return result;
         }
@@ -75,6 +76,37 @@ namespace Core
                     if (!occupiedPositions.Add(tilePos))
                     {
                         result.AddError($"Multiple pieces overlap at position {tilePos}");
+                    }
+                }
+            }
+        }
+
+        private static void ValidateZones(GameState state, GameStateValidationResult result)
+        {
+            if (state.Zones == null) return;
+
+            var allZonePositions = new HashSet<Vector2Int>();
+
+            for (var i = 0; i < state.Zones.Count; i++)
+            {
+                var zone = state.Zones[i];
+                var seenInZone = new HashSet<Vector2Int>();
+
+                foreach (var pos in zone.positions)
+                {
+                    if (!IsWithinBounds(pos, state.GridSize))
+                    {
+                        result.AddError($"Zone {i} has position {pos} outside grid bounds {state.GridSize}");
+                    }
+
+                    if (!seenInZone.Add(pos))
+                    {
+                        result.AddError($"Zone {i} has duplicate position {pos}");
+                    }
+
+                    if (!allZonePositions.Add(pos))
+                    {
+                        result.AddError($"Zone {i} overlaps with another zone at position {pos}");
                     }
                 }
             }
