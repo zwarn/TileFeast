@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3979553237441642998}
-  - component: {fileID: 6111558349948850196}
+  - component: {fileID: 3466839960439947719}
   m_Layer: 0
   m_Name: ZoneTool
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3865401884092228143}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6111558349948850196
+--- !u!114 &3466839960439947719
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,11 +41,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 206482282019915235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e75a36236d7f43b1aa945da49d399b6b, type: 3}
+  m_Script: {fileID: 11500000, guid: da69e95cddf24d7ca8e352e8ce4d11f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 7b26f7296aed36749bc97d1522e014a3, type: 2}
   grid: {fileID: 0}
+  zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
 --- !u!1 &3090848029978753039
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +103,7 @@ MonoBehaviour:
   - {fileID: 4645495449054095517}
   - {fileID: 2409808354141523726}
   - {fileID: 2437495481199557984}
-  - {fileID: 6111558349948850196}
+  - {fileID: 3466839960439947719}
 --- !u!1 &3436663882488151547
 GameObject:
   m_ObjectHideFlags: 0

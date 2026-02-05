@@ -35,30 +35,30 @@ MonoBehaviour:
     positions:
     - {x: 3, y: 0}
     ZoneRule:
-      rid: 252681647385739819
+      rid: 7299217930099359828
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
     - {x: 6, y: 6}
     ZoneRule:
-      rid: 252681647385739820
+      rid: 7299217930099359829
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
     - {x: 1, y: 3}
     ZoneRule:
-      rid: 252681647385739821
+      rid: 7299217930099359830
   nextLevel: {fileID: 11400000, guid: a2558fd68420fe840b4d6f046f7f7042, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 252681647385739819
-      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+    - rid: 7299217930099359828
+      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: TileFeast}
       data:
         Points: 1
-    - rid: 252681647385739820
-      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+    - rid: 7299217930099359829
+      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: TileFeast}
       data:
         Points: 1
-    - rid: 252681647385739821
-      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+    - rid: 7299217930099359830
+      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: TileFeast}
       data:
         Points: 1

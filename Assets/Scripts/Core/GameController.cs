@@ -93,6 +93,32 @@ namespace Core
             OnBoardChanged?.Invoke();
         }
 
+        public Zone PaintZoneTile(Vector2Int position, ZoneSO zoneType, Zone zone)
+        {
+            if (!IsWithinBounds(position)) return zone;
+            if (CurrentState.BlockedPositions.Contains(position)) return zone;
+
+            if (zone == null)
+            {
+                zone = new Zone(zoneType, new List<Vector2Int>(), null);
+                CurrentState.Zones.Add(zone);
+            }
+
+            _zoneController.AddTilesToZone(zone, new List<Vector2Int> { position });
+            CurrentState.Zones.RemoveAll(z => z.positions.Count == 0);
+            OnBoardChanged?.Invoke();
+            return zone;
+        }
+
+        public void EraseZoneTile(Vector2Int position)
+        {
+            if (!IsWithinBounds(position)) return;
+
+            _zoneController.RemoveTilesFromZones(new List<Vector2Int> { position });
+            CurrentState.Zones.RemoveAll(z => z.positions.Count == 0);
+            OnBoardChanged?.Invoke();
+        }
+
 
         public void PutPieceInHandOnBoard(Vector2Int position)
         {

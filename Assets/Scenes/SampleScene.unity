@@ -727,6 +727,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tools
       objectReference: {fileID: 0}
+    - target: {fileID: 3466839960439947719, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
+      propertyPath: grid
+      value: 
+      objectReference: {fileID: 737069547}
     - target: {fileID: 3865401884092228143, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.5
@@ -772,10 +776,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 737069547}
     - target: {fileID: 5926346368921528274, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
-      propertyPath: grid
-      value: 
-      objectReference: {fileID: 737069547}
-    - target: {fileID: 6111558349948850196, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
       propertyPath: grid
       value: 
       objectReference: {fileID: 737069547}

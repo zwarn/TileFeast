@@ -92,62 +92,62 @@ MonoBehaviour:
     - {x: 4, y: 3}
     - {x: 5, y: 3}
     ZoneRule:
-      rid: 7128803614124933494
+      rid: 7299217930099359840
   - zoneType: {fileID: 11400000, guid: 068dd79abbfe4734c9e272c51207353b, type: 2}
     positions:
     - {x: 4, y: 7}
     - {x: 5, y: 7}
     ZoneRule:
-      rid: 7128803614124933508
+      rid: 7299217930099359841
   - zoneType: {fileID: 11400000, guid: 49cda274e4138f945a9c4f3079b1005d, type: 2}
     positions:
     - {x: 6, y: 4}
     - {x: 6, y: 5}
     ZoneRule:
-      rid: 7128803614124933495
+      rid: 7299217930099359842
   - zoneType: {fileID: 11400000, guid: 49cda274e4138f945a9c4f3079b1005d, type: 2}
     positions:
     - {x: 4, y: 2}
     - {x: 5, y: 2}
     ZoneRule:
-      rid: 7128803614124933507
+      rid: 7299217930099359843
   - zoneType: {fileID: 11400000, guid: db8122c8371d85844809d96def040564, type: 2}
     positions:
     - {x: 4, y: 6}
     - {x: 5, y: 6}
     ZoneRule:
-      rid: 7128803614124933496
+      rid: 7299217930099359844
   - zoneType: {fileID: 11400000, guid: db8122c8371d85844809d96def040564, type: 2}
     positions:
     - {x: 7, y: 4}
     - {x: 7, y: 5}
     ZoneRule:
-      rid: 7128803614124933506
+      rid: 7299217930099359845
   nextLevel: {fileID: 11400000, guid: e1fffa51900c914448808b83c5f14f71, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 7128803614124933494
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+    - rid: 7299217930099359840
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
       data:
-        AllowedAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
-    - rid: 7128803614124933495
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+        AllowedAspect: {fileID: 0}
+    - rid: 7299217930099359841
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
       data:
-        AllowedAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
-    - rid: 7128803614124933496
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+        AllowedAspect: {fileID: 0}
+    - rid: 7299217930099359842
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
       data:
-        AllowedAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
-    - rid: 7128803614124933506
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+        AllowedAspect: {fileID: 0}
+    - rid: 7299217930099359843
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
       data:
-        AllowedAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
-    - rid: 7128803614124933507
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+        AllowedAspect: {fileID: 0}
+    - rid: 7299217930099359844
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
       data:
-        AllowedAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
-    - rid: 7128803614124933508
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: Assembly-CSharp}
+        AllowedAspect: {fileID: 0}
+    - rid: 7299217930099359845
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
       data:
-        AllowedAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        AllowedAspect: {fileID: 0}

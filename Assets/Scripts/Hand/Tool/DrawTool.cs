@@ -24,6 +24,8 @@ namespace Hand.Tool
 
         protected abstract void Paint(Vector2Int position);
         protected abstract void Erase(Vector2Int position);
+        protected virtual void OnPaintEnd() { }
+        protected virtual void OnEraseEnd() { }
 
         private void HandleInput()
         {
@@ -42,6 +44,7 @@ namespace Hand.Tool
             if (Input.GetMouseButtonUp(0))
             {
                 _isPainting = false;
+                OnPaintEnd();
             }
 
             // Right mouse - erase
@@ -59,6 +62,7 @@ namespace Hand.Tool
             if (Input.GetMouseButtonUp(1))
             {
                 _isErasing = false;
+                OnEraseEnd();
             }
         }
 
