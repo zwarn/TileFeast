@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Board.Zone;
 using UnityEngine;
 
 namespace Hand.Tool
@@ -15,12 +16,21 @@ namespace Hand.Tool
         public event Action<ToolType> OnToolChanged;
 
         public ToolBase CurrentTool => _currentTool;
+        public ToolType CurrentToolType => CurrentTool.Data.type;
         public List<ToolSO> AllToolData => allTools.Select(tool => tool.Data).ToList();
 
         private void Awake()
         {
             _toolsByType = BuildToolsByType();
+
             ChangeTool(ToolType.GrabTool);
+        }
+
+        public void SelectZone(ZoneSO zoneType)
+        {
+            ChangeTool(ToolType.ZonesTool);
+            var zoneTool = (ZoneTool)_toolsByType[ToolType.ZonesTool];
+            zoneTool.SetZoneType(zoneType);
         }
 
         private void Update()

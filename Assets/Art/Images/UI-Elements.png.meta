@@ -148,7 +148,7 @@ TextureImporter:
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 8, y: 9, z: 8, w: 7}
       customData: 
       outline: []
       physicsShape: []
@@ -170,7 +170,7 @@ TextureImporter:
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 8, y: 7, z: 8, w: 9}
       customData: 
       outline: []
       physicsShape: []
@@ -315,7 +315,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI-Elements_8
+      name: Border
       rect:
         serializedVersion: 2
         x: 0
@@ -324,7 +324,7 @@ TextureImporter:
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 6, y: 6, z: 6, w: 6}
       customData: 
       outline: []
       physicsShape: []
@@ -337,7 +337,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI-Elements_9
+      name: Border_highlight
       rect:
         serializedVersion: 2
         x: 32
@@ -346,7 +346,7 @@ TextureImporter:
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 6, y: 6, z: 6, w: 6}
       customData: 
       outline: []
       physicsShape: []
@@ -1560,6 +1560,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      Border: 507636710
+      Border_highlight: 2072908078
       RoundEdgeButton_Pressed: -560227269
       RoundEdgeButton_Unpressed: -6956450307256449861
       TriangleDownButton_Pressed: 1512032453
@@ -1622,8 +1624,6 @@ TextureImporter:
       UI-Elements_62: 1279455935
       UI-Elements_63: 95078714
       UI-Elements_7: -10579299
-      UI-Elements_8: 507636710
-      UI-Elements_9: 2072908078
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

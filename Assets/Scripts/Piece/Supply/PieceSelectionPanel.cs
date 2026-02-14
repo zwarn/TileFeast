@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core;
+using Hand.Tool;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,11 +13,13 @@ namespace Piece.Supply
     {
         [SerializeField] private PieceSelectionEntry prefab;
         [SerializeField] private Transform entryParent;
+        [SerializeField] private Transform visualParent;
 
         private readonly Dictionary<Piece, PieceSelectionEntry> _entries = new();
         [Inject] private DiContainer _container;
         [Inject] private PieceSupplyController _pieceSupply;
         [Inject] private GameController _gameController;
+        [Inject] private ToolController _toolController;
 
         public GraphicRaycaster raycaster;
 
@@ -25,6 +28,7 @@ namespace Piece.Supply
             _pieceSupply.OnPieceAdded += PieceAdded;
             _pieceSupply.OnPieceRemoved += PieceRemoved;
             _pieceSupply.OnPiecesReplaced += PiecesReplaced;
+            _toolController.OnToolChanged += UpdateVisibility;
         }
 
         private void OnDisable()
@@ -32,6 +36,12 @@ namespace Piece.Supply
             _pieceSupply.OnPieceAdded -= PieceAdded;
             _pieceSupply.OnPieceRemoved -= PieceRemoved;
             _pieceSupply.OnPiecesReplaced -= PiecesReplaced;
+            _toolController.OnToolChanged -= UpdateVisibility;
+        }
+
+        private void UpdateVisibility(ToolType toolType)
+        {
+            visualParent.gameObject.SetActive(toolType != ToolType.ZonesTool);
         }
 
         private void PiecesReplaced(List<Piece> pieces)

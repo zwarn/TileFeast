@@ -9,33 +9,33 @@ namespace Hand.Tool
     {
         [Inject] private GameController _gameController;
         [Inject] private ZoneController _zoneController;
-        [SerializeField] private ZoneSO zoneType;
 
-        private ZoneSO _selectedZoneType;
+        public ZoneSO SelectedZoneType { get; private set; }
         private Zone _activeZone;
 
-        private void Start()
+        public override void OnSelect()
         {
-            SetZoneType(zoneType);
+            base.OnSelect();
+            SetZoneType(null);
         }
 
         public void SetZoneType(ZoneSO zoneType)
         {
-            _selectedZoneType = zoneType;
+            SelectedZoneType = zoneType;
         }
 
         protected override void Paint(Vector2Int position)
         {
-            if (_selectedZoneType == null) return;
+            if (SelectedZoneType == null) return;
 
             if (_activeZone == null)
             {
                 var existingZone = _zoneController.GetZone(position);
-                if (existingZone != null && existingZone.zoneType == _selectedZoneType)
+                if (existingZone != null && existingZone.zoneType == SelectedZoneType)
                     _activeZone = existingZone;
             }
 
-            _activeZone = _gameController.PaintZoneTile(position, _selectedZoneType, _activeZone);
+            _activeZone = _gameController.PaintZoneTile(position, SelectedZoneType, _activeZone);
         }
 
         protected override void OnPaintEnd()
