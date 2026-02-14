@@ -5,6 +5,7 @@ using Rules;
 using Rules.ZoneRules;
 using Sirenix.Serialization;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Board.Zone
 {
@@ -13,42 +14,42 @@ namespace Board.Zone
     {
         [SerializeReference] public ZoneSO zoneType;
         public List<Vector2Int> positions;
-        [SerializeReference] [OdinSerialize] public ZoneRule ZoneRule;
+        [SerializeReference] [OdinSerialize] public ZoneRule zoneRule;
 
-        public Zone(ZoneSO zoneType, List<Vector2Int> positions, ZoneRule zoneRule)
+        public Zone(ZoneSO zoneType, List<Vector2Int> positions)
         {
             this.zoneType = zoneType;
             this.positions = positions;
-            ZoneRule = zoneRule;
+            zoneRule = zoneType.zoneRule;
         }
 
         public bool IsSatisfied()
         {
-            if (ZoneRule == null) return true;
+            if (zoneRule == null) return true;
 
-            return ZoneRule.IsSatisfied();
+            return zoneRule.IsSatisfied();
         }
 
         public int GetScore()
         {
-            if (ZoneRule == null) return 0;
+            if (zoneRule == null) return 0;
 
-            return ZoneRule.GetScore();
+            return zoneRule.GetScore();
         }
 
         public void Calculate(RuleContext context)
         {
-            if (ZoneRule == null)
+            if (zoneRule == null)
             {
                 return;
             }
 
-            ZoneRule.Calculate(new ZoneContext(positions, context.State, context.TileArray));
+            zoneRule.Calculate(new ZoneContext(positions, context.State, context.TileArray));
         }
 
         public Zone Clone()
         {
-            return new Zone(zoneType, positions.ToList(), ZoneRule);
+            return new Zone(zoneType, positions.ToList());
         }
     }
 }

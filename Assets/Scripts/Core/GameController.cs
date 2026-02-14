@@ -7,6 +7,7 @@ using Piece;
 using Piece.Supply;
 using Rules;
 using Scenario;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -26,6 +27,7 @@ namespace Core
         public event Action<Vector2Int> OnTileChanged;
         public event Action OnHandChanged;
 
+        [ShowInInspector, ReadOnly]
         public GameState CurrentState { get; private set; }
 
         public void LoadScenario(ScenarioSO scenario)
@@ -100,7 +102,7 @@ namespace Core
 
             if (zone == null)
             {
-                zone = new Zone(zoneType, new List<Vector2Int>(), null);
+                zone = new Zone(zoneType, new List<Vector2Int>());
                 CurrentState.Zones.Add(zone);
             }
 

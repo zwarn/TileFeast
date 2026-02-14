@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Board.Zone;
 using Piece;
@@ -9,6 +10,7 @@ using UnityEngine;
 
 namespace Core
 {
+    [Serializable]
     public class GameState
     {
         public Vector2Int GridSize;

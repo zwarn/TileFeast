@@ -14,4 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoneTile: {fileID: 11400000, guid: 9e623539fb31d724e9aa9d9d5b9e20a6, type: 2}
   zoneImage: {fileID: 1828663552, guid: 1b3acafedd747a14da4eb650537feba5, type: 3}
-  zoneRuleSO: {fileID: 11400000, guid: 382a35ddf59667048afa1013a2cb422f, type: 2}
+  zoneRule:
+    rid: 7299218219729158245
+  references:
+    version: 2
+    RefIds:
+    - rid: 7299218219729158245
+      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
+      data:
+        AllowedAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
