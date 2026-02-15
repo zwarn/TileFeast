@@ -22,7 +22,7 @@ namespace Hand.Tool
         private void Awake()
         {
             _toolsByType = BuildToolsByType();
-
+            
             ChangeTool(ToolType.GrabTool);
         }
 

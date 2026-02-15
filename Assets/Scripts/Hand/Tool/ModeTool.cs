@@ -6,10 +6,12 @@ namespace Hand.Tool
     {
         public override void OnSelect()
         {
+            gameObject.SetActive(true);
         }
 
         public override void OnDeselect()
         {
+            gameObject.SetActive(false);
         }
     }
 }
