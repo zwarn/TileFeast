@@ -36,7 +36,7 @@ namespace Board
                     .ToArray(), true);
         }
 
-        private void ResetHighlight()
+        public void ResetHighlight()
         {
             SetHighlight(HighlightData.Empty());
         }

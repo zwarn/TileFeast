@@ -46,7 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 7b26f7296aed36749bc97d1522e014a3, type: 2}
   grid: {fileID: 0}
-  zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
 --- !u!1 &3090848029978753039
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,9 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Piece.Hand.ToolController
   allTools:
   - {fileID: 2173764912647236278}
-  - {fileID: 5926346368921528274}
+  - {fileID: 5817855265050693706}
   - {fileID: 4645495449054095517}
-  - {fileID: 2409808354141523726}
+  - {fileID: 7444489414560608085}
   - {fileID: 2437495481199557984}
   - {fileID: 3466839960439947719}
 --- !u!1 &3436663882488151547
@@ -208,7 +207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8742130190981768070}
-  - component: {fileID: 5926346368921528274}
+  - component: {fileID: 5817855265050693706}
   m_Layer: 0
   m_Name: DrawTilesTool
   m_TagString: Untagged
@@ -231,7 +230,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3865401884092228143}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5926346368921528274
+--- !u!114 &5817855265050693706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -254,7 +253,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543729037659174476}
-  - component: {fileID: 2409808354141523726}
+  - component: {fileID: 7444489414560608085}
   m_Layer: 0
   m_Name: PieceTool
   m_TagString: Untagged
@@ -277,7 +276,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3865401884092228143}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2409808354141523726
+--- !u!114 &7444489414560608085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -286,7 +285,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7948869025494291068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e75a36236d7f43b1aa945da49d399b6b, type: 3}
+  m_Script: {fileID: 11500000, guid: fd5bce81a5f646d29a5ee77b8ee024f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 2f10d6d902c3f884ebe2c74cdda05244, type: 2}

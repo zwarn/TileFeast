@@ -118,12 +118,12 @@ namespace Board
             return _piecesByPosition.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
-        private bool IsValid(List<Vector2Int> tiles)
+        public bool IsValid(List<Vector2Int> tiles)
         {
             return tiles.TrueForAll(IsValid);
         }
 
-        private bool IsValid(Vector2Int position)
+        public bool IsValid(Vector2Int position)
         {
             return InBounds(position) && !IsBlocked(position) && IsEmpty(position);
         }
