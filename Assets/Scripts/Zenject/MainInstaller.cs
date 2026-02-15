@@ -20,6 +20,10 @@ namespace Zenject
         [SerializeField] private HighlightController highlightController;
         [SerializeField] private ZoneController zoneController;
         [SerializeField] private CameraController cameraController;
+        [Header("Tools")] [SerializeField] private GrabTool grabTool;
+        [SerializeField] private ZoneTool zoneTool;
+        [SerializeField] private ShapeTool shapeTool;
+
 
         public override void InstallBindings()
         {
@@ -32,6 +36,10 @@ namespace Zenject
             Container.Bind<HighlightController>().FromInstance(highlightController);
             Container.Bind<ZoneController>().FromInstance(zoneController);
             Container.Bind<CameraController>().FromInstance(cameraController);
+
+            Container.Bind<GrabTool>().FromInstance(grabTool);
+            Container.Bind<ZoneTool>().FromInstance(zoneTool);
+            Container.Bind<ShapeTool>().FromInstance(shapeTool);
         }
     }
 }

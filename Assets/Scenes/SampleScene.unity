@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &96767711 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3466839960439947719, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
+  m_PrefabInstance: {fileID: 6166601787790805258}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da69e95cddf24d7ca8e352e8ce4d11f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &398579454 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8925470439121771252, guid: 2a84983633161ca4d90192202acf4d94, type: 3}
@@ -456,6 +467,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8395581196c44c4beb4f8c615c2f0ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1150662765 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7444489414560608085, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
+  m_PrefabInstance: {fileID: 6166601787790805258}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd5bce81a5f646d29a5ee77b8ee024f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1189801354 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2173764912647236278, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
+  m_PrefabInstance: {fileID: 6166601787790805258}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9b9dd8d0c80489f9da16417ad502792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hand.Tool.GrabTool
 --- !u!114 &1362100616 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3077955860448957653, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
@@ -623,6 +656,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 946102014491244084, guid: f84ac95eb881b9e46b096d1297905b23, type: 3}
+      propertyPath: grabTool
+      value: 
+      objectReference: {fileID: 1189801354}
+    - target: {fileID: 946102014491244084, guid: f84ac95eb881b9e46b096d1297905b23, type: 3}
+      propertyPath: zoneTool
+      value: 
+      objectReference: {fileID: 96767711}
+    - target: {fileID: 946102014491244084, guid: f84ac95eb881b9e46b096d1297905b23, type: 3}
+      propertyPath: shapeTool
+      value: 
+      objectReference: {fileID: 1150662765}
+    - target: {fileID: 946102014491244084, guid: f84ac95eb881b9e46b096d1297905b23, type: 3}
       propertyPath: gameController
       value: 
       objectReference: {fileID: 1765971542}
@@ -719,10 +764,6 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 737069547}
-    - target: {fileID: 2409808354141523726, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
-      propertyPath: grid
-      value: 
-      objectReference: {fileID: 737069547}
     - target: {fileID: 3090848029978753039, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
       propertyPath: m_Name
       value: Tools
@@ -771,15 +812,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4197017772121839521, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
-      propertyPath: grid
-      value: 
-      objectReference: {fileID: 737069547}
     - target: {fileID: 4645495449054095517, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
       propertyPath: grid
       value: 
       objectReference: {fileID: 737069547}
-    - target: {fileID: 5926346368921528274, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
+    - target: {fileID: 5817855265050693706, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
+      propertyPath: grid
+      value: 
+      objectReference: {fileID: 737069547}
+    - target: {fileID: 7444489414560608085, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
       propertyPath: grid
       value: 
       objectReference: {fileID: 737069547}

@@ -14,6 +14,7 @@ namespace Board.Zone
         [SerializeField] private GameObject lowlights;
 
         [Inject] private ToolController _toolController;
+        [Inject] private ZoneTool _zoneTool;
 
         private ZoneSO _zoneType;
 
@@ -21,8 +22,7 @@ namespace Board.Zone
         {
             if (_toolController.CurrentToolType == ToolType.ZonesTool)
             {
-                var zoneTool = (ZoneTool)_toolController.CurrentTool;
-                UpdateHighlight(zoneTool.SelectedZoneType == _zoneType);
+                UpdateHighlight(_zoneTool.SelectedZoneType == _zoneType);
             }
         }
 
