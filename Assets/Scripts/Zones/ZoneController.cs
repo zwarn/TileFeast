@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Core;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -14,7 +15,7 @@ namespace Zones
         public event Action OnZonesReset;
         public event Action<List<Vector2Int>> OnZoneTilesChanged;
 
-        private readonly List<Zone> _zones = new();
+        [ShowInInspector, ReadOnly] private readonly List<Zone> _zones = new();
         private readonly Dictionary<Vector2Int, Zone> _zonesByPosition = new();
 
         public List<Zone> Zones => _zones.ToList();
@@ -108,7 +109,7 @@ namespace Zones
                     _zones.Remove(zone);
                 }
             }
-            
+
             OnZoneTilesChanged?.Invoke(positions);
         }
 

@@ -12,5 +12,6 @@ namespace Zones.Rules
 
         public abstract HighlightData GetHighlight();
         public abstract string GetText();
+        public abstract ZoneRule Clone();
     }
 }

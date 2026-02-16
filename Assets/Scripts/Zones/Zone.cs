@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Rules;
 using Zones.Rules;
-using Sirenix.Serialization;
 using UnityEngine;
 
 namespace Zones
@@ -13,7 +12,7 @@ namespace Zones
     {
         [SerializeReference] public ZoneSO zoneType;
         public List<Vector2Int> positions;
-        [SerializeReference] [OdinSerialize] public ZoneRule zoneRule;
+        [SerializeReference] public ZoneRule zoneRule;
 
         public Zone(ZoneSO zoneType, List<Vector2Int> positions)
         {
@@ -48,7 +47,17 @@ namespace Zones
 
         public Zone Clone()
         {
-            return new Zone(zoneType, positions.ToList());
+            var clone = new Zone(zoneType, positions.ToList());
+
+            // Always clone the zoneRule to ensure each zone has its own instance
+            // Use this.zoneRule if available, otherwise fall back to zoneType.zoneRule
+            var ruleToClone = zoneRule ?? zoneType?.zoneRule;
+            if (ruleToClone != null)
+            {
+                clone.zoneRule = ruleToClone.Clone();
+            }
+
+            return clone;
         }
     }
 }

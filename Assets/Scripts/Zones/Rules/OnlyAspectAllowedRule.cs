@@ -51,5 +51,10 @@ namespace Zones.Rules
         {
             return $"Can only be covered by {AllowedAspect.name} Tiles. Can be left empty.";
         }
+
+        public override ZoneRule Clone()
+        {
+            return new OnlyAspectAllowedRule { AllowedAspect = AllowedAspect };
+        }
     }
 }

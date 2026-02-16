@@ -46,5 +46,10 @@ namespace Zones.Rules
         {
             return "Gives points if left uncovered";
         }
+
+        public override ZoneRule Clone()
+        {
+            return new LeaveEmptyForBonusRule { Points = Points };
+        }
     }
 }
