@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Board;
-using Board.Zone;
+using Zones;
 using Core;
 using Rules.PlacementRules;
 using Rules.ScoreRules;

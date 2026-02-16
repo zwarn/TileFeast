@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Core;
-using Piece;
+using Pieces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;

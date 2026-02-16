@@ -19,7 +19,13 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 7299218219729158246
       type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: TileFeast}
       data:
         Points: 1
+        _isFree: 1
+        _position:
+        - {x: 1, y: 3}
+        _covered: []

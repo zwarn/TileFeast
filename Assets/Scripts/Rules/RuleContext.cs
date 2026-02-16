@@ -1,13 +1,14 @@
 ﻿using Core;
+using Pieces;
 
 namespace Rules
 {
     public class RuleContext
     {
         public GameState State { get; }
-        public Piece.Piece[,] TileArray { get; }
+        public Piece[,] TileArray { get; }
 
-        public RuleContext(GameState gameState, Piece.Piece[,] tileArray)
+        public RuleContext(GameState gameState, Piece[,] tileArray)
         {
             State = gameState;
             TileArray = tileArray;

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Board.Zone;
-using Piece;
+using Zones;
+using Pieces;
 using Rules.PlacementRules;
 using Rules.ScoreRules;
-using Scenario;
+using Scenarios;
 using UnityEngine;
 
 namespace Core
@@ -14,7 +14,7 @@ namespace Core
     public class GameState
     {
         public Vector2Int GridSize;
-        public List<Piece.Piece> AvailablePieces;
+        public List<Piece> AvailablePieces;
         public List<Vector2Int> BlockedPositions;
         public PieceWithRotation PieceInHand;
         public List<PlacedPiece> PlacedPieces;
@@ -22,7 +22,7 @@ namespace Core
         public List<PlacementRuleSO> PlacementRules;
         public List<Zone> Zones;
 
-        public GameState(Vector2Int gridSize, List<Vector2Int> blockedPositions, List<PlacedPiece> placedPieces, List<Piece.Piece> availablePieces,
+        public GameState(Vector2Int gridSize, List<Vector2Int> blockedPositions, List<PlacedPiece> placedPieces, List<Piece> availablePieces,
             PieceWithRotation pieceInHand, List<ScoreRuleSO> scoreRules, List<PlacementRuleSO> placementRules, List<Zone> zones)
         {
             GridSize = gridSize;

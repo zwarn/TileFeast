@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Piece.Aspect;
+using Pieces.Aspects;
 using UnityEngine;
 
 namespace Rules.ScoreRules

@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Board;
-using Board.Zone;
-using Hand.Tool;
-using Piece;
-using Piece.Supply;
+using Zones;
+using Tools;
+using Cameras;
+using Pieces;
+using Pieces.Supply;
 using Rules;
-using Scenario;
+using Scenarios;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -158,7 +159,7 @@ namespace Core
             SetPieceInHand(piece);
         }
 
-        public void MovePieceFromSupplyToHand(Piece.Piece piece)
+        public void MovePieceFromSupplyToHand(Piece piece)
         {
             if (!IsHandEmpty())
             {
@@ -216,7 +217,7 @@ namespace Core
             _pieceSupply.AddPiece(piece.Piece);
         }
 
-        public void RequestGrabPieceFromSupply(Piece.Piece piece)
+        public void RequestGrabPieceFromSupply(Piece piece)
         {
             _toolController.ChangeTool(ToolType.GrabTool);
 
@@ -234,7 +235,7 @@ namespace Core
             OnHandChanged?.Invoke();
         }
 
-        private void SetPieceInHand(Piece.Piece piece)
+        private void SetPieceInHand(Piece piece)
         {
             SetPieceInHand(new PieceWithRotation(piece, 0));
         }
@@ -251,7 +252,7 @@ namespace Core
         }
 
 
-        private void GrabPieceFromSupply(Piece.Piece piece)
+        private void GrabPieceFromSupply(Piece piece)
         {
             _pieceSupply.RemovePiece(piece);
         }

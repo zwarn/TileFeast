@@ -19,7 +19,10 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 7299218219729158245
       type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
-      data:
-        AllowedAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
+      data: {AllowedAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}, _position: []
+, _offendingTiles: []
+}
