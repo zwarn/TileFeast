@@ -53,6 +53,29 @@ namespace Tools
             }
         }
 
+
+        public void SpawnPiece(PieceMatch pieceMatch)
+        {
+            if (_shapePositions.Count == 0)
+            {
+                return;
+            }
+
+            var spawnPosition = ShapeHelper.CalculateSpawnPosition(
+                _shapePositions,
+                pieceMatch.Piece.shape,
+                pieceMatch.Rotation
+            );
+
+            var piece = new Piece(pieceMatch.Piece, false);
+            var success = _gameController.SpawnPiece(piece, spawnPosition, pieceMatch.Rotation);
+
+            if (success)
+            {
+                Reset();
+            }
+        }
+
         private void Reset()
         {
             _shapePositions = new List<Vector2Int>();

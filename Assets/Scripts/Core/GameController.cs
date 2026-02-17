@@ -28,8 +28,7 @@ namespace Core
         public event Action<Vector2Int> OnTileChanged;
         public event Action OnHandChanged;
 
-        [ShowInInspector, ReadOnly]
-        public GameState CurrentState { get; private set; }
+        [ShowInInspector, ReadOnly] public GameState CurrentState { get; private set; }
 
         public void LoadScenario(ScenarioSO scenario)
         {
@@ -138,6 +137,19 @@ namespace Core
                 OnBoardChanged?.Invoke();
                 ClearPieceInHand();
             }
+        }
+
+        public bool SpawnPiece(Piece piece, Vector2Int position, int rotation)
+        {
+            var rotatedPiece = new PieceWithRotation(piece, rotation);
+
+            var success = _boardController.PlacePiece(rotatedPiece, position);
+            if (success)
+            {
+                OnBoardChanged?.Invoke();
+            }
+
+            return success;
         }
 
         public void GrabPieceFromBoardInHand(Vector2Int position)

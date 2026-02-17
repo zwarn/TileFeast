@@ -89,5 +89,22 @@ namespace Pieces
 
             return -1;
         }
+
+        /// <summary>
+        /// Calculates the board position where a piece should be placed so that
+        /// its rotated shape covers the given drawn positions exactly.
+        /// </summary>
+        public static Vector2Int CalculateSpawnPosition(List<Vector2Int> drawnPositions, List<Vector2Int> pieceShape, int rotation)
+        {
+            var rotatedShape = Rotate(pieceShape, rotation);
+
+            var minDrawnX = drawnPositions.Min(p => p.x);
+            var minDrawnY = drawnPositions.Min(p => p.y);
+
+            var minRotatedX = rotatedShape.Min(p => p.x);
+            var minRotatedY = rotatedShape.Min(p => p.y);
+
+            return new Vector2Int(minDrawnX - minRotatedX, minDrawnY - minRotatedY);
+        }
     }
 }

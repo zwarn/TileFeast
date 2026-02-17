@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Pieces
     /// <summary>
     /// Result of a piece shape match, containing the piece and the rotation that matches.
     /// </summary>
-    public struct PieceMatch
+    public struct PieceMatch : IEquatable<PieceMatch>
     {
         public PieceSO Piece;
         public int Rotation;
@@ -16,6 +17,21 @@ namespace Pieces
         {
             Piece = piece;
             Rotation = rotation;
+        }
+
+        public bool Equals(PieceMatch other)
+        {
+            return Equals(Piece, other.Piece) && Rotation == other.Rotation;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is PieceMatch other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Piece, Rotation);
         }
     }
 

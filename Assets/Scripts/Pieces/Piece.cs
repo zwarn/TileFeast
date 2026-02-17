@@ -33,7 +33,7 @@ namespace Pieces
             this.aspects = aspects;
             _locked = locked;
         }
-
+        
         public Piece(PieceSO pieceSO, bool locked) : this(pieceSO.shape, pieceSO.sprite,
             pieceSO.aspects.Select(so => new Aspect(so)).ToList(), locked)
         {
