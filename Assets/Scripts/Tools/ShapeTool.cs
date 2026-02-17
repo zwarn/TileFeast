@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Board;
 using Core;
+using Pieces;
 using Rules;
 using UnityEngine;
 using Zenject;
@@ -12,8 +14,13 @@ namespace Tools
         [Inject] private GameController _gameController;
         [Inject] private HighlightController _highlightController;
         [Inject] private BoardController _boardController;
+        [Inject] private PieceRepository _pieceRepository;
 
         private List<Vector2Int> _shapePositions;
+        private List<PieceMatch> _matchingPieces = new();
+
+        public event Action<List<PieceMatch>> OnMatchingPiecesChanged;
+        public IReadOnlyList<PieceMatch> MatchingPieces => _matchingPieces;
 
 
         public override void OnSelect()
@@ -55,6 +62,13 @@ namespace Tools
         private void UpdateShape()
         {
             UpdateHighlight();
+            FindMatchingPieces();
+        }
+
+        private void FindMatchingPieces()
+        {
+            _matchingPieces = _pieceRepository.FindPiecesByShape(_shapePositions);
+            OnMatchingPiecesChanged?.Invoke(_matchingPieces);
         }
 
         private void UpdateHighlight()

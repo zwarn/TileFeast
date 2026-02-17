@@ -3,6 +3,7 @@ using Cameras;
 using Zones;
 using Core;
 using Tools;
+using Pieces;
 using Pieces.Supply;
 using Rules;
 using Scenarios;
@@ -22,6 +23,7 @@ namespace Infrastructure
         [SerializeField] private HighlightController highlightController;
         [SerializeField] private ZoneController zoneController;
         [SerializeField] private CameraController cameraController;
+        [SerializeField] private PieceRepository pieceRepository;
         [Header("Tools")] [SerializeField] private GrabTool grabTool;
         [SerializeField] private ZoneTool zoneTool;
         [SerializeField] private ShapeTool shapeTool;
@@ -38,6 +40,7 @@ namespace Infrastructure
             Container.Bind<HighlightController>().FromInstance(highlightController);
             Container.Bind<ZoneController>().FromInstance(zoneController);
             Container.Bind<CameraController>().FromInstance(cameraController);
+            Container.Bind<PieceRepository>().FromInstance(pieceRepository);
 
             Container.Bind<GrabTool>().FromInstance(grabTool);
             Container.Bind<ZoneTool>().FromInstance(zoneTool);
