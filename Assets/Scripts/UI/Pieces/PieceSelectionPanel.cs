@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using Core;
 using Pieces;
 using Pieces.Supply;
 using Tools;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using Zenject;
 
 namespace UI.Pieces
@@ -20,10 +18,7 @@ namespace UI.Pieces
         private readonly Dictionary<Piece, PieceSelectionEntry> _entries = new();
         [Inject] private DiContainer _container;
         [Inject] private PieceSupplyController _pieceSupply;
-        [Inject] private GameController _gameController;
         [Inject] private ToolController _toolController;
-
-        public GraphicRaycaster raycaster;
 
         private void OnEnable()
         {
@@ -68,49 +63,14 @@ namespace UI.Pieces
             _entries.Add(piece, entry);
         }
 
-        public PieceSelectionEntry GetPieceSelectionEntryPointedAt()
-        {
-            PointerEventData pointerData = new PointerEventData(EventSystem.current);
-            pointerData.position = Input.mousePosition;
+        public void OnBeginDrag(PointerEventData eventData) { }
 
-            List<RaycastResult> results = new List<RaycastResult>();
-            raycaster.Raycast(pointerData, results);
+        public void OnEndDrag(PointerEventData eventData) { }
 
-            foreach (var r in results)
-            {
-                PieceSelectionEntry entry = r.gameObject.GetComponentInParent<PieceSelectionEntry>();
-                if (entry != null)
-                    return entry;
-            }
+        public void OnDrag(PointerEventData eventData) { }
 
-            return null;
-        }
+        public void OnDrop(PointerEventData eventData) { }
 
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-            var pieceSelection = GetPieceSelectionEntryPointedAt();
-            if (pieceSelection != null)
-            {
-                pieceSelection.OnPointerClick(eventData);
-            }
-        }
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
-        }
-
-        public void OnDrag(PointerEventData eventData)
-        {
-        }
-
-        public void OnDrop(PointerEventData eventData)
-        {
-            _gameController.RequestReturnPieceInHand();
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            _gameController.RequestReturnPieceInHand();
-        }
+        public void OnPointerClick(PointerEventData eventData) { }
     }
 }

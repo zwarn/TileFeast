@@ -1,7 +1,9 @@
-using System;
+using System.Collections.Generic;
 using Core;
 using Pieces;
+using UI.Pieces;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Tools
@@ -69,7 +71,12 @@ namespace Tools
             // End drag or click - place piece
             if (Input.GetMouseButtonUp(0))
             {
-                if (_isDragging)
+                // Check if releasing over supply panel - return to supply
+                if (IsPointerOverSupplyPanel() && !_gameController.IsHandEmpty())
+                {
+                    _gameController.ReturnPieceInHandToSupply();
+                }
+                else if (_isDragging)
                 {
                     // Was a drag - place piece at current position
                     if (!_gameController.IsHandEmpty())
@@ -146,6 +153,27 @@ namespace Tools
         {
             var worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             return (Vector2Int)grid.WorldToCell(worldPos);
+        }
+
+        private bool IsPointerOverSupplyPanel()
+        {
+            var pointerData = new PointerEventData(EventSystem.current)
+            {
+                position = Input.mousePosition
+            };
+
+            var results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
+
+            foreach (var result in results)
+            {
+                if (result.gameObject.GetComponentInParent<PieceSelectionPanel>() != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void UpdatePieceView()

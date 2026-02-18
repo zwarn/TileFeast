@@ -8,7 +8,7 @@ using Zenject;
 
 namespace UI.Pieces
 {
-    public class PieceSelectionEntry : MonoBehaviour, IPointerClickHandler
+    public class PieceSelectionEntry : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         [SerializeField] private Image image;
         [Inject] private GameController _gameController;
@@ -27,6 +27,15 @@ namespace UI.Pieces
 
             _gameController.RequestGrabPieceFromSupply(_piece);
         }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            OnPointerClick(eventData);
+        }
+
+        public void OnDrag(PointerEventData eventData) { }
+
+        public void OnEndDrag(PointerEventData eventData) { }
 
         public void SetData(Piece piece)
         {
