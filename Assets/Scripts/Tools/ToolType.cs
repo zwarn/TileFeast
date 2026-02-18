@@ -8,5 +8,6 @@
         PiecesTool,
         ResizeTool,
         ZonesTool,
+        RemovePieceTool,
     }
 }

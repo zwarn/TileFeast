@@ -43,7 +43,7 @@ namespace UI.Pieces
 
         private void UpdateVisibility(ToolType toolType)
         {
-            visualParent.gameObject.SetActive(toolType != ToolType.ZonesTool);
+            visualParent.gameObject.SetActive(toolType != ToolType.ZonesTool && toolType != ToolType.PiecesTool);
         }
 
         private void PiecesReplaced(List<Piece> pieces)

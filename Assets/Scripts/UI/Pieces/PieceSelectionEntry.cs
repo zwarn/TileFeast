@@ -1,5 +1,6 @@
 ﻿using Core;
 using Pieces;
+using Tools;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,11 +12,19 @@ namespace UI.Pieces
     {
         [SerializeField] private Image image;
         [Inject] private GameController _gameController;
+        [Inject] private ToolController _toolController;
 
         private Piece _piece;
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (eventData.button == PointerEventData.InputButton.Right &&
+                _toolController.CurrentToolType == ToolType.RemovePieceTool)
+            {
+                _gameController.DeletePieceFromSupply(_piece);
+                return;
+            }
+
             _gameController.RequestGrabPieceFromSupply(_piece);
         }
 

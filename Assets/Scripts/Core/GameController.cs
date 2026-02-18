@@ -152,6 +152,27 @@ namespace Core
             return success;
         }
 
+        public void DeletePieceFromBoard(Vector2Int position)
+        {
+            var placedPiece = _boardController.GetPiece(position);
+            if (placedPiece == null)
+            {
+                return;
+            }
+            
+            _boardController.RemovePiece(placedPiece);
+        }
+
+        public void DeletePieceFromSupply(Piece piece)
+        {
+            _pieceSupply.RemovePiece(piece);
+        }
+
+        public void ClearPieceSupply()
+        {
+            _pieceSupply.DeleteAllPieces();
+        }
+
         public void GrabPieceFromBoardInHand(Vector2Int position)
         {
             if (!IsHandEmpty())

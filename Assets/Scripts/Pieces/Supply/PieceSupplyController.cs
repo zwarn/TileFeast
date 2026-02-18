@@ -48,6 +48,12 @@ namespace Pieces.Supply
             AddPieceEvent(piece);
         }
 
+        public void DeleteAllPieces()
+        {
+            pieces.Clear();
+            ReplacePiecesEvent(pieces);
+        }
+
         public void RemovePieceEvent(Piece piece)
         {
             OnPieceRemoved?.Invoke(piece);
