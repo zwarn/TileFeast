@@ -271,7 +271,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icons_6
+      name: Icons_RemovePiece
       rect:
         serializedVersion: 2
         x: 192
@@ -293,7 +293,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icons_7
+      name: Icons_Save
       rect:
         serializedVersion: 2
         x: 224
@@ -315,10 +315,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icons_10
+      name: Icons_Rules
       rect:
         serializedVersion: 2
-        x: 64
+        x: 0
         y: 192
         width: 32
         height: 32
@@ -337,10 +337,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icons_11
+      name: Icons_Compute
       rect:
         serializedVersion: 2
-        x: 96
+        x: 32
         y: 192
         width: 32
         height: 32
@@ -1524,8 +1524,6 @@ TextureImporter:
       Icon_Pieces: -834550270
       Icon_Resize: 566310131
       Icon_Zones: -1572452304
-      Icons_10: -156707132
-      Icons_11: -1024690757
       Icons_12: -1108085743
       Icons_13: 72366121
       Icons_14: -1688714680
@@ -1574,12 +1572,14 @@ TextureImporter:
       Icons_57: -876929866
       Icons_58: -1929481900
       Icons_59: 471780009
-      Icons_6: -566094424
       Icons_60: 1847119196
       Icons_61: 1910825276
       Icons_62: -2006460959
       Icons_63: 540810025
-      Icons_7: -1105771084
+      Icons_Compute: -1024690757
+      Icons_RemovePiece: -566094424
+      Icons_Rules: -156707132
+      Icons_Save: -1105771084
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

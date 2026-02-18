@@ -271,7 +271,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI-Elements_6
+      name: UI_Cross
       rect:
         serializedVersion: 2
         x: 192
@@ -1618,12 +1618,12 @@ TextureImporter:
       UI-Elements_57: -436208611
       UI-Elements_58: 1728983704
       UI-Elements_59: 1719683303
-      UI-Elements_6: -912672332
       UI-Elements_60: 951097965
       UI-Elements_61: 241068127
       UI-Elements_62: 1279455935
       UI-Elements_63: 95078714
       UI-Elements_7: -10579299
+      UI_Cross: -912672332
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
