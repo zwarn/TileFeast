@@ -53,17 +53,34 @@ namespace Board
             if (translate.magnitude > 0)
             {
                 MovePieces(translate);
+                MoveBlockedPositions(translate);
             }
 
-            Pieces.ForEach(piece =>
+            // Remove blocked positions that are now out of bounds
+            _blockPositions.RemoveAll(pos => !InBounds(pos));
+
+            // Rebuild position dictionary BEFORE validation so RemovePiece works correctly
+            RebuildPiecesByPosition();
+
+            // Remove pieces that are now out of bounds or on blocked positions
+            var piecesToRemove = _pieces
+                .Where(piece => !piece.GetTilePosition().TrueForAll(pos => InBounds(pos) && !IsBlocked(pos)))
+                .ToList();
+
+            foreach (var piece in piecesToRemove)
             {
-                if (!IsValid(piece.GetTilePosition()))
-                {
-                    _gameController.ReturnPieceOnBoardToSupply(piece);
-                }
-            });
-            
+                _gameController.ReturnPieceOnBoardToSupply(piece);
+            }
+
             OnBoardResize?.Invoke();
+        }
+
+        private void MoveBlockedPositions(Vector2Int translate)
+        {
+            for (int i = 0; i < _blockPositions.Count; i++)
+            {
+                _blockPositions[i] += translate;
+            }
         }
 
         private void MovePieces(Vector2Int translate)
