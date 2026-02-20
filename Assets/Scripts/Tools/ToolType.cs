@@ -9,5 +9,6 @@
         ResizeTool,
         ZonesTool,
         RemovePieceTool,
+        SaveTool,
     }
 }

@@ -10,6 +10,8 @@ namespace Scenarios
 
         [Inject] private GameController _gameController;
 
+        public ScenarioSO CurrentScenario => scenario;
+
         private void Start()
         {
             LoadScenario(scenario);

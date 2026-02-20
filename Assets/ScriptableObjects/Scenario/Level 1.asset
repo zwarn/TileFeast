@@ -19,9 +19,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ac213c468d9a50d499c10d08c1df8c62, type: 2}
   - {fileID: 11400000, guid: 15f218341685c614987477f6beb06c15, type: 2}
   - {fileID: 11400000, guid: 0bb162a1668fe2b439ca339a47d89026, type: 2}
-  - {fileID: 11400000, guid: ec2b5eddbf4c27e48a6cd65957a24c8b, type: 2}
   - {fileID: 11400000, guid: fef73a3b0fd826049ae9c84b09ff9d27, type: 2}
   - {fileID: 11400000, guid: 0279480b0c7e1584494b1360038dd9a8, type: 2}
+  - {fileID: 11400000, guid: ec2b5eddbf4c27e48a6cd65957a24c8b, type: 2}
   - {fileID: 11400000, guid: 350dbe9ce1095a4419db41befe103027, type: 2}
   - {fileID: 11400000, guid: 4f232424f0fecf249a7779daf5b64847, type: 2}
   lockedPieces:
@@ -34,31 +34,31 @@ MonoBehaviour:
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
     - {x: 3, y: 0}
-    ZoneRule:
-      rid: 7299217930099359828
+    zoneRule:
+      rid: 7299218219729158393
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
     - {x: 6, y: 6}
-    ZoneRule:
-      rid: 7299217930099359829
+    zoneRule:
+      rid: 7299218219729158394
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
     - {x: 1, y: 3}
-    ZoneRule:
-      rid: 7299217930099359830
+    zoneRule:
+      rid: 7299218219729158395
   nextLevel: {fileID: 11400000, guid: a2558fd68420fe840b4d6f046f7f7042, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 7299217930099359828
-      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: TileFeast}
+    - rid: 7299218219729158393
+      type: {class: LeaveEmptyForBonusRule, ns: Zones.Rules, asm: TileFeast}
       data:
         Points: 1
-    - rid: 7299217930099359829
-      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: TileFeast}
+    - rid: 7299218219729158394
+      type: {class: LeaveEmptyForBonusRule, ns: Zones.Rules, asm: TileFeast}
       data:
         Points: 1
-    - rid: 7299217930099359830
-      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: TileFeast}
+    - rid: 7299218219729158395
+      type: {class: LeaveEmptyForBonusRule, ns: Zones.Rules, asm: TileFeast}
       data:
         Points: 1

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Board;
 using Zones;
 using Tools;
@@ -248,6 +249,25 @@ namespace Core
         {
             _boardController.RemovePiece(piece);
             _pieceSupply.AddPiece(piece.Piece);
+        }
+
+        public void ReturnAllNonLockedPiecesToSupply()
+        {
+            var piecesToReturn = CurrentState.PlacedPieces
+                .Where(p => !p.IsLocked())
+                .ToList();
+
+            foreach (var piece in piecesToReturn)
+            {
+                ReturnPieceOnBoardToSupply(piece);
+            }
+
+            if (!IsHandEmpty())
+            {
+                ReturnPieceInHandToSupply();
+            }
+
+            OnBoardChanged?.Invoke();
         }
 
         public void RequestGrabPieceFromSupply(Piece piece)

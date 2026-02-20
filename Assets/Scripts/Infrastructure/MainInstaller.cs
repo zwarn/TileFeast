@@ -19,6 +19,7 @@ namespace Infrastructure
         [SerializeField] private PieceSupplyController pieceSupplyController;
         [SerializeField] private RulesController rulesController;
         [SerializeField] private ScenarioController scenarioController;
+        [SerializeField] private ScenarioPersistence scenarioPersistence;
         [SerializeField] private GameController gameController;
         [SerializeField] private HighlightController highlightController;
         [SerializeField] private ZoneController zoneController;
@@ -36,6 +37,7 @@ namespace Infrastructure
             Container.Bind<PieceSupplyController>().FromInstance(pieceSupplyController);
             Container.Bind<RulesController>().FromInstance(rulesController);
             Container.Bind<ScenarioController>().FromInstance(scenarioController);
+            Container.Bind<ScenarioPersistence>().FromInstance(scenarioPersistence);
             Container.Bind<GameController>().FromInstance(gameController);
             Container.Bind<HighlightController>().FromInstance(highlightController);
             Container.Bind<ZoneController>().FromInstance(zoneController);

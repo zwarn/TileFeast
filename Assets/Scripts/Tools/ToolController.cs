@@ -38,16 +38,6 @@ namespace Tools
             var targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPosition.z = 0;
             transform.localPosition = targetPosition;
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                ChangeTool(ToolType.GrabTool);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                ChangeTool(ToolType.AvailableTilesTool);
-            }
         }
 
         public void ChangeTool(ToolType newToolType)
