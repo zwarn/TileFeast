@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core;
 using Pieces;
 using Pieces.Supply;
 using Tools;
@@ -19,6 +20,7 @@ namespace UI.Pieces
         [Inject] private DiContainer _container;
         [Inject] private PieceSupplyController _pieceSupply;
         [Inject] private ToolController _toolController;
+        [Inject] private GameController _gameController;
 
         private void OnEnable()
         {
@@ -71,6 +73,9 @@ namespace UI.Pieces
 
         public void OnDrop(PointerEventData eventData) { }
 
-        public void OnPointerClick(PointerEventData eventData) { }
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            _gameController.RequestReturnPieceInHand();
+        }
     }
 }

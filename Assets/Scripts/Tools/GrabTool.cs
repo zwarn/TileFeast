@@ -12,15 +12,11 @@ namespace Tools
     {
         [SerializeField] private PieceView pieceView;
         [SerializeField] private Grid grid;
-        [SerializeField] private float dragThreshold = 0.5f; // Grid cells moved before considered a drag
 
         [Inject] private GameController _gameController;
 
         private bool _isSelected;
-        private bool _isDragging;
-        private bool _mouseDown;
-        private bool _grabbedThisClick;
-        private Vector2Int _mouseDownPosition;
+        private bool _processedMouseDown;
 
         private void OnEnable()
         {
@@ -36,81 +32,50 @@ namespace Tools
         {
             if (!_isSelected) return;
 
-            HandleClickInput();
+            // Handle board input when not over supply panel
+            if (!IsPointerOverSupplyPanel())
+            {
+                HandleBoardInput();
+            }
+
+            // Reset flag on any mouse up (after processing)
+            if (Input.GetMouseButtonUp(0))
+            {
+                _processedMouseDown = false;
+            }
+
             HandleRotationInput();
         }
 
-        private void HandleClickInput()
+        private void HandleBoardInput()
         {
-            // Start potential drag - grab piece from board
+            // Click to grab or place
             if (Input.GetMouseButtonDown(0))
             {
-                _mouseDownPosition = GetBoardPosition();
-                _mouseDown = true;
-                _isDragging = false;
-                _grabbedThisClick = false;
+                _processedMouseDown = true;
 
                 if (_gameController.IsHandEmpty())
                 {
-                    _gameController.GrabPieceFromBoardInHand(_mouseDownPosition);
-                    _grabbedThisClick = !_gameController.IsHandEmpty();
+                    var position = GetBoardPosition();
+                    _gameController.GrabPieceFromBoardInHand(position);
+                }
+                else
+                {
+                    var position = GetBoardPosition();
+                    _gameController.PutPieceInHandOnBoard(position);
                 }
             }
 
-            // Check if we've moved enough to consider it a drag
-            if (_mouseDown && !_isDragging && !_gameController.IsHandEmpty())
+            // Release over board with piece (for drag from UI to board)
+            if (Input.GetMouseButtonUp(0) && !_processedMouseDown && !_gameController.IsHandEmpty())
             {
-                var currentPosition = GetBoardPosition();
-                var distance = Vector2Int.Distance(_mouseDownPosition, currentPosition);
-                if (distance >= dragThreshold)
-                {
-                    _isDragging = true;
-                }
+                var position = GetBoardPosition();
+                _gameController.PutPieceInHandOnBoard(position);
             }
 
-            // End drag or click - place piece
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonDown(1) && !_gameController.IsHandEmpty())
             {
-                // Check if releasing over supply panel - return to supply
-                if (IsPointerOverSupplyPanel() && !_gameController.IsHandEmpty())
-                {
-                    _gameController.ReturnPieceInHandToSupply();
-                }
-                else if (_isDragging)
-                {
-                    // Was a drag - place piece at current position
-                    if (!_gameController.IsHandEmpty())
-                    {
-                        var position = GetBoardPosition();
-                        _gameController.PutPieceInHandOnBoard(position);
-                    }
-                }
-                else if (!_grabbedThisClick)
-                {
-                    // Click to place (hand already had a piece before this click)
-                    if (!_gameController.IsHandEmpty())
-                    {
-                        var position = GetBoardPosition();
-                        _gameController.PutPieceInHandOnBoard(position);
-                    }
-                }
-                // else: was a click to pick up without dragging - keep in hand
-
-                _isDragging = false;
-                _mouseDown = false;
-                _grabbedThisClick = false;
-            }
-
-            // Right click - return piece to supply
-            if (Input.GetMouseButtonUp(1))
-            {
-                if (!_gameController.IsHandEmpty())
-                {
-                    _gameController.ReturnPieceInHandToSupply();
-                    _isDragging = false;
-                    _mouseDown = false;
-                    _grabbedThisClick = false;
-                }
+                _gameController.ReturnPieceInHandToSupply();
             }
         }
 
@@ -138,9 +103,6 @@ namespace Tools
         public override void OnDeselect()
         {
             _isSelected = false;
-            _isDragging = false;
-            _mouseDown = false;
-            _grabbedThisClick = false;
             if (!_gameController.IsHandEmpty())
             {
                 _gameController.ReturnPieceInHandToSupply();
