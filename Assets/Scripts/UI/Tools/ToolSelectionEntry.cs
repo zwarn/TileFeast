@@ -16,6 +16,7 @@ namespace UI.Tools
         private void OnEnable()
         {
             _toolController.OnToolChanged += ToolSelectionChanged;
+            ToolSelectionChanged(_toolController.CurrentToolType);
         }
 
         private void OnDisable()
