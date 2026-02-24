@@ -7,6 +7,7 @@ using Pieces;
 using Pieces.Supply;
 using Rules;
 using Scenarios;
+using Solver;
 using UnityEngine;
 using Zenject;
 
@@ -26,6 +27,7 @@ namespace Infrastructure
         [SerializeField] private ZoneController zoneController;
         [SerializeField] private CameraController cameraController;
         [SerializeField] private PieceRepository pieceRepository;
+        [SerializeField] private SolverRunner solverRunner;
         [Header("Tools")] [SerializeField] private GrabTool grabTool;
         [SerializeField] private ZoneTool zoneTool;
         [SerializeField] private ShapeTool shapeTool;
@@ -49,6 +51,8 @@ namespace Infrastructure
             Container.Bind<GrabTool>().FromInstance(grabTool);
             Container.Bind<ZoneTool>().FromInstance(zoneTool);
             Container.Bind<ShapeTool>().FromInstance(shapeTool);
+
+            Container.Bind<SolverRunner>().FromInstance(solverRunner);
         }
     }
 }

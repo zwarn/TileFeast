@@ -15,17 +15,11 @@ MonoBehaviour:
   zoneTile: {fileID: 11400000, guid: 1191aa47f278d4b4b93db1c87b9f84e4, type: 2}
   zoneImage: {fileID: 8644282460927414975, guid: 1b3acafedd747a14da4eb650537feba5, type: 3}
   zoneRule:
-    rid: 7299218219729158246
+    rid: 7299218428112404557
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 7299218219729158246
-      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: TileFeast}
+    - rid: 7299218428112404557
+      type: {class: LeaveEmptyForBonusRule, ns: Zones.Rules, asm: TileFeast}
       data:
         Points: 1
-        _isFree: 1
-        _position:
-        - {x: 1, y: 3}
-        _covered: []

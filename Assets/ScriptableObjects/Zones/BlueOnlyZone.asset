@@ -15,14 +15,11 @@ MonoBehaviour:
   zoneTile: {fileID: 11400000, guid: b903cec360222ad43850c5ee9ec66a37, type: 2}
   zoneImage: {fileID: 1941528998, guid: 1b3acafedd747a14da4eb650537feba5, type: 3}
   zoneRule:
-    rid: 7299218219729158242
+    rid: 7299218428112404556
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 7299218219729158242
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
-      data: {AllowedAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}, _position: []
-, _offendingTiles: []
-}
+    - rid: 7299218428112404556
+      type: {class: OnlyAspectAllowedRule, ns: Zones.Rules, asm: TileFeast}
+      data:
+        AllowedAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}

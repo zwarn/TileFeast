@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 745017308840859323}
   - component: {fileID: 1239989648766678312}
+  - component: {fileID: 525659182053834655}
+  - component: {fileID: 4259895000869414358}
   m_Layer: 0
   m_Name: Scenario
   m_TagString: Untagged
@@ -45,3 +47,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenario: {fileID: 11400000, guid: e1fffa51900c914448808b83c5f14f71, type: 2}
+--- !u!114 &525659182053834655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7034492469162588720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b4ec9597794bcc4488de7cced479a15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSavePath: Assets/ScriptableObjects/Scenario/
+--- !u!114 &4259895000869414358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7034492469162588720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6ad9018515f31409ab9bc7d40c6f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxResults: 10

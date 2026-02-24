@@ -10,5 +10,6 @@
         ZonesTool,
         RemovePieceTool,
         SaveTool,
+        CalculateTool,
     }
 }

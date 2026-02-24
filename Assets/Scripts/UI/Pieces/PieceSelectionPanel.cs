@@ -40,7 +40,10 @@ namespace UI.Pieces
 
         private void UpdateVisibility(ToolType toolType)
         {
-            visualParent.gameObject.SetActive(toolType != ToolType.ZonesTool && toolType != ToolType.PiecesTool);
+            visualParent.gameObject.SetActive(
+                toolType != ToolType.ZonesTool &&
+                toolType != ToolType.PiecesTool &&
+                toolType != ToolType.CalculateTool);
         }
 
         private void PiecesReplaced(List<Piece> pieces)
@@ -65,13 +68,21 @@ namespace UI.Pieces
             _entries.Add(piece, entry);
         }
 
-        public void OnBeginDrag(PointerEventData eventData) { }
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+        }
 
-        public void OnEndDrag(PointerEventData eventData) { }
+        public void OnEndDrag(PointerEventData eventData)
+        {
+        }
 
-        public void OnDrag(PointerEventData eventData) { }
+        public void OnDrag(PointerEventData eventData)
+        {
+        }
 
-        public void OnDrop(PointerEventData eventData) { }
+        public void OnDrop(PointerEventData eventData)
+        {
+        }
 
         public void OnPointerClick(PointerEventData eventData)
         {
