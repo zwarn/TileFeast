@@ -58,7 +58,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: -37531149
   m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_SortAtRoot: 0
 --- !u!1 &5452547252447558390
 GameObject:
@@ -119,7 +119,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: -37531149
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_SortAtRoot: 0
 --- !u!1 &6156505267427490114
 GameObject:
