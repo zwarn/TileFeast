@@ -218,7 +218,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 608
+        y: 992
         width: 32
         height: 32
       alignment: 0
@@ -240,7 +240,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 576
+        y: 960
         width: 64
         height: 64
       alignment: 9
@@ -262,7 +262,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 576
+        y: 960
         width: 64
         height: 64
       alignment: 9
@@ -284,7 +284,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 256
-        y: 576
+        y: 960
         width: 96
         height: 64
       alignment: 9
@@ -306,7 +306,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 384
-        y: 544
+        y: 928
         width: 96
         height: 96
       alignment: 9
@@ -328,7 +328,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 480
+        y: 864
         width: 96
         height: 64
       alignment: 9
@@ -350,7 +350,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 480
+        y: 864
         width: 96
         height: 64
       alignment: 9
@@ -372,7 +372,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 256
-        y: 384
+        y: 768
         width: 96
         height: 96
       alignment: 0
@@ -394,11 +394,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 384
-        y: 448
-        width: 128
+        y: 832
+        width: 160
         height: 64
       alignment: 9
-      pivot: {x: 0.375, y: 0.75}
+      pivot: {x: 0.3, y: 0.75}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -416,7 +416,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 416
+        y: 800
         width: 64
         height: 32
       alignment: 9
@@ -438,7 +438,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 352
+        y: 736
         width: 96
         height: 96
       alignment: 0
@@ -459,12 +459,12 @@ TextureImporter:
       name: Blue-Horse
       rect:
         serializedVersion: 2
-        x: 416
-        y: 384
-        width: 128
+        x: 384
+        y: 736
+        width: 160
         height: 64
       alignment: 9
-      pivot: {x: 0.625, y: 0.75}
+      pivot: {x: 0.7, y: 0.75}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -482,7 +482,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 352
+        y: 736
         width: 96
         height: 32
       alignment: 0
@@ -504,7 +504,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 256
+        y: 608
         width: 96
         height: 96
       alignment: 0
@@ -526,7 +526,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 288
+        y: 672
         width: 128
         height: 32
       alignment: 9
@@ -548,7 +548,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 224
+        y: 608
         width: 96
         height: 96
       alignment: 0
@@ -570,7 +570,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 224
+        y: 608
         width: 160
         height: 32
       alignment: 0
@@ -591,8 +591,8 @@ TextureImporter:
       name: Blue-House
       rect:
         serializedVersion: 2
-        x: 288
-        y: 128
+        x: 256
+        y: 480
         width: 96
         height: 96
       alignment: 0
@@ -614,7 +614,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 96
+        y: 480
         width: 96
         height: 96
       alignment: 0
@@ -635,8 +635,8 @@ TextureImporter:
       name: Blue-N
       rect:
         serializedVersion: 2
-        x: 160
-        y: 128
+        x: 128
+        y: 480
         width: 96
         height: 64
       alignment: 9
@@ -657,8 +657,8 @@ TextureImporter:
       name: Blue-Bridge
       rect:
         serializedVersion: 2
-        x: 416
-        y: 128
+        x: 384
+        y: 480
         width: 96
         height: 64
       alignment: 9
@@ -680,7 +680,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 384
         width: 96
         height: 64
       alignment: 9
@@ -702,7 +702,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 0
+        y: 352
         width: 64
         height: 96
       alignment: 9
@@ -723,8 +723,8 @@ TextureImporter:
       name: Blue-2x3
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
+        x: 224
+        y: 352
         width: 64
         height: 96
       alignment: 9
@@ -745,8 +745,8 @@ TextureImporter:
       name: Blue-RightThumps
       rect:
         serializedVersion: 2
-        x: 352
-        y: 0
+        x: 320
+        y: 352
         width: 64
         height: 96
       alignment: 9
@@ -767,8 +767,8 @@ TextureImporter:
       name: Blue-BigBridge
       rect:
         serializedVersion: 2
-        x: 448
-        y: 0
+        x: 416
+        y: 352
         width: 128
         height: 64
       alignment: 9

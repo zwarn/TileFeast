@@ -18,6 +18,7 @@ MonoBehaviour:
   - {x: 0, y: 0}
   - {x: 1, y: 0}
   - {x: 2, y: 0}
+  - {x: 3, y: 0}
   sprite: {fileID: -7071697869870880282, guid: 7394b0590aac7494e8807582f932aecb, type: 3}
   aspects:
   - {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}

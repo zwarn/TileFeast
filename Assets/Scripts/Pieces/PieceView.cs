@@ -7,6 +7,7 @@ namespace Pieces
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private AspectListView aspectListView;
+        [SerializeField] private FaceView _faceView;
 
         private PieceWithRotation _piece;
 
@@ -40,6 +41,7 @@ namespace Pieces
                 transform.rotation = Quaternion.Euler(0, 0, 90 * _piece.Rotation);
 
                 aspectListView.SetData(piece.Piece);
+                _faceView?.SetData(piece.Piece);
             }
         }
 
