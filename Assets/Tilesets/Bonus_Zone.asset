@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Bonus_Zone
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -544585866, guid: c160e2e09585b9f4d94576ae731b6790, type: 3}
+  m_Sprite: {fileID: 8644282460927414975, guid: 1b3acafedd747a14da4eb650537feba5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
