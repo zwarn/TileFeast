@@ -23,3 +23,8 @@ MonoBehaviour:
   previewSprite: {fileID: 21300000, guid: 62dd78466483e774ca8ba4cc2c8d6e2d, type: 3}
   aspects:
   - {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+  leftEyePosition: {x: -2, y: 0}
+  rightEyePosition: {x: 2, y: 0}
+  hasMouth: 1
+  mouthPosition: {x: 0, y: 0}
+  mouthDouble: 0

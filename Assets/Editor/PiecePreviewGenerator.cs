@@ -214,14 +214,14 @@ namespace Editor
             int maxY = pso.shape.Max(p => p.y);
 
             // Gameplay sprite (no face — FaceView adds animated eyes at runtime)
-            Texture2D gameplayTex = CompositeTexture(pso.shape, tileSprites, tilePixels,
+            Texture2D gameplayTex = CompositeTexture(pso, tileSprites, tilePixels,
                 minX, minY, maxX, maxY, withFace: false);
             Sprite gameplaySprite = SaveAndAssign(pso, gameplayTex, tilePixels,
                 minX, minY, maxX, maxY, suffix: "", assignTo: "sprite");
             DestroyImmediate(gameplayTex);
 
             // UI preview sprite (with baked face — for inventory/hand display)
-            Texture2D previewTex = CompositeTexture(pso.shape, tileSprites, tilePixels,
+            Texture2D previewTex = CompositeTexture(pso, tileSprites, tilePixels,
                 minX, minY, maxX, maxY, withFace: true);
             Sprite previewSprite = SaveAndAssign(pso, previewTex, tilePixels,
                 minX, minY, maxX, maxY, suffix: "_preview", assignTo: "previewSprite");
@@ -274,20 +274,20 @@ namespace Editor
         // ------------------------------------------------------------------ texture composition
 
         private Texture2D CompositeTexture(
-            List<Vector2Int> shape,
+            PieceSO pso,
             Dictionary<Vector2Int, Sprite> tileSprites,
             int tilePixels,
             int minX, int minY, int maxX, int maxY,
             bool withFace = true)
         {
-            int width = (maxX - minX + 1) * tilePixels;
+            int width  = (maxX - minX + 1) * tilePixels;
             int height = (maxY - minY + 1) * tilePixels;
 
             var tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
             tex.SetPixels(new Color[width * height]);
 
             // Tiles (base layer, no alpha blend)
-            foreach (var pos in shape)
+            foreach (var pos in pso.shape)
             {
                 if (!tileSprites.TryGetValue(pos, out var sprite) || sprite == null) continue;
                 int px = (pos.x - minX) * tilePixels;
@@ -298,51 +298,38 @@ namespace Editor
             if (!withFace) { tex.Apply(); return tex; }
 
             // Eyes
-            var leftEyeSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/Images/Eyes/LeftEye.png");
+            var leftEyeSprite  = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/Images/Eyes/LeftEye.png");
             var rightEyeSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/Images/Eyes/RightEye.png");
 
-            if (leftEyeSprite != null) EnsureReadable(leftEyeSprite.texture);
-            if (rightEyeSprite != null) EnsureReadable(rightEyeSprite.texture);
-
-            int topY = shape.Max(p => p.y);
-            var topTiles = shape.Where(p => p.y == topY).ToList();
-            int leftX = topTiles.Min(p => p.x);
-            int rightX = topTiles.Max(p => p.x);
-
             if (leftEyeSprite != null)
-                BlitSpriteCentered(tex, leftEyeSprite,
-                    (leftX - minX) * tilePixels + tilePixels / 2,
-                    (topY - minY) * tilePixels + tilePixels / 2);
-
-            if (rightEyeSprite != null)
-                BlitSpriteCentered(tex, rightEyeSprite,
-                    (rightX - minX) * tilePixels + tilePixels / 2,
-                    (topY - minY) * tilePixels + tilePixels / 2);
-
-            // Mouth (replicate FaceView.PlaceMouth logic)
-            var rows = shape.Select(p => p.y).Distinct().OrderBy(y => y).ToList();
-            foreach (int row in rows)
             {
-                var xs = shape.Where(p => p.y == row).Select(p => p.x).OrderBy(x => x).ToList();
-                int spanMin = xs.First(), spanMax = xs.Last(), count = xs.Count;
-                if (spanMax - spanMin + 1 != count) continue;
+                EnsureReadable(leftEyeSprite.texture);
+                BlitSpriteCentered(tex, leftEyeSprite,
+                    (pso.leftEyePosition.x - minX) * tilePixels + tilePixels / 2,
+                    (pso.leftEyePosition.y - minY) * tilePixels + tilePixels / 2);
+            }
+            if (rightEyeSprite != null)
+            {
+                EnsureReadable(rightEyeSprite.texture);
+                BlitSpriteCentered(tex, rightEyeSprite,
+                    (pso.rightEyePosition.x - minX) * tilePixels + tilePixels / 2,
+                    (pso.rightEyePosition.y - minY) * tilePixels + tilePixels / 2);
+            }
 
-                bool isEven = count % 2 == 0;
-                float centerX = (spanMin + spanMax) / 2f;
-
-                string mouthPath = isEven
+            // Mouth
+            if (pso.hasMouth)
+            {
+                string mouthPath = pso.mouthDouble
                     ? "Assets/Art/Images/Eyes/BigMouth.png"
                     : "Assets/Art/Images/Eyes/SmallMouth.png";
-
                 var mouthSprite = AssetDatabase.LoadAssetAtPath<Sprite>(mouthPath);
                 if (mouthSprite != null)
                 {
                     EnsureReadable(mouthSprite.texture);
-                    int mouthCenterX = Mathf.RoundToInt((centerX - minX) * tilePixels + tilePixels * 0.5f);
-                    int mouthCenterY = (row - minY) * tilePixels + tilePixels / 2;
-                    BlitSpriteCentered(tex, mouthSprite, mouthCenterX, mouthCenterY);
+                    int mx = Mathf.RoundToInt((pso.mouthPosition.x - minX) * tilePixels + tilePixels * 0.5f);
+                    int my = Mathf.RoundToInt((pso.mouthPosition.y - minY) * tilePixels + tilePixels * 0.5f);
+                    BlitSpriteCentered(tex, mouthSprite, mx, my);
                 }
-                break;
             }
 
             tex.Apply();

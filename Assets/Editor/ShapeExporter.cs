@@ -95,6 +95,42 @@ namespace Editor
         [Serializable]
         private class ShapeNameEntry { public string name; }
 
+        // ------------------------------------------------------------------ face data
+
+        public struct FaceData
+        {
+            public Vector2Int leftEye;
+            public Vector2Int rightEye;
+            public bool hasMouth;
+            public Vector2 mouthPosition;
+            public bool mouthDouble;
+        }
+
+        public static FaceData ComputeFaceData(List<Vector2Int> shape)
+        {
+            int topY = shape.Max(p => p.y);
+            var topRow = shape.Where(p => p.y == topY).ToList();
+            var fd = new FaceData
+            {
+                leftEye  = new Vector2Int(topRow.Min(p => p.x), topY),
+                rightEye = new Vector2Int(topRow.Max(p => p.x), topY)
+            };
+
+            foreach (int row in shape.Select(p => p.y).Distinct().OrderBy(y => y))
+            {
+                var xs = shape.Where(p => p.y == row).Select(p => p.x).OrderBy(x => x).ToList();
+                if (xs.Last() - xs.First() + 1 != xs.Count) continue;
+                float cx = (xs.First() + xs.Last()) / 2f;
+                fd.hasMouth      = true;
+                fd.mouthDouble   = xs.Count % 2 == 0;
+                fd.mouthPosition = new Vector2(fd.mouthDouble ? cx : Mathf.RoundToInt(cx), row);
+                break;
+            }
+            return fd;
+        }
+
+        // ------------------------------------------------------------------ json building
+
         private static string BuildJsonEntry(string shapeName, List<Vector2Int> shape)
         {
             int minX = shape.Min(p => p.x);
@@ -115,10 +151,24 @@ namespace Editor
                 rows.Add($"\"{sb}\"");
             }
 
+            FaceData fd = ComputeFaceData(shape);
+
+            string faceFields = $"    \"leftEye\": [{fd.leftEye.x}, {fd.leftEye.y}],\n" +
+                                $"    \"rightEye\": [{fd.rightEye.x}, {fd.rightEye.y}]";
+            if (fd.hasMouth)
+            {
+                string mx = fd.mouthPosition.x == Mathf.Floor(fd.mouthPosition.x)
+                    ? $"{(int)fd.mouthPosition.x}"
+                    : fd.mouthPosition.x.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture);
+                faceFields += $",\n    \"mouth\": [{mx}, {(int)fd.mouthPosition.y}]," +
+                              $"\n    \"mouthDouble\": {(fd.mouthDouble ? "true" : "false")}";
+            }
+
             return $"  {{\n" +
                    $"    \"name\": \"{shapeName}\",\n" +
                    $"    \"pivot\": [{pivotCol}, {pivotRow}],\n" +
-                   $"    \"shape\": [{string.Join(", ", rows)}]\n" +
+                   $"    \"shape\": [{string.Join(", ", rows)}],\n" +
+                   $"{faceFields}\n" +
                    $"  }}";
         }
     }

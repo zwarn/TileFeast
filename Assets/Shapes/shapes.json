@@ -2,136 +2,253 @@
   {
     "name": "2LinePiece",
     "pivot": [1, 0],
-    "shape": ["XX"]
+    "shape": ["XX"],
+    "leftEye": [-1, 0],
+    "rightEye": [0, 0],
+    "mouth": [-0.5, 0],
+    "mouthDouble": true
   },
   {
     "name": "2x3Piece",
     "pivot": [1, 1],
-    "shape": ["XX", "XX", "XX"]
+    "shape": ["XX", "XX", "XX"],
+    "leftEye": [-1, 1],
+    "rightEye": [0, 1],
+    "mouth": [-0.5, -1],
+    "mouthDouble": true
   },
   {
     "name": "3LinePiece",
     "pivot": [1, 0],
-    "shape": ["XXX"]
+    "shape": ["XXX"],
+    "leftEye": [-1, 0],
+    "rightEye": [1, 0],
+    "mouth": [0, 0],
+    "mouthDouble": false
   },
   {
     "name": "4LinePiece",
     "pivot": [2, 0],
-    "shape": ["XXXX"]
+    "shape": ["XXXX"],
+    "leftEye": [-2, 0],
+    "rightEye": [1, 0],
+    "mouth": [-0.5, 0],
+    "mouthDouble": true
   },
   {
     "name": "5LinePiece",
     "pivot": [2, 0],
-    "shape": ["XXXXX"]
+    "shape": ["XXXXX"],
+    "leftEye": [-2, 0],
+    "rightEye": [2, 0],
+    "mouth": [0, 0],
+    "mouthDouble": false
   },
   {
     "name": "BigBridgePiece",
     "pivot": [2, 1],
-    "shape": ["XOOX", "XXXX"]
+    "shape": ["XOOX", "XXXX"],
+    "leftEye": [-2, 1],
+    "rightEye": [1, 1],
+    "mouth": [-0.5, 0],
+    "mouthDouble": true
   },
   {
     "name": "BigTPiece",
     "pivot": [1, 1],
-    "shape": ["OXO", "OXO", "XXX"]
+    "shape": ["OXO", "OXO", "XXX"],
+    "leftEye": [0, 1],
+    "rightEye": [0, 1],
+    "mouth": [0, -1],
+    "mouthDouble": false
   },
   {
     "name": "BigTrianglePiece",
     "pivot": [1, 1],
-    "shape": ["OOX", "OOX", "XXX"]
+    "shape": ["OOX", "OOX", "XXX"],
+    "leftEye": [1, 1],
+    "rightEye": [1, 1],
+    "mouth": [0, -1],
+    "mouthDouble": false
   },
   {
     "name": "BridgePiece",
     "pivot": [1, 0],
-    "shape": ["XXX", "XOX"]
+    "shape": ["XXX", "XOX"],
+    "leftEye": [-1, 0],
+    "rightEye": [1, 0],
+    "mouth": [0, 0],
+    "mouthDouble": false
   },
   {
     "name": "DotPiece",
     "pivot": [0, 0],
-    "shape": ["X"]
+    "shape": ["X"],
+    "leftEye": [0, 0],
+    "rightEye": [0, 0],
+    "mouth": [0, 0],
+    "mouthDouble": false
   },
   {
     "name": "FishPiece",
     "pivot": [1, 1],
-    "shape": ["OXO", "XXX", "OXX"]
-  },
-  {
-    "name": "HookPiece",
-    "pivot": [1, 1],
-    "shape": ["OOX", "XXX", "OXO"]
-  },
-  {
-    "name": "HorsePiece",
-    "pivot": [2, 0],
-    "shape": ["XXXO", "OOXX"]
-  },
-  {
-    "name": "HousePiece",
-    "pivot": [1, 1],
-    "shape": ["OXO", "XXX", "XOX"]
-  },
-  {
-    "name": "JPiece",
-    "pivot": [0, 1],
-    "shape": ["XOO", "XXX"]
-  },
-  {
-    "name": "LeftThumpsPiece",
-    "pivot": [0, 1],
-    "shape": ["OX", "XX", "XX"]
-  },
-  {
-    "name": "LPiece",
-    "pivot": [2, 1],
-    "shape": ["OOX", "XXX"]
-  },
-  {
-    "name": "NPiece",
-    "pivot": [1, 0],
-    "shape": ["OXX", "XXO"]
-  },
-  {
-    "name": "PantsPiece",
-    "pivot": [1, 0],
-    "shape": ["XXX", "XOX", "XOX"]
+    "shape": ["OXO", "XXX", "OXX"],
+    "leftEye": [0, 1],
+    "rightEye": [0, 1],
+    "mouth": [0.5, -1],
+    "mouthDouble": true
   },
   {
     "name": "GunPiece",
     "pivot": [1, 0],
-    "shape": ["OXXX", "XXOO"]
+    "shape": ["OXXX", "XXOO"],
+    "leftEye": [0, 0],
+    "rightEye": [2, 0],
+    "mouth": [-0.5, -1],
+    "mouthDouble": true
+  },
+  {
+    "name": "HookPiece",
+    "pivot": [1, 1],
+    "shape": ["OOX", "XXX", "OXO"],
+    "leftEye": [1, 1],
+    "rightEye": [1, 1],
+    "mouth": [0, -1],
+    "mouthDouble": false
+  },
+  {
+    "name": "HorsePiece",
+    "pivot": [2, 0],
+    "shape": ["XXXO", "OOXX"],
+    "leftEye": [-2, 0],
+    "rightEye": [0, 0],
+    "mouth": [0.5, -1],
+    "mouthDouble": true
+  },
+  {
+    "name": "HousePiece",
+    "pivot": [1, 1],
+    "shape": ["OXO", "XXX", "XOX"],
+    "leftEye": [0, 1],
+    "rightEye": [0, 1],
+    "mouth": [0, 0],
+    "mouthDouble": false
+  },
+  {
+    "name": "JPiece",
+    "pivot": [0, 1],
+    "shape": ["XOO", "XXX"],
+    "leftEye": [0, 1],
+    "rightEye": [0, 1],
+    "mouth": [1, 0],
+    "mouthDouble": false
+  },
+  {
+    "name": "LeftThumpsPiece",
+    "pivot": [0, 1],
+    "shape": ["OX", "XX", "XX"],
+    "leftEye": [1, 1],
+    "rightEye": [1, 1],
+    "mouth": [0.5, -1],
+    "mouthDouble": true
+  },
+  {
+    "name": "LPiece",
+    "pivot": [2, 1],
+    "shape": ["OOX", "XXX"],
+    "leftEye": [0, 1],
+    "rightEye": [0, 1],
+    "mouth": [-1, 0],
+    "mouthDouble": false
+  },
+  {
+    "name": "NPiece",
+    "pivot": [1, 0],
+    "shape": ["OXX", "XXO"],
+    "leftEye": [0, 0],
+    "rightEye": [1, 0],
+    "mouth": [-0.5, -1],
+    "mouthDouble": true
+  },
+  {
+    "name": "PantsPiece",
+    "pivot": [1, 0],
+    "shape": ["XXX", "XOX", "XOX"],
+    "leftEye": [-1, 0],
+    "rightEye": [1, 0],
+    "mouth": [0, 0],
+    "mouthDouble": false
+  },
+  {
+    "name": "RiflePiece",
+    "pivot": [1, 0],
+    "shape": ["OXXXX", "XXOOO"],
+    "leftEye": [0, 0],
+    "rightEye": [3, 0],
+    "mouth": [-0.5, -1],
+    "mouthDouble": true
   },
   {
     "name": "RightThumpsPiece",
     "pivot": [0, 1],
-    "shape": ["XO", "XX", "XX"]
+    "shape": ["XO", "XX", "XX"],
+    "leftEye": [0, 1],
+    "rightEye": [0, 1],
+    "mouth": [0.5, -1],
+    "mouthDouble": true
   },
   {
     "name": "SquarePiece",
     "pivot": [1, 1],
-    "shape": ["XX", "XX"]
+    "shape": ["XX", "XX"],
+    "leftEye": [-1, 1],
+    "rightEye": [0, 1],
+    "mouth": [-0.5, 0],
+    "mouthDouble": true
   },
   {
     "name": "StairsPiece",
     "pivot": [1, 1],
-    "shape": ["OOX", "OXX", "XXX"]
+    "shape": ["OOX", "OXX", "XXX"],
+    "leftEye": [1, 1],
+    "rightEye": [1, 1],
+    "mouth": [0, -1],
+    "mouthDouble": false
   },
   {
     "name": "TPiece",
     "pivot": [1, 1],
-    "shape": ["OXO", "XXX"]
+    "shape": ["OXO", "XXX"],
+    "leftEye": [0, 1],
+    "rightEye": [0, 1],
+    "mouth": [0, 0],
+    "mouthDouble": false
   },
   {
     "name": "TrianglePiece",
     "pivot": [1, 1],
-    "shape": ["OX", "XX"]
+    "shape": ["OX", "XX"],
+    "leftEye": [0, 1],
+    "rightEye": [0, 1],
+    "mouth": [-0.5, 0],
+    "mouthDouble": true
   },
   {
     "name": "X-Blocked",
     "pivot": [0, 0],
-    "shape": ["X"]
+    "shape": ["X"],
+    "leftEye": [0, 0],
+    "rightEye": [0, 0],
+    "mouth": [0, 0],
+    "mouthDouble": false
   },
   {
     "name": "ZPiece",
     "pivot": [1, 1],
-    "shape": ["XXO", "OXX"]
+    "shape": ["XXO", "OXX"],
+    "leftEye": [-1, 1],
+    "rightEye": [0, 1],
+    "mouth": [0.5, 0],
+    "mouthDouble": true
   }
 ]

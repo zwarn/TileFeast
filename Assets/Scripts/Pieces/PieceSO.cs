@@ -17,6 +17,12 @@ namespace Pieces
         public Sprite previewSprite;
         public List<AspectSO> aspects;
 
+        public Vector2Int leftEyePosition;
+        public Vector2Int rightEyePosition;
+        public bool       hasMouth;
+        public Vector2    mouthPosition;
+        public bool       mouthDouble;
+
 #if UNITY_EDITOR
 
         private void OnValidate()
@@ -59,6 +65,15 @@ namespace Pieces
                     }
                 }
 
+                if (entry.leftEye?.Length == 2)
+                    leftEyePosition = new Vector2Int(entry.leftEye[0], entry.leftEye[1]);
+                if (entry.rightEye?.Length == 2)
+                    rightEyePosition = new Vector2Int(entry.rightEye[0], entry.rightEye[1]);
+                hasMouth = entry.mouth?.Length == 2;
+                if (hasMouth)
+                    mouthPosition = new Vector2(entry.mouth[0], entry.mouth[1]);
+                mouthDouble = entry.mouthDouble;
+
                 EditorUtility.SetDirty(this);
             }
             catch (Exception e)
@@ -76,9 +91,13 @@ namespace Pieces
         [Serializable]
         private class ShapeData
         {
-            public string name;
-            public int[] pivot;
+            public string  name;
+            public int[]   pivot;
             public string[] shape;
+            public int[]   leftEye;
+            public int[]   rightEye;
+            public float[] mouth;
+            public bool    mouthDouble;
         }
 
         // Deprecated: shape is now loaded from shapes.json via shapeName.

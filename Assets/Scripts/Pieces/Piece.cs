@@ -14,6 +14,12 @@ namespace Pieces
         public Sprite previewSprite;
         public List<Aspect> aspects;
 
+        public Vector2Int leftEyePosition;
+        public Vector2Int rightEyePosition;
+        public bool       hasMouth;
+        public Vector2    mouthPosition;
+        public bool       mouthDouble;
+
         private bool _locked;
         public bool locked
         {
@@ -41,6 +47,11 @@ namespace Pieces
         public Piece(PieceSO pieceSO, bool locked) : this(pieceSO, pieceSO.shape, pieceSO.sprite, pieceSO.previewSprite,
             pieceSO.aspects.Select(so => new Aspect(so)).ToList(), locked)
         {
+            leftEyePosition  = pieceSO.leftEyePosition;
+            rightEyePosition = pieceSO.rightEyePosition;
+            hasMouth         = pieceSO.hasMouth;
+            mouthPosition    = pieceSO.mouthPosition;
+            mouthDouble      = pieceSO.mouthDouble;
         }
     }
 }
