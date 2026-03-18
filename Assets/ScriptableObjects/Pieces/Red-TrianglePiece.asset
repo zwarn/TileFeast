@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Red-TrianglePiece
   m_EditorClassIdentifier: 
   shape:
+  - {x: 0, y: 1}
   - {x: -1, y: 0}
   - {x: 0, y: 0}
-  - {x: 0, y: 1}
-  sprite: {fileID: 473060244, guid: b904a282ba56b5f42bf72231e8abc331, type: 3}
+  shapeName: TrianglePiece
+  sprite: {fileID: 21300000, guid: be6573fe1e99f5c4f8437cf5b3870b69, type: 3}
+  previewSprite: {fileID: 21300000, guid: d2eb5c1adc74b6943af1d40d685861ca, type: 3}
   aspects:
   - {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}

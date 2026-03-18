@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: Blue-2x3Piece
   m_EditorClassIdentifier: 
   shape:
-  - {x: -1, y: -1}
-  - {x: 0, y: -1}
-  - {x: -1, y: 0}
-  - {x: 0, y: 0}
   - {x: -1, y: 1}
   - {x: 0, y: 1}
-  sprite: {fileID: 6039756732765846330, guid: 7394b0590aac7494e8807582f932aecb, type: 3}
+  - {x: -1, y: 0}
+  - {x: 0, y: 0}
+  - {x: -1, y: -1}
+  - {x: 0, y: -1}
+  shapeName: 2x3Piece
+  sprite: {fileID: 21300000, guid: 620097edf3b1f01449220c7a742f4fa8, type: 3}
+  previewSprite: {fileID: 21300000, guid: f6b7176c0cb0206458d0e7d4dbf22661, type: 3}
   aspects:
   - {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}

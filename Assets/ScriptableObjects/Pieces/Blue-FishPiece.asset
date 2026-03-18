@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: Blue-FishPiece
   m_EditorClassIdentifier: 
   shape:
-  - {x: 0, y: -1}
-  - {x: 1, y: -1}
+  - {x: 0, y: 1}
   - {x: -1, y: 0}
   - {x: 0, y: 0}
   - {x: 1, y: 0}
-  - {x: 0, y: 1}
-  sprite: {fileID: -5273857173647239234, guid: 7394b0590aac7494e8807582f932aecb, type: 3}
+  - {x: 0, y: -1}
+  - {x: 1, y: -1}
+  shapeName: FishPiece
+  sprite: {fileID: 21300000, guid: c8daae03aac9d9f4d87480f931c2bc26, type: 3}
+  previewSprite: {fileID: 21300000, guid: db606aeb7374e7244a658c7b1086206c, type: 3}
   aspects:
   - {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}

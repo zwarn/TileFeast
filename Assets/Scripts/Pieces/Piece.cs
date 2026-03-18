@@ -11,6 +11,7 @@ namespace Pieces
         public PieceSO sourceSO;
         public List<Vector2Int> shape;
         public Sprite sprite;
+        public Sprite previewSprite;
         public List<Aspect> aspects;
 
         private bool _locked;
@@ -27,16 +28,17 @@ namespace Pieces
 
         public event Action OnChanged;
 
-        public Piece(PieceSO sourceSO, List<Vector2Int> shape, Sprite sprite, List<Aspect> aspects, bool locked)
+        public Piece(PieceSO sourceSO, List<Vector2Int> shape, Sprite sprite, Sprite previewSprite, List<Aspect> aspects, bool locked)
         {
             this.sourceSO = sourceSO;
             this.shape = shape;
             this.sprite = sprite;
+            this.previewSprite = previewSprite;
             this.aspects = aspects;
             _locked = locked;
         }
 
-        public Piece(PieceSO pieceSO, bool locked) : this(pieceSO, pieceSO.shape, pieceSO.sprite,
+        public Piece(PieceSO pieceSO, bool locked) : this(pieceSO, pieceSO.shape, pieceSO.sprite, pieceSO.previewSprite,
             pieceSO.aspects.Select(so => new Aspect(so)).ToList(), locked)
         {
         }

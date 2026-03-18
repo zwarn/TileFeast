@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Red-NPiece
   m_EditorClassIdentifier: 
   shape:
-  - {x: -1, y: -1}
-  - {x: 0, y: -1}
   - {x: 0, y: 0}
   - {x: 1, y: 0}
-  sprite: {fileID: 930910319, guid: b904a282ba56b5f42bf72231e8abc331, type: 3}
+  - {x: -1, y: -1}
+  - {x: 0, y: -1}
+  shapeName: NPiece
+  sprite: {fileID: 21300000, guid: df48158705fa9a34584fe1eb27683838, type: 3}
+  previewSprite: {fileID: 21300000, guid: 55bcfb8cfcc045143872bd12d3e848b3, type: 3}
   aspects:
   - {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}

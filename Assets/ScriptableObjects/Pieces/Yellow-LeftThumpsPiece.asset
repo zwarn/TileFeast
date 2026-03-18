@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Yellow-LeftThumpsPiece
   m_EditorClassIdentifier: 
   shape:
-  - {x: 0, y: -1}
-  - {x: 1, y: -1}
+  - {x: 1, y: 1}
   - {x: 0, y: 0}
   - {x: 1, y: 0}
-  - {x: 1, y: 1}
-  sprite: {fileID: 7718688240528091871, guid: 01543ca1473435940ab151e3e629fbee, type: 3}
+  - {x: 0, y: -1}
+  - {x: 1, y: -1}
+  shapeName: LeftThumpsPiece
+  sprite: {fileID: 21300000, guid: 58e21537a2acee44988ec730bf032585, type: 3}
+  previewSprite: {fileID: 21300000, guid: 0c8b738e977fc9748a5438d80698ba9d, type: 3}
   aspects:
   - {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}

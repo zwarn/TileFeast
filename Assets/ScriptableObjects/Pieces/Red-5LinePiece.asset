@@ -18,6 +18,8 @@ MonoBehaviour:
   - {x: 0, y: 0}
   - {x: 1, y: 0}
   - {x: 2, y: 0}
-  sprite: {fileID: -2144792168, guid: b904a282ba56b5f42bf72231e8abc331, type: 3}
+  shapeName: 5LinePiece
+  sprite: {fileID: 21300000, guid: 8999b804483af32448b3fb5b0ca78602, type: 3}
+  previewSprite: {fileID: 21300000, guid: 62dd78466483e774ca8ba4cc2c8d6e2d, type: 3}
   aspects:
   - {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}

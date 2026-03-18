@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Red-LPiece
   m_EditorClassIdentifier: 
   shape:
+  - {x: 0, y: 1}
   - {x: -2, y: 0}
   - {x: -1, y: 0}
   - {x: 0, y: 0}
-  - {x: 0, y: 1}
-  sprite: {fileID: -1423456666, guid: b904a282ba56b5f42bf72231e8abc331, type: 3}
+  shapeName: LPiece
+  sprite: {fileID: 21300000, guid: 8f774637bfef6be4d96e84b4e178a8bc, type: 3}
+  previewSprite: {fileID: 21300000, guid: 3ff520ef5e35b644286231ba6978bdc5, type: 3}
   aspects:
   - {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}

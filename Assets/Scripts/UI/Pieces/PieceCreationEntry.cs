@@ -22,7 +22,7 @@ namespace UI.Pieces
         public void SetData(PieceMatch match)
         {
             _pieceMatch = match;
-            image.sprite = match.Piece.sprite;
+            image.sprite = match.Piece.previewSprite != null ? match.Piece.previewSprite : match.Piece.sprite;
         }
     }
 }

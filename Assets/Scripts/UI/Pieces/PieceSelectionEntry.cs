@@ -40,7 +40,7 @@ namespace UI.Pieces
         public void SetData(Piece piece)
         {
             _piece = piece;
-            image.sprite = piece.sprite;
+            image.sprite = piece.previewSprite != null ? piece.previewSprite : piece.sprite;
         }
     }
 }

@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Blue-LPiece
   m_EditorClassIdentifier: 
   shape:
+  - {x: 0, y: 1}
   - {x: -2, y: 0}
   - {x: -1, y: 0}
   - {x: 0, y: 0}
-  - {x: 0, y: 1}
-  sprite: {fileID: 7841597329808715623, guid: 7394b0590aac7494e8807582f932aecb, type: 3}
+  shapeName: LPiece
+  sprite: {fileID: 21300000, guid: 64f1073c708d94045bfe7fa203f1304c, type: 3}
+  previewSprite: {fileID: 21300000, guid: df59454b7d836ec418e93fbc2895045c, type: 3}
   aspects:
   - {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}

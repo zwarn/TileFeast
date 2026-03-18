@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Yellow-JPiece
   m_EditorClassIdentifier: 
   shape:
+  - {x: 0, y: 1}
   - {x: 0, y: 0}
   - {x: 1, y: 0}
   - {x: 2, y: 0}
-  - {x: 0, y: 1}
-  sprite: {fileID: -7321672615202393616, guid: 01543ca1473435940ab151e3e629fbee, type: 3}
+  shapeName: JPiece
+  sprite: {fileID: 21300000, guid: 8b109359efe2b6c46bdbaac43057806d, type: 3}
+  previewSprite: {fileID: 21300000, guid: 97846bea3f8443046a98484cc65583a9, type: 3}
   aspects:
   - {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}

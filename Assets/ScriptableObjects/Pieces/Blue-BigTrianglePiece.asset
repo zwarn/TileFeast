@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Blue-BigTrianglePiece
   m_EditorClassIdentifier: 
   shape:
+  - {x: 1, y: 1}
+  - {x: 1, y: 0}
   - {x: -1, y: -1}
   - {x: 0, y: -1}
   - {x: 1, y: -1}
-  - {x: 1, y: 0}
-  - {x: 1, y: 1}
-  sprite: {fileID: -5164236718091365443, guid: 7394b0590aac7494e8807582f932aecb, type: 3}
+  shapeName: BigTrianglePiece
+  sprite: {fileID: 21300000, guid: 87325f06e8ae60d42ab9e77f071e0c7b, type: 3}
+  previewSprite: {fileID: 21300000, guid: ac1b2fca7fb179b48a9e9a58a8612588, type: 3}
   aspects:
   - {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}

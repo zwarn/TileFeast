@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Red-HookPiece
   m_EditorClassIdentifier: 
   shape:
-  - {x: 0, y: -1}
+  - {x: 1, y: 1}
   - {x: -1, y: 0}
   - {x: 0, y: 0}
   - {x: 1, y: 0}
-  - {x: 1, y: 1}
-  sprite: {fileID: -1108441155, guid: b904a282ba56b5f42bf72231e8abc331, type: 3}
+  - {x: 0, y: -1}
+  shapeName: HookPiece
+  sprite: {fileID: 21300000, guid: 126d74ccc92ebfb4b9d7a46997665b5b, type: 3}
+  previewSprite: {fileID: 21300000, guid: e24af9ea53276d44abe1d61074bcb6a0, type: 3}
   aspects:
   - {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}

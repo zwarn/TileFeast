@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Blue-BridgePiece
   m_EditorClassIdentifier: 
   shape:
-  - {x: -1, y: -1}
-  - {x: 1, y: -1}
   - {x: -1, y: 0}
   - {x: 0, y: 0}
   - {x: 1, y: 0}
-  sprite: {fileID: -176670986263470003, guid: 7394b0590aac7494e8807582f932aecb, type: 3}
+  - {x: -1, y: -1}
+  - {x: 1, y: -1}
+  shapeName: BridgePiece
+  sprite: {fileID: 21300000, guid: f43360dcc3386864080201b4fc5391c6, type: 3}
+  previewSprite: {fileID: 21300000, guid: a2256d9d5f067f04fb930ddb517f36d3, type: 3}
   aspects:
   - {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}

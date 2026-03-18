@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e16a8951ea40e9aa428fed7175b894, type: 3}
+  m_Name: Yellow-GunPiece
+  m_EditorClassIdentifier: 
+  shape:
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: 2, y: 0}
+  - {x: -1, y: -1}
+  - {x: 0, y: -1}
+  shapeName: GunPiece
+  sprite: {fileID: 21300000, guid: eebd58519cb9bc7438eaad6fb38c95f7, type: 3}
+  previewSprite: {fileID: 21300000, guid: 6a9aa7935e55df14b9cc05f0599fbd9f, type: 3}
+  aspects:
+  - {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}

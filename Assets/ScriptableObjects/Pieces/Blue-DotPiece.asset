@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shape:
   - {x: 0, y: 0}
-  sprite: {fileID: -4347807266116952380, guid: 7394b0590aac7494e8807582f932aecb, type: 3}
+  shapeName: DotPiece
+  sprite: {fileID: 21300000, guid: 7475a75926bb4134985f4dabb63747ca, type: 3}
+  previewSprite: {fileID: 21300000, guid: 195a28cefaeca9f49be56416d2464295, type: 3}
   aspects:
   - {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}

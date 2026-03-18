@@ -1,0 +1,137 @@
+﻿[
+  {
+    "name": "2LinePiece",
+    "pivot": [1, 0],
+    "shape": ["XX"]
+  },
+  {
+    "name": "2x3Piece",
+    "pivot": [1, 1],
+    "shape": ["XX", "XX", "XX"]
+  },
+  {
+    "name": "3LinePiece",
+    "pivot": [1, 0],
+    "shape": ["XXX"]
+  },
+  {
+    "name": "4LinePiece",
+    "pivot": [2, 0],
+    "shape": ["XXXX"]
+  },
+  {
+    "name": "5LinePiece",
+    "pivot": [2, 0],
+    "shape": ["XXXXX"]
+  },
+  {
+    "name": "BigBridgePiece",
+    "pivot": [2, 1],
+    "shape": ["XOOX", "XXXX"]
+  },
+  {
+    "name": "BigTPiece",
+    "pivot": [1, 1],
+    "shape": ["OXO", "OXO", "XXX"]
+  },
+  {
+    "name": "BigTrianglePiece",
+    "pivot": [1, 1],
+    "shape": ["OOX", "OOX", "XXX"]
+  },
+  {
+    "name": "BridgePiece",
+    "pivot": [1, 0],
+    "shape": ["XXX", "XOX"]
+  },
+  {
+    "name": "DotPiece",
+    "pivot": [0, 0],
+    "shape": ["X"]
+  },
+  {
+    "name": "FishPiece",
+    "pivot": [1, 1],
+    "shape": ["OXO", "XXX", "OXX"]
+  },
+  {
+    "name": "HookPiece",
+    "pivot": [1, 1],
+    "shape": ["OOX", "XXX", "OXO"]
+  },
+  {
+    "name": "HorsePiece",
+    "pivot": [2, 0],
+    "shape": ["XXXO", "OOXX"]
+  },
+  {
+    "name": "HousePiece",
+    "pivot": [1, 1],
+    "shape": ["OXO", "XXX", "XOX"]
+  },
+  {
+    "name": "JPiece",
+    "pivot": [0, 1],
+    "shape": ["XOO", "XXX"]
+  },
+  {
+    "name": "LeftThumpsPiece",
+    "pivot": [0, 1],
+    "shape": ["OX", "XX", "XX"]
+  },
+  {
+    "name": "LPiece",
+    "pivot": [2, 1],
+    "shape": ["OOX", "XXX"]
+  },
+  {
+    "name": "NPiece",
+    "pivot": [1, 0],
+    "shape": ["OXX", "XXO"]
+  },
+  {
+    "name": "PantsPiece",
+    "pivot": [1, 0],
+    "shape": ["XXX", "XOX", "XOX"]
+  },
+  {
+    "name": "GunPiece",
+    "pivot": [1, 0],
+    "shape": ["OXXX", "XXOO"]
+  },
+  {
+    "name": "RightThumpsPiece",
+    "pivot": [0, 1],
+    "shape": ["XO", "XX", "XX"]
+  },
+  {
+    "name": "SquarePiece",
+    "pivot": [1, 1],
+    "shape": ["XX", "XX"]
+  },
+  {
+    "name": "StairsPiece",
+    "pivot": [1, 1],
+    "shape": ["OOX", "OXX", "XXX"]
+  },
+  {
+    "name": "TPiece",
+    "pivot": [1, 1],
+    "shape": ["OXO", "XXX"]
+  },
+  {
+    "name": "TrianglePiece",
+    "pivot": [1, 1],
+    "shape": ["OX", "XX"]
+  },
+  {
+    "name": "X-Blocked",
+    "pivot": [0, 0],
+    "shape": ["X"]
+  },
+  {
+    "name": "ZPiece",
+    "pivot": [1, 1],
+    "shape": ["XXO", "OXX"]
+  }
+]
