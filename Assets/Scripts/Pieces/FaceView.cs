@@ -5,10 +5,13 @@ namespace Pieces
 {
     public class FaceView : MonoBehaviour
     {
+        private static readonly int Blink = Animator.StringToHash("Blink");
+
         [SerializeField] private GameObject leftEye;
         [SerializeField] private GameObject rightEye;
         [SerializeField] private GameObject mouthSingle;
         [SerializeField] private GameObject mouthDouble;
+        [SerializeField] private Animator animator;
 
         [SerializeField] private float blinkIntervalMin = 4f;
         [SerializeField] private float blinkIntervalMax = 10f;
@@ -27,11 +30,11 @@ namespace Pieces
 
             SetAllActive(true);
 
-            leftEye.transform.localPosition  = new Vector3(piece.leftEyePosition.x,  piece.leftEyePosition.y,  0);
+            leftEye.transform.localPosition = new Vector3(piece.leftEyePosition.x, piece.leftEyePosition.y, 0);
             rightEye.transform.localPosition = new Vector3(piece.rightEyePosition.x, piece.rightEyePosition.y, 0);
 
             mouthSingle.SetActive(!piece.mouthDouble && piece.hasMouth);
-            mouthDouble.SetActive( piece.mouthDouble && piece.hasMouth);
+            mouthDouble.SetActive(piece.mouthDouble && piece.hasMouth);
             if (piece.hasMouth)
                 (piece.mouthDouble ? mouthDouble : mouthSingle)
                     .transform.localPosition = new Vector3(piece.mouthPosition.x, piece.mouthPosition.y, 0);
@@ -43,10 +46,7 @@ namespace Pieces
 
         private void StartBlink()
         {
-            var leftEyeAnim = leftEye ? leftEye.GetComponent<Animator>() : null;
-            var rightEyeAnim = rightEye ? rightEye.GetComponent<Animator>() : null;
-
-            if (leftEyeAnim != null || rightEyeAnim != null)
+            if (animator != null)
                 _blinkRoutine = StartCoroutine(BlinkRoutine());
         }
 
@@ -59,14 +59,10 @@ namespace Pieces
 
         private IEnumerator BlinkRoutine()
         {
-            var leftEyeAnim = leftEye ? leftEye.GetComponent<Animator>() : null;
-            var rightEyeAnim = rightEye ? rightEye.GetComponent<Animator>() : null;
-
             while (true)
             {
                 yield return new WaitForSeconds(Random.Range(blinkIntervalMin, blinkIntervalMax));
-                leftEyeAnim?.SetTrigger("Blink");
-                rightEyeAnim?.SetTrigger("Blink");
+                animator?.SetTrigger(Blink);
             }
         }
 

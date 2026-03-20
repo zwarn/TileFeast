@@ -1111,6 +1111,14 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 873112249586614545, guid: 76bb3caabd0ba43418e1439d3db3ac47, type: 3}
+      propertyPath: allZones.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 873112249586614545, guid: 76bb3caabd0ba43418e1439d3db3ac47, type: 3}
+      propertyPath: 'allZones.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c723682be344b4f4cb8aa248046dcccb, type: 2}
     - target: {fileID: 1305413026165398575, guid: 76bb3caabd0ba43418e1439d3db3ac47, type: 3}
       propertyPath: m_Camera
       value: 

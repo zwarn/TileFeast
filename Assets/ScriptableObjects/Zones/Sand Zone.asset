@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 326435aa2730455fa4abd2ffde12b917, type: 3}
   m_Name: Sand Zone
   m_EditorClassIdentifier: 
-  zoneTile: {fileID: 0}
-  zoneImage: {fileID: 0}
+  zoneTile: {fileID: 11400000, guid: a1cfe600f833a1245b7ccc587a0d581d, type: 2}
+  zoneImage: {fileID: -1966890857, guid: 710906c0d2712734fb97934c752f8828, type: 3}
   zoneRule:
-    rid: -2
+    rid: 5971275488626737229
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 5971275488626737229
+      type: {class: LeaveEmptyForBonusRule, ns: Zones.Rules, asm: TileFeast}
+      data:
+        Points: 0

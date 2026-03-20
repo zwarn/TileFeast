@@ -220,6 +220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8350495319235943036}
   - component: {fileID: 5562277208996622183}
+  - component: {fileID: 4776439165030409637}
   m_Layer: 0
   m_Name: Animation
   m_TagString: Untagged
@@ -262,8 +263,31 @@ MonoBehaviour:
   rightEye: {fileID: 1841247297087675708}
   mouthSingle: {fileID: 6533639101039472664}
   mouthDouble: {fileID: 4449694757384836625}
+  animator: {fileID: 4776439165030409637}
   blinkIntervalMin: 4
   blinkIntervalMax: 10
+--- !u!95 &4776439165030409637
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8589050922222177949}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 88908615a0032df41bae78bb9330bd20, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &807470888768783533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -527,7 +551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6468993269871746394, guid: ef9b602149de826489648473d399ca83, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
