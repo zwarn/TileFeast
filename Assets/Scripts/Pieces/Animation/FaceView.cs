@@ -1,11 +1,15 @@
 using System.Collections;
+using Rules;
 using UnityEngine;
 
 namespace Pieces.Animation
 {
     public class FaceView : MonoBehaviour
     {
-        private static readonly int Blink = Animator.StringToHash("Blink");
+        private static readonly int Blink   = Animator.StringToHash("Blink");
+        private static readonly int Happy   = Animator.StringToHash("Happy");
+        private static readonly int Sad     = Animator.StringToHash("Sad");
+        private static readonly int Neutral = Animator.StringToHash("Neutral");
 
         [SerializeField] private GameObject leftEye;
         [SerializeField] private GameObject rightEye;
@@ -40,6 +44,17 @@ namespace Pieces.Animation
                     .transform.localPosition = new Vector3(piece.mouthPosition.x, piece.mouthPosition.y, 0);
 
             StartBlink();
+        }
+
+        public void SetEmotion(PieceEmotion emotion)
+        {
+            if (animator == null) return;
+            switch (emotion)
+            {
+                case PieceEmotion.Happy:   animator.SetTrigger(Happy);   break;
+                case PieceEmotion.Sad:     animator.SetTrigger(Sad);     break;
+                case PieceEmotion.Neutral: animator.SetTrigger(Neutral); break;
+            }
         }
 
         private void OnDisable() => StopBlink();

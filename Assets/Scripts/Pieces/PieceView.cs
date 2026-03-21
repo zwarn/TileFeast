@@ -1,6 +1,8 @@
 ﻿using Pieces.Animation;
 using Pieces.Aspects;
+using Rules;
 using UnityEngine;
+using Zenject;
 
 namespace Pieces
 {
@@ -10,7 +12,20 @@ namespace Pieces
         [SerializeField] private AspectListView aspectListView;
         [SerializeField] private FaceView _faceView;
 
+        [Inject] private RulesController _rulesController;
+
         private PieceWithRotation _piece;
+        private PieceEmotion? _lastEmotion;
+
+        private void OnEnable()
+        {
+            _rulesController.OnEvaluationChanged += OnEvaluationChanged;
+        }
+
+        private void OnDisable()
+        {
+            _rulesController.OnEvaluationChanged -= OnEvaluationChanged;
+        }
 
         private void Update()
         {
@@ -28,11 +43,10 @@ namespace Pieces
         public void SetData(PieceWithRotation piece)
         {
             if (_piece != null)
-            {
                 _piece.Piece.OnChanged -= OnPieceChanged;
-            }
 
             _piece = piece;
+            _lastEmotion = null;
             gameObject.SetActive(_piece != null);
 
             if (_piece != null)
@@ -49,9 +63,26 @@ namespace Pieces
         private void OnPieceChanged()
         {
             if (_piece != null)
-            {
                 aspectListView.SetData(_piece.Piece);
+        }
+
+        private void OnEvaluationChanged(EmotionEvaluationResult result)
+        {
+            if (_piece == null || _faceView == null) return;
+
+            PieceEmotion emotion = PieceEmotion.Neutral;
+            foreach (var state in result.PieceStates)
+            {
+                if (state.Piece.Piece == _piece.Piece)
+                {
+                    emotion = state.FinalEmotion;
+                    break;
+                }
             }
+
+            if (emotion == _lastEmotion) return;
+            _lastEmotion = emotion;
+            _faceView.SetEmotion(emotion);
         }
     }
 }
