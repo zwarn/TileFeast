@@ -1,4 +1,5 @@
-﻿using Pieces.Aspects;
+﻿using Pieces.Animation;
+using Pieces.Aspects;
 using UnityEngine;
 
 namespace Pieces

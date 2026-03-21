@@ -643,6 +643,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: pupil
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d050eef33c2b1c4cbee6ba37e3bff14
+      internalID: 2125294867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -669,6 +691,7 @@ TextureImporter:
       leftEye_blink4: 1186691055
       leftEye_blink5: -1180030773
       leftEye_idle: -4296760176796813495
+      pupil: 2125294867
       rightEye_blink1: -751362615
       rightEye_blink2: 102766239
       rightEye_blink3: 1756050631

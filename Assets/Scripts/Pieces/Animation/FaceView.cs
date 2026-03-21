@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Pieces
+namespace Pieces.Animation
 {
     public class FaceView : MonoBehaviour
     {
