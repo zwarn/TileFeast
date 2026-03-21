@@ -1,4 +1,3 @@
-﻿using Zones.Rules;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,6 +8,5 @@ namespace Zones
     {
         public TileBase zoneTile;
         public Sprite zoneImage;
-        [SerializeReference] public ZoneRule zoneRule;
     }
 }

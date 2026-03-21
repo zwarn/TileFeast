@@ -80,74 +80,40 @@ MonoBehaviour:
   - {x: 8, y: 9}
   - {x: 7, y: 9}
   - {x: 6, y: 9}
-  scoreRules:
-  - {fileID: 11400000, guid: 7b9dee74e5f95074194cdb504a6d5c1e, type: 2}
-  - {fileID: 11400000, guid: 746233ee92d5bb34aa56832c945e53f9, type: 2}
-  - {fileID: 11400000, guid: 8351ae4a741ce434c8bcdc571c737757, type: 2}
-  placementRules:
-  - {fileID: 11400000, guid: 3f780f7f0f6a8364daaf3b0b4b8c1a76, type: 2}
+  emotionRules: []
+  completionRules:
+  - rule: {fileID: 11400000, guid: 2a8df198ee2832f458ea3f67b5e9248d, type: 2}
+    args:
+      rid: 5971275488626737260
   zones:
   - zoneType: {fileID: 11400000, guid: 068dd79abbfe4734c9e272c51207353b, type: 2}
     positions:
     - {x: 4, y: 3}
     - {x: 5, y: 3}
-    ZoneRule:
-      rid: 7299217930099359840
   - zoneType: {fileID: 11400000, guid: 068dd79abbfe4734c9e272c51207353b, type: 2}
     positions:
     - {x: 4, y: 7}
     - {x: 5, y: 7}
-    ZoneRule:
-      rid: 7299217930099359841
   - zoneType: {fileID: 11400000, guid: 49cda274e4138f945a9c4f3079b1005d, type: 2}
     positions:
     - {x: 6, y: 4}
     - {x: 6, y: 5}
-    ZoneRule:
-      rid: 7299217930099359842
   - zoneType: {fileID: 11400000, guid: 49cda274e4138f945a9c4f3079b1005d, type: 2}
     positions:
     - {x: 4, y: 2}
     - {x: 5, y: 2}
-    ZoneRule:
-      rid: 7299217930099359843
   - zoneType: {fileID: 11400000, guid: db8122c8371d85844809d96def040564, type: 2}
     positions:
     - {x: 4, y: 6}
     - {x: 5, y: 6}
-    ZoneRule:
-      rid: 7299217930099359844
   - zoneType: {fileID: 11400000, guid: db8122c8371d85844809d96def040564, type: 2}
     positions:
     - {x: 7, y: 4}
     - {x: 7, y: 5}
-    ZoneRule:
-      rid: 7299217930099359845
   nextLevel: {fileID: 11400000, guid: e1fffa51900c914448808b83c5f14f71, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 7299217930099359840
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
-      data:
-        AllowedAspect: {fileID: 0}
-    - rid: 7299217930099359841
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
-      data:
-        AllowedAspect: {fileID: 0}
-    - rid: 7299217930099359842
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
-      data:
-        AllowedAspect: {fileID: 0}
-    - rid: 7299217930099359843
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
-      data:
-        AllowedAspect: {fileID: 0}
-    - rid: 7299217930099359844
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
-      data:
-        AllowedAspect: {fileID: 0}
-    - rid: 7299217930099359845
-      type: {class: OnlyAspectAllowedRule, ns: Rules.ZoneRules, asm: TileFeast}
-      data:
-        AllowedAspect: {fileID: 0}
+    - rid: 5971275488626737260
+      type: {class: AllPiecesPlacedArgs, ns: Rules.CompletionRules, asm: TileFeast}
+      data: 

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Core;
 using Pieces;
 using Rules;
-using Rules.PlacementRules;
-using Rules.ScoreRules;
+using Rules.CompletionRules;
+using Rules.EmotionRules;
 using Scenarios;
 using UnityEngine;
 using Zones;
@@ -14,8 +14,8 @@ using Zones;
 namespace Solver
 {
     /// <summary>
-    /// Exhaustive backtracking solver. Construct on the main thread (clones ScriptableObjects),
-    /// then call SolveAsync to run on a background thread.
+    /// Exhaustive backtracking solver. Construct on the main thread, then call SolveAsync
+    /// to run on a background thread. EmotionRuleSOs are stateless, so no cloning is needed.
     /// </summary>
     public class AutoSolver
     {
@@ -32,9 +32,8 @@ namespace Solver
         private readonly List<Piece> _availablePieces;
         private readonly int _maxResults;
 
-        // Cloned rule instances (created on main thread, used on background thread)
-        private readonly List<PlacementRuleSO> _clonedPlacementRules;
-        private readonly List<ScoreRuleSO> _clonedScoreRules;
+        private readonly List<EmotionRuleConfig> _emotionRuleConfigs;
+        private readonly List<CompletionRuleConfig> _completionRuleConfigs;
         private readonly List<Zone> _clonedZones;
 
         // Precomputed unique rotation indices per piece (indexed by _availablePieces index)
@@ -57,14 +56,9 @@ namespace Solver
             _blockedPositions = new HashSet<Vector2Int>(scenario.blockedPositions);
             _availablePieces = scenario.AvailablePieces();
 
-            // Clone rules on main thread (Object.Instantiate requires main thread)
-            _clonedPlacementRules = scenario.placementRules
-                .Select(r => UnityEngine.Object.Instantiate(r))
-                .ToList();
-
-            _clonedScoreRules = scenario.scoreRules
-                .Select(r => UnityEngine.Object.Instantiate(r))
-                .ToList();
+            // Rules are stateless — no cloning needed, just store configs directly
+            _emotionRuleConfigs = scenario.emotionRules.ToList();
+            _completionRuleConfigs = scenario.completionRules.ToList();
 
             _clonedZones = scenario.Zones();
 
@@ -158,36 +152,42 @@ namespace Solver
         {
             var tileArray = RulesHelper.ConvertTiles(_pieceDict, _width, _height);
 
+            // Build a minimal GameState for CompletionRuleSO.IsMet
             var gameState = new GameState(
                 new Vector2Int(_width, _height),
                 _blockedPositions.ToList(),
                 _currentPlacements.ToList(),
-                new List<Piece>(),
+                new List<Piece>(),  // all pieces placed
                 null,
-                _clonedScoreRules,
-                _clonedPlacementRules,
+                _emotionRuleConfigs,
+                _completionRuleConfigs,
                 _clonedZones
             );
 
-            var context = new RuleContext(gameState, tileArray);
+            var context = new EmotionContext(gameState, tileArray, _clonedZones);
 
-            _clonedPlacementRules.ForEach(r => r.Calculate(context));
-            _clonedScoreRules.ForEach(r => r.CalculateScore(context));
-            _clonedZones.ForEach(z => z.Calculate(context));
+            // Evaluate emotions for all placed pieces (stateless — thread safe)
+            var pieceStates = _currentPlacements.Select(placed =>
+            {
+                var effects = _emotionRuleConfigs
+                    .Select(config => config.rule.Evaluate(placed, context, config.args))
+                    .Where(e => e != null)
+                    .ToList();
+                return new PieceEmotionState(placed, effects);
+            }).ToList();
 
-            bool satisfied = _clonedPlacementRules.All(r => r.IsSatisfied())
-                          && _clonedZones.All(z => z.IsSatisfied());
+            var emotionResult = new EmotionEvaluationResult(pieceStates);
 
-            if (!satisfied) return;
+            // Check all completion rules
+            bool completed = _completionRuleConfigs.All(c => c.rule.IsMet(emotionResult, gameState, c.args));
+            if (!completed) return;
 
-            int score = _clonedScoreRules.Sum(r => r.GetScore())
-                      + _clonedZones.Sum(z => z.GetScore());
+            int score = emotionResult.Score;
 
             var result = new SolverResult(_currentPlacements.ToList(), score, true);
 
             lock (_resultsLock)
             {
-                // Insert sorted descending by score
                 int insertAt = _results.Count;
                 for (int i = 0; i < _results.Count; i++)
                 {

@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Board;
-using Zones;
 using Core;
-using Rules.PlacementRules;
-using Rules.ScoreRules;
+using Rules.CompletionRules;
+using Rules.EmotionRules;
 using UnityEngine;
 using Zenject;
+using Zones;
 
 namespace Rules
 {
@@ -17,100 +17,71 @@ namespace Rules
         [Inject] private GameController _gameController;
         [Inject] private ZoneController _zoneController;
 
-        private List<ScoreRuleSO> _scoreRules;
-        private List<PlacementRuleSO> _placementRules;
+        public event Action<EmotionEvaluationResult> OnEvaluationChanged;
+        public event Action<List<EmotionRuleConfig>> OnEmotionRulesReset;
+        public event Action<List<CompletionRuleConfig>> OnCompletionRulesReset;
 
+        private List<EmotionRuleConfig> _emotionRules = new();
+        private List<CompletionRuleConfig> _completionRules = new();
         private Vector2Int _gridSize;
 
-        public Action<List<ScoreRuleSO>> OnScoreRuleReset;
-        public Action<List<PlacementRuleSO>> OnPlacementRuleReset;
+        public EmotionEvaluationResult LastResult { get; private set; } = EmotionEvaluationResult.Empty();
 
         private void OnEnable()
         {
-            _gameController.OnChangeGameState += UpdateState;
-            _gameController.OnBoardChanged += CalculateRules;
+            _gameController.OnChangeGameState += HandleStateChanged;
+            _gameController.OnBoardChanged += Evaluate;
         }
 
         private void OnDisable()
         {
-            _gameController.OnChangeGameState -= UpdateState;
-            _gameController.OnBoardChanged -= CalculateRules;
+            _gameController.OnChangeGameState -= HandleStateChanged;
+            _gameController.OnBoardChanged -= Evaluate;
         }
 
-        public bool SatisfiesRules()
-        {
-            return _placementRules.All(rule => rule.IsSatisfied()) && _zoneController.Zones.All(zone => zone.IsSatisfied());
-        }
+        public bool IsLevelComplete()
+            => _completionRules.All(c => c.rule.IsMet(LastResult, _gameController.CurrentState, c.args));
 
-        public int TotalScore()
-        {
-            var total = _scoreRules.Sum(rule => rule.GetScore()) + _zoneController.Zones.Sum(zone => zone.GetScore());
-            return total;
-        }
+        public int TotalScore() => LastResult.Score;
 
         public void HandleBoardResize(Vector2Int size)
         {
             _gridSize = size;
-            CalculateRules();
-            ScoreRuleResetEvent(_scoreRules);
-            PlacementRuleResetEvent(_placementRules);
+            Evaluate();
+            OnEmotionRulesReset?.Invoke(_emotionRules);
+            OnCompletionRulesReset?.Invoke(_completionRules);
         }
 
-        private void UpdateState(GameState gameState)
+        private void HandleStateChanged(GameState gameState)
         {
-            _scoreRules = gameState.ScoreRules;
-            _placementRules = gameState.PlacementRules;
+            _emotionRules = gameState.EmotionRules;
+            _completionRules = gameState.CompletionRules;
             _gridSize = gameState.GridSize;
-            CalculateRules();
-            ScoreRuleResetEvent(_scoreRules);
-            PlacementRuleResetEvent(_placementRules);
+            Evaluate();
+            OnEmotionRulesReset?.Invoke(_emotionRules);
+            OnCompletionRulesReset?.Invoke(_completionRules);
         }
 
-        private void CalculateRules()
+        private void Evaluate()
         {
-            CalculateScoreRules();
-            CalculatePlacementRules();
-            CalculateZones();
-        }
+            if (_gameController.CurrentState == null) return;
 
-        private void CalculateZones()
-        {
-            var tilesDictionary = _boardController.GetPieceByPosition();
-            var tileArray = RulesHelper.ConvertTiles(tilesDictionary, _gridSize.x, _gridSize.y);
+            var state = _gameController.CurrentState;
+            var tileDict = _boardController.GetPieceByPosition();
+            var tileArray = RulesHelper.ConvertTiles(tileDict, _gridSize.x, _gridSize.y);
+            var context = new EmotionContext(state, tileArray, _zoneController.Zones);
 
-            var context = new RuleContext(_gameController.CurrentState, tileArray);
+            var pieceStates = state.PlacedPieces.Select(placed =>
+            {
+                var effects = _emotionRules
+                    .Select(config => config.rule.Evaluate(placed, context, config.args))
+                    .Where(effect => effect != null)
+                    .ToList();
+                return new PieceEmotionState(placed, effects);
+            }).ToList();
 
-            _zoneController.Zones.ForEach(zone => zone.Calculate(context));
-        }
-
-        private void CalculateScoreRules()
-        {
-            var tilesDictionary = _boardController.GetPieceByPosition();
-            var tileArray = RulesHelper.ConvertTiles(tilesDictionary, _gridSize.x, _gridSize.y);
-
-            var context = new RuleContext(_gameController.CurrentState, tileArray);
-
-            _scoreRules.ForEach(rule => rule.CalculateScore(context));
-        }
-
-        private void CalculatePlacementRules()
-        {
-            var tilesDictionary = _boardController.GetPieceByPosition();
-            var tileArray = RulesHelper.ConvertTiles(tilesDictionary, _gridSize.x, _gridSize.y);
-
-            var context = new RuleContext(_gameController.CurrentState, tileArray);
-
-            _placementRules.ForEach(rule => rule.Calculate(context));
-        }
-
-        private void ScoreRuleResetEvent(List<ScoreRuleSO> scoreRules)
-        {
-            OnScoreRuleReset?.Invoke(scoreRules);
-        }
-
-        private void PlacementRuleResetEvent(List<PlacementRuleSO> placementRules)
-        {
-            OnPlacementRuleReset?.Invoke(placementRules);
+            LastResult = new EmotionEvaluationResult(pieceStates);
+            OnEvaluationChanged?.Invoke(LastResult);
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Zones;
 using Pieces;
-using Rules.PlacementRules;
-using Rules.ScoreRules;
+using Rules.EmotionRules;
+using Rules.CompletionRules;
 using UnityEngine;
 
 namespace Scenarios
@@ -15,8 +15,8 @@ namespace Scenarios
         [SerializeField] private List<PieceSO> availablePieces;
         [SerializeField] private LockedPieceList lockedPieces;
         public List<Vector2Int> blockedPositions;
-        public List<ScoreRuleSO> scoreRules;
-        public List<PlacementRuleSO> placementRules;
+        public List<EmotionRuleConfig> emotionRules;
+        public List<CompletionRuleConfig> completionRules;
         public List<Zone> zones;
         public ScenarioSO nextLevel;
 

@@ -135,8 +135,8 @@ namespace Core
             var success = _boardController.PlacePiece(piece, position);
             if (success)
             {
-                OnBoardChanged?.Invoke();
                 ClearPieceInHand();
+                OnBoardChanged?.Invoke();
             }
         }
 
@@ -187,10 +187,10 @@ namespace Core
             if (placedPiece.IsLocked()) return;
 
             _boardController.RemovePiece(placedPiece);
-            OnBoardChanged?.Invoke();
 
             var piece = new PieceWithRotation(placedPiece.Piece, placedPiece.Rotation);
             SetPieceInHand(piece);
+            OnBoardChanged?.Invoke();
         }
 
         public void MovePieceFromSupplyToHand(Piece piece)

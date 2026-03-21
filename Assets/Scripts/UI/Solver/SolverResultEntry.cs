@@ -21,7 +21,7 @@ namespace UI.Solver
             _onApply = onApply;
             rankLabel.text = $"#{rank}";
             scoreLabel.text = result.Score.ToString();
-            statusLabel.text = result.RulesSatisfied ? "All rules satisfied" : "Rules violated";
+            statusLabel.text = result.RulesSatisfied ? "Completion rules met" : "Not complete";
         }
 
         public void OnPointerClick(PointerEventData eventData)

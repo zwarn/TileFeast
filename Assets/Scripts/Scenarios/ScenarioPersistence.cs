@@ -75,8 +75,8 @@ namespace Scenarios
 
             scenario.gridSize = state.GridSize;
             scenario.blockedPositions = state.BlockedPositions.ToList();
-            scenario.scoreRules = state.ScoreRules.ToList();
-            scenario.placementRules = state.PlacementRules.ToList();
+            scenario.emotionRules = state.EmotionRules.ToList();
+            scenario.completionRules = state.CompletionRules.ToList();
             scenario.zones = state.Zones.Select(z => z.Clone()).ToList();
 
             SetAvailablePieces(scenario, state.AvailablePieces);

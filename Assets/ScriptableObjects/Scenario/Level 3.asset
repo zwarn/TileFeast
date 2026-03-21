@@ -33,50 +33,72 @@ MonoBehaviour:
   - {x: 1, y: 6}
   - {x: 6, y: 1}
   - {x: 6, y: 6}
-  scoreRules: []
-  placementRules:
-  - {fileID: 11400000, guid: 3f780f7f0f6a8364daaf3b0b4b8c1a76, type: 2}
-  - {fileID: 11400000, guid: 43a0dbb8519da1748ae293e3f310b612, type: 2}
-  - {fileID: 11400000, guid: 944888e37d78c494382c3c1044cc977c, type: 2}
-  - {fileID: 11400000, guid: 3afa0bd4187aba940bb3712ab2d2c77f, type: 2}
+  emotionRules:
+  - rule: {fileID: 11400000, guid: da8a15ccef9bfef46842b43ddec1355a, type: 2}
+    args:
+      rid: 5971275488626737257
+  - rule: {fileID: 11400000, guid: da8a15ccef9bfef46842b43ddec1355a, type: 2}
+    args:
+      rid: 5971275488626737258
+  - rule: {fileID: 11400000, guid: da8a15ccef9bfef46842b43ddec1355a, type: 2}
+    args:
+      rid: 5971275488626737259
+  completionRules:
+  - rule: {fileID: 11400000, guid: 79af2369d9739d040a9f24f93e22ddab, type: 2}
+    args:
+      rid: 5971275488626737255
+  - rule: {fileID: 11400000, guid: 7453c19ff40991c4d895ecc4c435d538, type: 2}
+    args:
+      rid: 5971275488626737256
   zones:
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
     - {x: 0, y: 0}
-    ZoneRule:
-      rid: 7299217930099359836
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
     - {x: 0, y: 7}
-    ZoneRule:
-      rid: 7299217930099359837
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
     - {x: 7, y: 0}
-    ZoneRule:
-      rid: 7299217930099359838
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
     - {x: 7, y: 7}
-    ZoneRule:
-      rid: 7299217930099359839
   nextLevel: {fileID: 11400000, guid: b9728e7cf1611024b9361aa1b4138818, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 7299217930099359836
-      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: TileFeast}
+    - rid: 5971275488626737255
+      type: {class: MaxSadArgs, ns: Rules.CompletionRules, asm: TileFeast}
       data:
-        Points: 1
-    - rid: 7299217930099359837
-      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: TileFeast}
+        maximumSadPieces: 0
+    - rid: 5971275488626737256
+      type: {class: MinHappyArgs, ns: Rules.CompletionRules, asm: TileFeast}
       data:
-        Points: 1
-    - rid: 7299217930099359838
-      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: TileFeast}
+        minimumHappyPieces: 12
+    - rid: 5971275488626737257
+      type: {class: AspectAdjacencyArgs, ns: Rules.EmotionRules, asm: TileFeast}
       data:
-        Points: 1
-    - rid: 7299217930099359839
-      type: {class: LeaveEmptyForBonusRule, ns: Rules.ZoneRules, asm: TileFeast}
+        applyToAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        neighborAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        minNeighborCount: 1
+        maxNeighborCount: -1
+        emotionWhenMet: 2
+        emotionWhenNotMet: 0
+    - rid: 5971275488626737258
+      type: {class: AspectAdjacencyArgs, ns: Rules.EmotionRules, asm: TileFeast}
       data:
-        Points: 1
+        applyToAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+        neighborAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+        minNeighborCount: 1
+        maxNeighborCount: -1
+        emotionWhenMet: 2
+        emotionWhenNotMet: 0
+    - rid: 5971275488626737259
+      type: {class: AspectAdjacencyArgs, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
+        neighborAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
+        minNeighborCount: 1
+        maxNeighborCount: -1
+        emotionWhenMet: 2
+        emotionWhenNotMet: 0
