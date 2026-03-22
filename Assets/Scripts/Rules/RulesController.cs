@@ -71,6 +71,14 @@ namespace Rules
             var tileArray = RulesHelper.ConvertTiles(tileDict, _gridSize.x, _gridSize.y);
             var context = new EmotionContext(state, tileArray, _zoneController.Zones);
 
+            // Aspect Source phase: clear and repopulate dynamic aspects
+            foreach (var placed in state.PlacedPieces)
+                placed.DynamicAspects.Clear();
+
+            foreach (var placed in state.PlacedPieces)
+                foreach (var config in state.AspectSources)
+                    config.source.Apply(placed, context, config.args);
+
             var pieceStates = state.PlacedPieces.Select(placed =>
             {
                 var effects = _emotionRules

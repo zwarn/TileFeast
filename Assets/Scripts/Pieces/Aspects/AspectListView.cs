@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -12,9 +12,22 @@ namespace Pieces.Aspects
 
         private readonly List<AspectView> _aspectViews = new();
 
+        public void SetData(Piece piece, IEnumerable<Aspect> allAspects)
+        {
+            var aspects = new List<Aspect>();
+            if (piece.locked)
+                aspects.Add(new Aspect(lockedAspect));
+            aspects.AddRange(allAspects);
+            RenderAspects(aspects, piece);
+        }
+
         public void SetData(Piece piece)
         {
-            var aspects = AddSpecialAspects(piece);
+            RenderAspects(AddSpecialAspects(piece), piece);
+        }
+
+        private void RenderAspects(List<Aspect> aspects, Piece piece)
+        {
             var viewsNeeded = aspects.Count - _aspectViews.Count;
             for (var i = 0; i < viewsNeeded; i++)
             {
@@ -27,7 +40,7 @@ namespace Pieces.Aspects
                 if (i >= aspects.Count)
                 {
                     _aspectViews[i].gameObject.SetActive(false);
-                    return;
+                    continue;
                 }
 
                 _aspectViews[i].SetData(aspects[i]);

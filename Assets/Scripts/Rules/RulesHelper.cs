@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Pieces;
@@ -8,7 +8,7 @@ namespace Rules
 {
     public static class RulesHelper
     {
-        public static List<Piece> GetNeighborPieces(PlacedPiece piece, Piece[,] tilesArray)
+        public static List<PlacedPiece> GetNeighborPieces(PlacedPiece piece, PlacedPiece[,] tilesArray)
         {
             return piece.GetTilePosition().SelectMany(pos => GetNeighborTiles(pos)).Distinct()
                 .Where(pos => InBounds(pos, tilesArray)).Where(pos => !piece.GetTilePosition().Contains(pos))
@@ -16,7 +16,7 @@ namespace Rules
                 .Select(pos => tilesArray[pos.x, pos.y]).Distinct().ToList();
         }
 
-        private static bool InBounds(Vector2Int pos, Piece[,] tilesArray)
+        private static bool InBounds(Vector2Int pos, PlacedPiece[,] tilesArray)
         {
             return pos.x >= 0 && pos.x < tilesArray.GetLength(0)
                               && pos.y >= 0 && pos.y < tilesArray.GetLength(1);
@@ -33,20 +33,20 @@ namespace Rules
             };
         }
 
-        public static Piece[,] ConvertTiles(Dictionary<Vector2Int, PlacedPiece> tiles, int width, int height)
+        public static PlacedPiece[,] ConvertTiles(Dictionary<Vector2Int, PlacedPiece> tiles, int width, int height)
         {
-            var result = new Piece[width, height];
+            var result = new PlacedPiece[width, height];
 
             tiles.ToList().ForEach(pair =>
             {
                 var pos = pair.Key;
-                if (pos.x < width && pos.y < height) result[pos.x, pos.y] = pair.Value.Piece;
+                if (pos.x < width && pos.y < height) result[pos.x, pos.y] = pair.Value;
             });
 
             return result;
         }
 
-        public static List<List<Vector2Int>> GetGroups(Piece[,] tilesArray, Func<Piece, bool> check)
+        public static List<List<Vector2Int>> GetGroups(PlacedPiece[,] tilesArray, Func<PlacedPiece, bool> check)
         {
             var groups = new List<List<Vector2Int>>();
             var visited = new List<Vector2Int>();
@@ -64,7 +64,7 @@ namespace Rules
             return groups;
         }
 
-        private static List<Vector2Int> FloodGroup(Piece[,] tilesArray, Func<Piece, bool> check, int x,
+        private static List<Vector2Int> FloodGroup(PlacedPiece[,] tilesArray, Func<PlacedPiece, bool> check, int x,
             int y,
             List<Vector2Int> visited)
         {
@@ -90,7 +90,7 @@ namespace Rules
             return tiles;
         }
 
-        private static void FindCandidates(Piece[,] tilesArray, Func<Piece, bool> check,
+        private static void FindCandidates(PlacedPiece[,] tilesArray, Func<PlacedPiece, bool> check,
             List<Vector2Int> visited,
             Vector2Int position, Queue<Vector2Int> candidates)
         {
@@ -100,7 +100,7 @@ namespace Rules
                 candidates.Enqueue(candidate);
         }
 
-        private static List<Vector2Int> Neighbors(Piece[,] tiles, int x, int y)
+        private static List<Vector2Int> Neighbors(PlacedPiece[,] tiles, int x, int y)
         {
             var result = new List<Vector2Int>();
 

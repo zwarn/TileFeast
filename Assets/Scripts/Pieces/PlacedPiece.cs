@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Pieces.Aspects;
 using UnityEngine;
 
 namespace Pieces
 {
     public class PlacedPiece
     {
+        public List<Aspect> DynamicAspects { get; } = new();
+        public IEnumerable<Aspect> AllAspects => Piece.aspects.Concat(DynamicAspects);
+
         public PlacedPiece(Piece piece, int rotation, Vector2Int position)
         {
             Piece = piece;

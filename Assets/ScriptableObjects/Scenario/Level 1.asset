@@ -45,6 +45,10 @@ MonoBehaviour:
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
     - {x: 1, y: 3}
+  aspectSources:
+  - source: {fileID: 11400000, guid: 496879b7b52fd4046b421e59a34563a5, type: 2}
+    args:
+      rid: 5971275488626737281
   nextLevel: {fileID: 11400000, guid: a2558fd68420fe840b4d6f046f7f7042, type: 2}
   references:
     version: 2
@@ -56,8 +60,14 @@ MonoBehaviour:
       type: {class: AspectAdjacencyArgs, ns: Rules.EmotionRules, asm: TileFeast}
       data:
         applyToAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
-        neighborAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        neighborAspect: {fileID: 11400000, guid: 50bfa8231b9e7a34f83bd360d8bd7756, type: 2}
         minNeighborCount: 1
         maxNeighborCount: -1
         emotionWhenMet: 0
         emotionWhenNotMet: 2
+    - rid: 5971275488626737281
+      type: {class: ZoneAspectGranterArgs, ns: Rules.AspectSources, asm: TileFeast}
+      data:
+        targetZone: {fileID: 11400000, guid: c723682be344b4f4cb8aa248046dcccb, type: 2}
+        grantedAspect: {fileID: 11400000, guid: 50bfa8231b9e7a34f83bd360d8bd7756, type: 2}
+        includeAdjacent: 0

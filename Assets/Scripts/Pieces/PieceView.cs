@@ -2,6 +2,7 @@
 using Pieces.Aspects;
 using Rules;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Pieces
@@ -10,7 +11,7 @@ namespace Pieces
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private AspectListView aspectListView;
-        [SerializeField] private FaceView _faceView;
+        [SerializeField] private FaceView faceView;
 
         [Inject] private RulesController _rulesController;
 
@@ -56,7 +57,7 @@ namespace Pieces
                 transform.rotation = Quaternion.Euler(0, 0, 90 * _piece.Rotation);
 
                 aspectListView.SetData(piece.Piece);
-                _faceView?.SetData(piece.Piece);
+                faceView?.SetData(piece.Piece);
             }
         }
 
@@ -68,21 +69,26 @@ namespace Pieces
 
         private void OnEvaluationChanged(EmotionEvaluationResult result)
         {
-            if (_piece == null || _faceView == null) return;
+            if (_piece == null) return;
 
             PieceEmotion emotion = PieceEmotion.Neutral;
+            PieceEmotionState matchedState = null;
             foreach (var state in result.PieceStates)
             {
                 if (state.Piece.Piece == _piece.Piece)
                 {
                     emotion = state.FinalEmotion;
+                    matchedState = state;
                     break;
                 }
             }
 
-            if (emotion == _lastEmotion) return;
+            if (matchedState != null)
+                aspectListView.SetData(_piece.Piece, matchedState.Piece.AllAspects);
+
+            if (faceView == null || emotion == _lastEmotion) return;
             _lastEmotion = emotion;
-            _faceView.SetEmotion(emotion);
+            faceView.SetEmotion(emotion);
         }
     }
 }

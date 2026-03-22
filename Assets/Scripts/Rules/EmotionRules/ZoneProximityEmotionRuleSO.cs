@@ -16,7 +16,7 @@ namespace Rules.EmotionRules
         {
             var a = (ZoneProximityArgs)args;
 
-            if (a.applyToAspect != null && !piece.Piece.aspects.Contains(new Aspect(a.applyToAspect)))
+            if (a.applyToAspect != null && !piece.AllAspects.Contains(new Aspect(a.applyToAspect)))
                 return null;
 
             var targetZones = context.Zones.Where(z => z.zoneType == a.targetZoneType).ToList();

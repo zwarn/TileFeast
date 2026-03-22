@@ -8,10 +8,10 @@ namespace Rules
     public class EmotionContext
     {
         public GameState State { get; }
-        public Piece[,] TileArray { get; }
+        public PlacedPiece[,] TileArray { get; }
         public List<Zone> Zones { get; }
 
-        public EmotionContext(GameState state, Piece[,] tileArray, List<Zone> zones)
+        public EmotionContext(GameState state, PlacedPiece[,] tileArray, List<Zone> zones)
         {
             State = state;
             TileArray = tileArray;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Zones;
 using Pieces;
+using Rules.AspectSources;
 using Rules.EmotionRules;
 using Rules.CompletionRules;
 using Scenarios;
@@ -21,10 +22,12 @@ namespace Core
         public List<EmotionRuleConfig> EmotionRules;
         public List<CompletionRuleConfig> CompletionRules;
         public List<Zone> Zones;
+        public List<AspectSourceConfig> AspectSources;
 
         public GameState(Vector2Int gridSize, List<Vector2Int> blockedPositions, List<PlacedPiece> placedPieces,
             List<Piece> availablePieces, PieceWithRotation pieceInHand,
-            List<EmotionRuleConfig> emotionRules, List<CompletionRuleConfig> completionRules, List<Zone> zones)
+            List<EmotionRuleConfig> emotionRules, List<CompletionRuleConfig> completionRules, List<Zone> zones,
+            List<AspectSourceConfig> aspectSources = null)
         {
             GridSize = gridSize;
             BlockedPositions = blockedPositions;
@@ -34,6 +37,7 @@ namespace Core
             EmotionRules = emotionRules;
             CompletionRules = completionRules;
             Zones = zones;
+            AspectSources = aspectSources ?? new List<AspectSourceConfig>();
         }
 
         public GameState(ScenarioSO scenarioSO) :
@@ -44,7 +48,8 @@ namespace Core
                 null,
                 scenarioSO.emotionRules.ToList(),
                 scenarioSO.completionRules.ToList(),
-                scenarioSO.Zones())
+                scenarioSO.Zones(),
+                scenarioSO.AspectSources())
         {
         }
     }

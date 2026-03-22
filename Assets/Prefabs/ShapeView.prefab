@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5975676345572387527
 Transform:
   m_ObjectHideFlags: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 6392780574851368562}
   aspectListView: {fileID: 3586512804109104207}
-  _faceView: {fileID: 5562277208996622183}
+  faceView: {fileID: 5562277208996622183}
 --- !u!210 &2689994336142983072
 SortingGroup:
   m_ObjectHideFlags: 0

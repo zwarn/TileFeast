@@ -12,11 +12,11 @@ namespace Rules.EmotionRules
         {
             var a = (AspectAdjacencyArgs)args;
 
-            if (a.applyToAspect != null && !piece.Piece.aspects.Contains(new Aspect(a.applyToAspect)))
+            if (a.applyToAspect != null && !piece.AllAspects.Contains(new Aspect(a.applyToAspect)))
                 return null;
 
             var neighbors = RulesHelper.GetNeighborPieces(piece, context.TileArray);
-            int count = neighbors.Count(n => n.aspects.Contains(new Aspect(a.neighborAspect)));
+            int count = neighbors.Count(n => n.AllAspects.Contains(new Aspect(a.neighborAspect)));
 
             bool conditionMet = count >= a.minNeighborCount &&
                                 (a.maxNeighborCount < 0 || count <= a.maxNeighborCount);
