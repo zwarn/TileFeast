@@ -27,7 +27,10 @@ MonoBehaviour:
   lockedPieces:
     data: []
   blockedPositions: []
-  emotionRules: []
+  emotionRules:
+  - rule: {fileID: 11400000, guid: da8a15ccef9bfef46842b43ddec1355a, type: 2}
+    args:
+      rid: 5971275488626737273
   completionRules:
   - rule: {fileID: 11400000, guid: 2a8df198ee2832f458ea3f67b5e9248d, type: 2}
     args:
@@ -49,3 +52,12 @@ MonoBehaviour:
     - rid: 5971275488626737252
       type: {class: AllPiecesPlacedArgs, ns: Rules.CompletionRules, asm: TileFeast}
       data: 
+    - rid: 5971275488626737273
+      type: {class: AspectAdjacencyArgs, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        neighborAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        minNeighborCount: 1
+        maxNeighborCount: -1
+        emotionWhenMet: 0
+        emotionWhenNotMet: 2
