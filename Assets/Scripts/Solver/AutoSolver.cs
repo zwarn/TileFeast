@@ -15,7 +15,7 @@ namespace Solver
 {
     /// <summary>
     /// Exhaustive backtracking solver. Construct on the main thread, then call SolveAsync
-    /// to run on a background thread. EmotionRuleSOs are stateless, so no cloning is needed.
+    /// to run on a background thread. Emotion rules are stateless, so no cloning is needed.
     /// </summary>
     public class AutoSolver
     {
@@ -152,7 +152,7 @@ namespace Solver
         {
             var tileArray = RulesHelper.ConvertTiles(_pieceDict, _width, _height);
 
-            // Build a minimal GameState for CompletionRuleSO.IsMet
+            // Build a minimal GameState for CompletionRule.IsMet
             var gameState = new GameState(
                 new Vector2Int(_width, _height),
                 _blockedPositions.ToList(),
@@ -170,7 +170,7 @@ namespace Solver
             var pieceStates = _currentPlacements.Select(placed =>
             {
                 var effects = _emotionRuleConfigs
-                    .Select(config => config.rule.Evaluate(placed, context, config.args))
+                    .Select(config => config.rule.Evaluate(placed, context))
                     .Where(e => e != null)
                     .ToList();
                 return new PieceEmotionState(placed, effects);
@@ -179,7 +179,7 @@ namespace Solver
             var emotionResult = new EmotionEvaluationResult(pieceStates);
 
             // Check all completion rules
-            bool completed = _completionRuleConfigs.All(c => c.rule.IsMet(emotionResult, gameState, c.args));
+            bool completed = _completionRuleConfigs.All(c => c.rule.IsMet(emotionResult, gameState));
             if (!completed) return;
 
             int score = emotionResult.Score;

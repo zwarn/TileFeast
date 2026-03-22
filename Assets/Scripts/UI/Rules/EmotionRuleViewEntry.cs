@@ -10,7 +10,7 @@ namespace UI.Rules
 
         public void SetRule(EmotionRuleConfig config)
         {
-            if (descriptionLabel != null) descriptionLabel.text = config.rule.GetDescription(config.args);
+            if (descriptionLabel != null) descriptionLabel.text = config.rule.GetDescription();
         }
     }
 }

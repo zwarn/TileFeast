@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Pieces;
@@ -7,20 +8,23 @@ using Zones;
 
 namespace Rules.AspectSources
 {
-    [CreateAssetMenu(menuName = "AspectSource/ZoneAspectGranter", fileName = "ZoneAspectGranter")]
-    public class ZoneAspectGranterSO : AspectSourceSO
+    [Serializable]
+    public class ZoneAspectGranter : AspectSource
     {
-        public override void Apply(PlacedPiece piece, EmotionContext context, AspectSourceArgs args)
-        {
-            var a = (ZoneAspectGranterArgs)args;
-            var targetZones = context.Zones.Where(z => z.zoneType == a.targetZone).ToList();
+        public ZoneSO targetZone;
+        public AspectSO grantedAspect;
+        public bool includeAdjacent;
 
-            bool matches = a.includeAdjacent
+        public override void Apply(PlacedPiece piece, EmotionContext context)
+        {
+            var targetZones = context.Zones.Where(z => z.zoneType == targetZone).ToList();
+
+            bool matches = includeAdjacent
                 ? IsOnZoneOrAdjacent(piece, targetZones)
                 : IsOnZone(piece, targetZones);
 
             if (matches)
-                piece.DynamicAspects.Add(new Aspect(a.grantedAspect));
+                piece.DynamicAspects.Add(new Aspect(grantedAspect));
         }
 
         private static bool IsOnZone(PlacedPiece piece, List<Zone> zones)

@@ -23,7 +23,7 @@ namespace UI.Rules
         {
             _config = config;
             _controller = controller;
-            if (descriptionLabel != null) descriptionLabel.text = config.rule.GetDescription(config.args);
+            if (descriptionLabel != null) descriptionLabel.text = config.rule.GetDescription();
             Refresh();
         }
 
@@ -34,9 +34,9 @@ namespace UI.Rules
             var result = _controller.LastResult;
             var state = _gameController.CurrentState;
 
-            if (progressLabel != null) progressLabel.text = _config.rule.GetProgress(result, state, _config.args);
+            if (progressLabel != null) progressLabel.text = _config.rule.GetProgress(result, state);
 
-            bool met = _config.rule.IsMet(result, state, _config.args);
+            bool met = _config.rule.IsMet(result, state);
             if (checkmark != null) checkmark.SetActive(met);
             if (failMark != null) failMark.SetActive(!met);
         }

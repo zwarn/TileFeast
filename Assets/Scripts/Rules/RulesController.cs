@@ -40,7 +40,7 @@ namespace Rules
         }
 
         public bool IsLevelComplete()
-            => _completionRules.All(c => c.rule.IsMet(LastResult, _gameController.CurrentState, c.args));
+            => _completionRules.All(c => c.rule.IsMet(LastResult, _gameController.CurrentState));
 
         public int TotalScore() => LastResult.Score;
 
@@ -77,12 +77,12 @@ namespace Rules
 
             foreach (var placed in state.PlacedPieces)
                 foreach (var config in state.AspectSources)
-                    config.source.Apply(placed, context, config.args);
+                    config.source.Apply(placed, context);
 
             var pieceStates = state.PlacedPieces.Select(placed =>
             {
                 var effects = _emotionRules
-                    .Select(config => config.rule.Evaluate(placed, context, config.args))
+                    .Select(config => config.rule.Evaluate(placed, context))
                     .Where(effect => effect != null)
                     .ToList();
                 return new PieceEmotionState(placed, effects);

@@ -6,9 +6,9 @@ namespace Rules
     {
         public PieceEmotion Emotion { get; }
         public string Reason { get; }
-        public EmotionRuleSO Source { get; }
+        public EmotionRule Source { get; }
 
-        public EmotionEffect(PieceEmotion emotion, string reason, EmotionRuleSO source)
+        public EmotionEffect(PieceEmotion emotion, string reason, EmotionRule source)
         {
             Emotion = emotion;
             Reason = reason;
