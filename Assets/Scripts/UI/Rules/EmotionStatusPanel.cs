@@ -1,6 +1,9 @@
+using Core;
 using Rules;
+using Rules.CompletionRules;
 using Scenarios;
 using TMPro;
+using UI.Common;
 using UnityEngine;
 using Zenject;
 
@@ -8,15 +11,13 @@ namespace UI.Rules
 {
     public class EmotionStatusPanel : MonoBehaviour
     {
-        [SerializeField] private TMP_Text happyLabel;
-        [SerializeField] private TMP_Text neutralLabel;
-        [SerializeField] private TMP_Text sadLabel;
-        [SerializeField] private TMP_Text scoreLabel;
-        [SerializeField] private GameObject completionCheckmark;
-        [SerializeField] private GameObject completionFailMark;
+        [SerializeField] private TMP_Text happinessConditionLabel;
+        [SerializeField] private TMP_Text sadnessConditionLabel;
+        [SerializeField] private Checkmark checkmark;
 
         [Inject] private RulesController _rulesController;
         [Inject] private ScenarioController _scenarioController;
+        [Inject] private GameController _gameController;
 
         private void OnEnable()
         {
@@ -31,14 +32,34 @@ namespace UI.Rules
 
         private void Refresh(EmotionEvaluationResult result)
         {
-            if (happyLabel != null) happyLabel.text = $"Happy: {result.HappyCount}";
-            if (neutralLabel != null) neutralLabel.text = $"Neutral: {result.NeutralCount}";
-            if (sadLabel != null) sadLabel.text = $"Sad: {result.SadCount}";
-            if (scoreLabel != null) scoreLabel.text = $"Score: {result.Score}";
+            var rules = _gameController.CurrentState?.CompletionRules;
+
+            MinHappyCountCompletionRule happyRule = null;
+            MaxSadCountCompletionRule sadRule = null;
+
+            if (rules != null)
+            {
+                foreach (var config in rules)
+                {
+                    if (config.rule is MinHappyCountCompletionRule h) happyRule = h;
+                    else if (config.rule is MaxSadCountCompletionRule s) sadRule = s;
+                }
+            }
+
+            string happyLine = happyRule != null
+                ? $"Happy: {result.HappyCount}/{happyRule.minimumHappyPieces}"
+                : $"Happy: {result.HappyCount}";
+
+            happinessConditionLabel.text = happyLine;
+
+            string sadLine = (sadRule != null)
+                ? $"Sad: {result.SadCount}/{sadRule.maximumSadPieces}"
+                : $"Sad: {result.SadCount}";
+
+            sadnessConditionLabel.text = sadLine;
 
             bool complete = _rulesController.IsLevelComplete();
-            if (completionCheckmark != null) completionCheckmark.SetActive(complete);
-            if (completionFailMark != null) completionFailMark.SetActive(!complete);
+            if (checkmark != null) checkmark.SetState(complete);
         }
 
         public void GoToNextScenario()

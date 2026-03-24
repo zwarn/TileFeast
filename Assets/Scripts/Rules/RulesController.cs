@@ -5,6 +5,7 @@ using Board;
 using Core;
 using Rules.CompletionRules;
 using Rules.EmotionRules;
+using Sirenix.Utilities;
 using UnityEngine;
 using Zenject;
 using Zones;
@@ -40,7 +41,14 @@ namespace Rules
         }
 
         public bool IsLevelComplete()
-            => _completionRules.All(c => c.rule.IsMet(LastResult, _gameController.CurrentState));
+        {
+            if (_completionRules.IsNullOrEmpty())
+            {
+                return true;
+            }
+
+            return _completionRules.All(c => c.rule.IsMet(LastResult, _gameController.CurrentState));
+        }
 
         public int TotalScore() => LastResult.Score;
 
@@ -76,8 +84,8 @@ namespace Rules
                 placed.DynamicAspects.Clear();
 
             foreach (var placed in state.PlacedPieces)
-                foreach (var config in state.AspectSources)
-                    config.source.Apply(placed, context);
+            foreach (var config in state.AspectSources)
+                config.source.Apply(placed, context);
 
             var pieceStates = state.PlacedPieces.Select(placed =>
             {

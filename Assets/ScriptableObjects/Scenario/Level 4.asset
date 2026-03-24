@@ -81,10 +81,7 @@ MonoBehaviour:
   - {x: 7, y: 9}
   - {x: 6, y: 9}
   emotionRules: []
-  completionRules:
-  - rule: {fileID: 11400000, guid: 2a8df198ee2832f458ea3f67b5e9248d, type: 2}
-    args:
-      rid: 5971275488626737260
+  completionRules: []
   zones:
   - zoneType: {fileID: 11400000, guid: 068dd79abbfe4734c9e272c51207353b, type: 2}
     positions:
@@ -110,10 +107,8 @@ MonoBehaviour:
     positions:
     - {x: 7, y: 4}
     - {x: 7, y: 5}
+  aspectSources: []
   nextLevel: {fileID: 11400000, guid: e1fffa51900c914448808b83c5f14f71, type: 2}
   references:
     version: 2
-    RefIds:
-    - rid: 5971275488626737260
-      type: {class: AllPiecesPlacedArgs, ns: Rules.CompletionRules, asm: TileFeast}
-      data: 
+    RefIds: []

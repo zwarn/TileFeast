@@ -11,8 +11,7 @@ namespace Rules
         public int NeutralCount => PieceStates.Count(s => s.FinalEmotion == PieceEmotion.Neutral);
         public int SadCount => PieceStates.Count(s => s.FinalEmotion == PieceEmotion.Sad);
 
-        // Score = number of happy pieces
-        public int Score => HappyCount;
+        public int Score => HappyCount - SadCount;
 
         public EmotionEvaluationResult(List<PieceEmotionState> pieceStates)
         {

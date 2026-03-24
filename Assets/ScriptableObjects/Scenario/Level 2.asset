@@ -34,13 +34,7 @@ MonoBehaviour:
   - {x: 6, y: 1}
   - {x: 6, y: 6}
   emotionRules: []
-  completionRules:
-  - rule: {fileID: 11400000, guid: 79af2369d9739d040a9f24f93e22ddab, type: 2}
-    args:
-      rid: 5971275488626737253
-  - rule: {fileID: 11400000, guid: 7453c19ff40991c4d895ecc4c435d538, type: 2}
-    args:
-      rid: 5971275488626737254
+  completionRules: []
   zones:
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
@@ -54,15 +48,8 @@ MonoBehaviour:
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
     positions:
     - {x: 1, y: 4}
+  aspectSources: []
   nextLevel: {fileID: 11400000, guid: 78d1f350342dbee459d2b10c69100e7e, type: 2}
   references:
     version: 2
-    RefIds:
-    - rid: 5971275488626737253
-      type: {class: MaxSadArgs, ns: Rules.CompletionRules, asm: TileFeast}
-      data:
-        maximumSadPieces: 0
-    - rid: 5971275488626737254
-      type: {class: MinHappyArgs, ns: Rules.CompletionRules, asm: TileFeast}
-      data:
-        minimumHappyPieces: 12
+    RefIds: []

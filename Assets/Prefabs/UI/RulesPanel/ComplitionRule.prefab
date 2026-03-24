@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 8826305483839033994}
   - component: {fileID: 5720869728712096259}
   m_Layer: 5
-  m_Name: ScoreRule
+  m_Name: ComplitionRule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -326,8 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptionLabel: {fileID: 6454196945778898823}
   progressLabel: {fileID: 7102752478463520035}
-  checkmark: {fileID: 7366942419309637840}
-  failMark: {fileID: 782958505835342231}
+  checkmark: {fileID: 5637409075665464854}
 --- !u!114 &5720869728712096259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,18 +444,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcfb8e934888a2049be19c61a7ac0180, type: 3}
---- !u!1 &782958505835342231 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 891778618558239387, guid: bcfb8e934888a2049be19c61a7ac0180, type: 3}
-  m_PrefabInstance: {fileID: 485715244985645836}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4387772109302051869 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4204642473576550161, guid: bcfb8e934888a2049be19c61a7ac0180, type: 3}
   m_PrefabInstance: {fileID: 485715244985645836}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7366942419309637840 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6953901319516670940, guid: bcfb8e934888a2049be19c61a7ac0180, type: 3}
+--- !u!114 &5637409075665464854 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5224600935938266394, guid: bcfb8e934888a2049be19c61a7ac0180, type: 3}
   m_PrefabInstance: {fileID: 485715244985645836}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ca780bf1ec6474f9ed47b0ae436f6e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

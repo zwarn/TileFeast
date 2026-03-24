@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using Rules.AspectSources;
+using Rules.CompletionRules;
+using Rules.EmotionRules;
 using UnityEngine;
 
 namespace Core
@@ -25,6 +28,7 @@ namespace Core
             ValidateBlockedPositions(state, result);
             ValidatePlacedPieces(state, result);
             ValidateZones(state, result);
+            ValidateRules(state, result);
 
             return result;
         }
@@ -107,6 +111,78 @@ namespace Core
                     if (!allZonePositions.Add(pos))
                     {
                         result.AddError($"Zone {i} overlaps with another zone at position {pos}");
+                    }
+                }
+            }
+        }
+
+        private static void ValidateRules(GameState state, GameStateValidationResult result)
+        {
+            if (state.EmotionRules != null)
+            {
+                for (int i = 0; i < state.EmotionRules.Count; i++)
+                {
+                    var config = state.EmotionRules[i];
+                    if (config.rule == null)
+                    {
+                        result.AddError($"Emotion rule at index {i} has no rule assigned");
+                        continue;
+                    }
+
+                    if (config.rule is AspectAdjacencyEmotionRule adj)
+                    {
+                        if (adj.neighborAspect == null)
+                            result.AddError($"AspectAdjacencyEmotionRule at index {i}: neighborAspect is not assigned");
+                    }
+                    else if (config.rule is ZoneProximityEmotionRule zone)
+                    {
+                        if (zone.targetZoneType == null)
+                            result.AddError($"ZoneProximityEmotionRule at index {i}: targetZoneType is not assigned");
+                    }
+                }
+            }
+
+            if (state.CompletionRules != null)
+            {
+                for (int i = 0; i < state.CompletionRules.Count; i++)
+                {
+                    var config = state.CompletionRules[i];
+                    if (config.rule == null)
+                    {
+                        result.AddError($"Completion rule at index {i} has no rule assigned");
+                        continue;
+                    }
+
+                    if (config.rule is MinHappyCountCompletionRule minHappy)
+                    {
+                        if (minHappy.minimumHappyPieces <= 0)
+                            result.AddError($"MinHappyCountCompletionRule at index {i}: minimumHappyPieces must be > 0, got {minHappy.minimumHappyPieces}");
+                    }
+                    else if (config.rule is MaxSadCountCompletionRule maxSad)
+                    {
+                        if (maxSad.maximumSadPieces < 0)
+                            result.AddError($"MaxSadCountCompletionRule at index {i}: maximumSadPieces must be >= 0, got {maxSad.maximumSadPieces}");
+                    }
+                }
+            }
+
+            if (state.AspectSources != null)
+            {
+                for (int i = 0; i < state.AspectSources.Count; i++)
+                {
+                    var config = state.AspectSources[i];
+                    if (config.source == null)
+                    {
+                        result.AddError($"Aspect source at index {i} has no source assigned");
+                        continue;
+                    }
+
+                    if (config.source is ZoneAspectGranter granter)
+                    {
+                        if (granter.targetZone == null)
+                            result.AddError($"ZoneAspectGranter at index {i}: targetZone is not assigned");
+                        if (granter.grantedAspect == null)
+                            result.AddError($"ZoneAspectGranter at index {i}: grantedAspect is not assigned");
                     }
                 }
             }

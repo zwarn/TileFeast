@@ -2,6 +2,7 @@ using Core;
 using Rules;
 using Rules.CompletionRules;
 using TMPro;
+using UI.Common;
 using UnityEngine;
 using Zenject;
 
@@ -11,8 +12,7 @@ namespace UI.Rules
     {
         [SerializeField] private TMP_Text descriptionLabel;
         [SerializeField] private TMP_Text progressLabel;
-        [SerializeField] private GameObject checkmark;
-        [SerializeField] private GameObject failMark;
+        [SerializeField] private Checkmark checkmark;
 
         [Inject] private GameController _gameController;
 
@@ -37,8 +37,7 @@ namespace UI.Rules
             if (progressLabel != null) progressLabel.text = _config.rule.GetProgress(result, state);
 
             bool met = _config.rule.IsMet(result, state);
-            if (checkmark != null) checkmark.SetActive(met);
-            if (failMark != null) failMark.SetActive(!met);
+            checkmark.SetState(met);
         }
     }
 }
