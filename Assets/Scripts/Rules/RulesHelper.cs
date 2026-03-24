@@ -16,6 +16,24 @@ namespace Rules
                 .Select(pos => tilesArray[pos.x, pos.y]).Distinct().ToList();
         }
 
+        /// <summary>All in-bounds cardinal neighbor positions of the piece, excluding its own tiles. Deduplicated.</summary>
+        public static List<Vector2Int> GetNeighborPositions(PlacedPiece piece, PlacedPiece[,] tilesArray)
+        {
+            var ownTiles = piece.GetTilePosition();
+            return ownTiles.SelectMany(GetNeighborTiles).Distinct()
+                .Where(pos => InBounds(pos, tilesArray))
+                .Where(pos => !ownTiles.Contains(pos))
+                .ToList();
+        }
+
+        /// <summary>All cardinal neighbor positions of the piece without bounds filtering, excluding its own tiles. Deduplicated.</summary>
+        public static IEnumerable<Vector2Int> GetRawNeighborPositions(PlacedPiece piece)
+        {
+            var ownTiles = piece.GetTilePosition();
+            return ownTiles.SelectMany(GetNeighborTiles).Distinct()
+                .Where(pos => !ownTiles.Contains(pos));
+        }
+
         private static bool InBounds(Vector2Int pos, PlacedPiece[,] tilesArray)
         {
             return pos.x >= 0 && pos.x < tilesArray.GetLength(0)

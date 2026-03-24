@@ -77,7 +77,7 @@ namespace Rules
             var state = _gameController.CurrentState;
             var tileDict = _boardController.GetPieceByPosition();
             var tileArray = RulesHelper.ConvertTiles(tileDict, _gridSize.x, _gridSize.y);
-            var context = new EmotionContext(state, tileArray, _zoneController.Zones);
+            var context = new EmotionContext(state, tileArray, _zoneController.Zones, LastResult);
 
             // Aspect Source phase: clear and repopulate dynamic aspects
             foreach (var placed in state.PlacedPieces)
