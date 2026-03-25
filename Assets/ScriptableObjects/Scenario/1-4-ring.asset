@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d6ea39cb86f48948228dc942f4fdb44, type: 3}
+  m_Name: 1-4-ring
+  m_EditorClassIdentifier: 
+  gridSize: {x: 6, y: 6}
+  availablePieces:
+  - {fileID: 11400000, guid: 55d6a3d2e653e4d43a0e97a79f0b2a26, type: 2}
+  - {fileID: 11400000, guid: 14eaa3b88b503bd43b35b2e918fb812c, type: 2}
+  - {fileID: 11400000, guid: dd3347f58e5462343852e84b6ea8b478, type: 2}
+  - {fileID: 11400000, guid: f8fd1705ec8328741a6d5909d0ebac23, type: 2}
+  - {fileID: 11400000, guid: 733874eaca6aea046abf35951f4ef541, type: 2}
+  - {fileID: 11400000, guid: 19a9629f65aebb442aae8bb5907c9c9e, type: 2}
+  - {fileID: 11400000, guid: f471bf4eb397abf4998417fad845e8d7, type: 2}
+  - {fileID: 11400000, guid: df192e3a2a654b24da2cd0a5810d5237, type: 2}
+  lockedPieces:
+    data: []
+  blockedPositions:
+  - {x: 3, y: 3}
+  - {x: 4, y: 3}
+  - {x: 4, y: 2}
+  - {x: 0, y: 0}
+  - {x: 0, y: 1}
+  emotionRules:
+  - rule:
+      rid: 5971275602942492773
+  - rule:
+      rid: 5971275602942492774
+  - rule:
+      rid: 5971275602942492775
+  completionRules:
+  - rule:
+      rid: 5971275602942492778
+  zones: []
+  aspectSources: []
+  nextLevel: {fileID: 11400000, guid: 926ef3e22c2ec1b459d12d9cc1a4bcd2, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 5971275602942492773
+      type: {class: AspectAdjacencyEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        neighborAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+        minNeighborCount: 1
+        maxNeighborCount: -1
+        emotionWhenMet: 0
+        emotionWhenNotMet: 1
+    - rid: 5971275602942492774
+      type: {class: AspectAdjacencyEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+        neighborAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
+        minNeighborCount: 1
+        maxNeighborCount: -1
+        emotionWhenMet: 0
+        emotionWhenNotMet: 1
+    - rid: 5971275602942492775
+      type: {class: AspectAdjacencyEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
+        neighborAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        minNeighborCount: 1
+        maxNeighborCount: -1
+        emotionWhenMet: 0
+        emotionWhenNotMet: 1
+    - rid: 5971275602942492778
+      type: {class: MinHappyCountCompletionRule, ns: Rules.CompletionRules, asm: TileFeast}
+      data:
+        minimumHappyPieces: 5

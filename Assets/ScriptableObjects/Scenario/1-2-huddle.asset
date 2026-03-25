@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d6ea39cb86f48948228dc942f4fdb44, type: 3}
+  m_Name: 1-2-huddle
+  m_EditorClassIdentifier: 
+  gridSize: {x: 6, y: 6}
+  availablePieces:
+  - {fileID: 11400000, guid: baa0742a2fd9be94f973cd94b5ea85a0, type: 2}
+  - {fileID: 11400000, guid: bdc7d7edaca3459479155daf23ccfebf, type: 2}
+  - {fileID: 11400000, guid: 222c256883cee384ba3716fc4ea8c33a, type: 2}
+  - {fileID: 11400000, guid: f866b929cc6b2a4419192c8fdfdeb6a2, type: 2}
+  - {fileID: 11400000, guid: fef73a3b0fd826049ae9c84b09ff9d27, type: 2}
+  - {fileID: 11400000, guid: 4f232424f0fecf249a7779daf5b64847, type: 2}
+  - {fileID: 11400000, guid: 2830fbf8aad202b4f95366a9f578d171, type: 2}
+  - {fileID: 11400000, guid: 0bb162a1668fe2b439ca339a47d89026, type: 2}
+  lockedPieces:
+    data: []
+  blockedPositions: []
+  emotionRules:
+  - rule:
+      rid: 5971275602942492776
+  - rule:
+      rid: 5971275602942492777
+  completionRules:
+  - rule:
+      rid: 5971275602942492769
+  zones: []
+  aspectSources: []
+  nextLevel: {fileID: 11400000, guid: bfde0f1dd1e17a042adfec06072487c1, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 5971275602942492769
+      type: {class: MinHappyCountCompletionRule, ns: Rules.CompletionRules, asm: TileFeast}
+      data:
+        minimumHappyPieces: 4
+    - rid: 5971275602942492776
+      type: {class: LargestAspectGroupEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        groupAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        emotionWhenTrue: 0
+        emotionWhenFalse: 1
+    - rid: 5971275602942492777
+      type: {class: LargestAspectGroupEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+        groupAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+        emotionWhenTrue: 0
+        emotionWhenFalse: 1

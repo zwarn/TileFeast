@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d6ea39cb86f48948228dc942f4fdb44, type: 3}
+  m_Name: 1-1-introduction
+  m_EditorClassIdentifier: 
+  gridSize: {x: 5, y: 5}
+  availablePieces:
+  - {fileID: 11400000, guid: fc13f5a09fd924848bb8f8c1b3c618ca, type: 2}
+  - {fileID: 11400000, guid: deccc9439bc64ff4b85f0eb794eb7ac8, type: 2}
+  - {fileID: 11400000, guid: 3e8d45ed764c9a740958a57268152b29, type: 2}
+  - {fileID: 11400000, guid: 320e7ba74dc5de64db83ca8ed555b3b1, type: 2}
+  - {fileID: 11400000, guid: df192e3a2a654b24da2cd0a5810d5237, type: 2}
+  lockedPieces:
+    data: []
+  blockedPositions: []
+  emotionRules:
+  - rule:
+      rid: 5971275602942492763
+  completionRules:
+  - rule:
+      rid: 5971275602942492762
+  zones: []
+  aspectSources: []
+  nextLevel: {fileID: 11400000, guid: d9ba41e061da2db49b2a5619df7777af, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 5971275602942492762
+      type: {class: MinHappyCountCompletionRule, ns: Rules.CompletionRules, asm: TileFeast}
+      data:
+        minimumHappyPieces: 3
+    - rid: 5971275602942492763
+      type: {class: PlacedEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        emotion: 0
