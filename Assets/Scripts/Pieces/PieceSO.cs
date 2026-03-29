@@ -22,6 +22,7 @@ namespace Pieces
         public bool       hasMouth;
         public Vector2    mouthPosition;
         public bool       mouthDouble;
+        public bool       hasEmotions = true;
 
 #if UNITY_EDITOR
 

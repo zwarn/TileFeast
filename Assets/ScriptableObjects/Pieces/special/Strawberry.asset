@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62e16a8951ea40e9aa428fed7175b894, type: 3}
-  m_Name: Red-X-Blocked
+  m_Name: Strawberry
   m_EditorClassIdentifier: 
   shape:
   - {x: 0, y: 0}
-  shapeName: X-Blocked
-  sprite: {fileID: 21300000, guid: bb1ff5a346564994da5ee487ab901a18, type: 3}
-  previewSprite: {fileID: 21300000, guid: 060bdd2bb63f968459b3eb477307452a, type: 3}
+  shapeName: Strwberry
+  sprite: {fileID: 1775669009216684005, guid: 26029e51932be104c9348d0a578d1449, type: 3}
+  previewSprite: {fileID: 1775669009216684005, guid: 26029e51932be104c9348d0a578d1449, type: 3}
   aspects:
-  - {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+  - {fileID: 11400000, guid: 50bfa8231b9e7a34f83bd360d8bd7756, type: 2}
   leftEyePosition: {x: 0, y: 0}
   rightEyePosition: {x: 0, y: 0}
-  hasMouth: 1
+  hasMouth: 0
   mouthPosition: {x: 0, y: 0}
   mouthDouble: 0
+  hasEmotions: 0

@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSize: {x: 5, y: 5}
   availablePieces:
-  - {fileID: 11400000, guid: fc13f5a09fd924848bb8f8c1b3c618ca, type: 2}
+  - {fileID: 11400000, guid: 0a29adb05d252d541a86ecd980d3eeda, type: 2}
   - {fileID: 11400000, guid: deccc9439bc64ff4b85f0eb794eb7ac8, type: 2}
-  - {fileID: 11400000, guid: 3e8d45ed764c9a740958a57268152b29, type: 2}
-  - {fileID: 11400000, guid: 320e7ba74dc5de64db83ca8ed555b3b1, type: 2}
+  - {fileID: 11400000, guid: 0bb162a1668fe2b439ca339a47d89026, type: 2}
+  - {fileID: 11400000, guid: 41c4c5ba7ae24424f922fef16034019a, type: 2}
   - {fileID: 11400000, guid: df192e3a2a654b24da2cd0a5810d5237, type: 2}
   lockedPieces:
     data: []
@@ -41,5 +41,5 @@ MonoBehaviour:
     - rid: 5971275602942492763
       type: {class: PlacedEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
       data:
-        applyToAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        applyToAspect: {fileID: 0}
         emotion: 0

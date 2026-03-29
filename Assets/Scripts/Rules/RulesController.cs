@@ -87,7 +87,9 @@ namespace Rules
             foreach (var config in state.AspectSources)
                 config.source.Apply(placed, context);
 
-            var pieceStates = state.PlacedPieces.Select(placed =>
+            var pieceStates = state.PlacedPieces
+                .Where(placed => placed.Piece.hasEmotions)
+                .Select(placed =>
             {
                 var effects = _emotionRules
                     .Select(config => config.rule.Evaluate(placed, context))

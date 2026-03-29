@@ -27,3 +27,4 @@ MonoBehaviour:
   hasMouth: 1
   mouthPosition: {x: -0.5, y: -1}
   mouthDouble: 1
+  hasEmotions: 1

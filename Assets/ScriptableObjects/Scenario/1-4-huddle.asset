@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d6ea39cb86f48948228dc942f4fdb44, type: 3}
+  m_Name: 1-4-huddle
+  m_EditorClassIdentifier: 
+  gridSize: {x: 7, y: 7}
+  availablePieces:
+  - {fileID: 11400000, guid: 0bb162a1668fe2b439ca339a47d89026, type: 2}
+  - {fileID: 11400000, guid: ec2b5eddbf4c27e48a6cd65957a24c8b, type: 2}
+  - {fileID: 11400000, guid: 733874eaca6aea046abf35951f4ef541, type: 2}
+  - {fileID: 11400000, guid: 0279480b0c7e1584494b1360038dd9a8, type: 2}
+  - {fileID: 11400000, guid: 222c256883cee384ba3716fc4ea8c33a, type: 2}
+  - {fileID: 11400000, guid: 299e19d67d2671545aa5df568b920f38, type: 2}
+  - {fileID: 11400000, guid: a106876c8e8209d4d9dc635420574a4c, type: 2}
+  - {fileID: 11400000, guid: 2830fbf8aad202b4f95366a9f578d171, type: 2}
+  - {fileID: 11400000, guid: fef73a3b0fd826049ae9c84b09ff9d27, type: 2}
+  lockedPieces:
+    data: []
+  blockedPositions:
+  - {x: 5, y: 1}
+  - {x: 5, y: 2}
+  - {x: 6, y: 2}
+  - {x: 2, y: 1}
+  - {x: 0, y: 4}
+  - {x: 4, y: 6}
+  - {x: 3, y: 4}
+  - {x: 2, y: 2}
+  - {x: 1, y: 5}
+  emotionRules:
+  - rule:
+      rid: 5971275697293885527
+  - rule:
+      rid: 5971275697293885528
+  - rule:
+      rid: 5971275697293885529
+  completionRules:
+  - rule:
+      rid: 5971275697293885532
+  zones: []
+  aspectSources: []
+  nextLevel: {fileID: 11400000, guid: 926ef3e22c2ec1b459d12d9cc1a4bcd2, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 5971275697293885527
+      type: {class: LargestAspectGroupEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        groupAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        emotionWhenTrue: 0
+        emotionWhenFalse: 2
+    - rid: 5971275697293885528
+      type: {class: LargestAspectGroupEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+        groupAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+        emotionWhenTrue: 0
+        emotionWhenFalse: 2
+    - rid: 5971275697293885529
+      type: {class: LargestAspectGroupEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
+        groupAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
+        emotionWhenTrue: 0
+        emotionWhenFalse: 2
+    - rid: 5971275697293885532
+      type: {class: MinHappyCountCompletionRule, ns: Rules.CompletionRules, asm: TileFeast}
+      data:
+        minimumHappyPieces: 5

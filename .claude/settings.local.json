@@ -10,7 +10,10 @@
       "Bash(mv HappinessRules EmotionRules)",
       "Bash(mv EmotionRules/HappinessRuleSO.cs EmotionRules/EmotionRuleSO.cs)",
       "Bash(mv EmotionRules/AspectAdjacencyHappinessRuleSO.cs EmotionRules/AspectAdjacencyEmotionRuleSO.cs)",
-      "Bash(find /c/Users/Admin/Documents/GitHub/TileFeast/Assets/Scripts/UI/Rules -type f -name *.cs)"
+      "Bash(find /c/Users/Admin/Documents/GitHub/TileFeast/Assets/Scripts/UI/Rules -type f -name *.cs)",
+      "Bash(find \"C:\\\\Users\\\\Admin\\\\Documents\\\\GitHub\\\\TileFeast\\\\Assets\\\\Scripts\"\" -type f -name \"*.cs \")",
+      "Bash(xargs grep:*)",
+      "Bash(grep -E \"\\\\.cs$\")"
     ]
   }
 }

@@ -19,6 +19,7 @@ namespace Pieces
         public bool       hasMouth;
         public Vector2    mouthPosition;
         public bool       mouthDouble;
+        public bool       hasEmotions;
 
         private bool _locked;
         public bool locked
@@ -52,6 +53,7 @@ namespace Pieces
             hasMouth         = pieceSO.hasMouth;
             mouthPosition    = pieceSO.mouthPosition;
             mouthDouble      = pieceSO.mouthDouble;
+            hasEmotions      = pieceSO.hasEmotions;
         }
     }
 }

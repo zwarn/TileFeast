@@ -12,32 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6ea39cb86f48948228dc942f4fdb44, type: 3}
   m_Name: 1-3-solitude
   m_EditorClassIdentifier: 
-  gridSize: {x: 6, y: 6}
+  gridSize: {x: 7, y: 7}
   availablePieces:
-  - {fileID: 11400000, guid: 222c256883cee384ba3716fc4ea8c33a, type: 2}
-  - {fileID: 11400000, guid: 0bb162a1668fe2b439ca339a47d89026, type: 2}
-  - {fileID: 11400000, guid: 222c256883cee384ba3716fc4ea8c33a, type: 2}
+  - {fileID: 11400000, guid: fcaf821bdea451b41a3ee00a1862e83e, type: 2}
+  - {fileID: 11400000, guid: fef73a3b0fd826049ae9c84b09ff9d27, type: 2}
+  - {fileID: 11400000, guid: 83a70b8f7c95ee14093f95fd91761020, type: 2}
+  - {fileID: 11400000, guid: 608aba85173cd66428cb551f5ae9eca1, type: 2}
+  - {fileID: 11400000, guid: 97c08058cdfae2843b6fe353e37cbd7a, type: 2}
+  - {fileID: 11400000, guid: 8f6815ee64b22e942ab951310744e423, type: 2}
+  - {fileID: 11400000, guid: 8f6815ee64b22e942ab951310744e423, type: 2}
   - {fileID: 11400000, guid: ddd570f5fd9a5b6488ef2524ca1e3306, type: 2}
-  - {fileID: 11400000, guid: 222c256883cee384ba3716fc4ea8c33a, type: 2}
+  - {fileID: 11400000, guid: 97b43db86725f4540b90c9a8993c49f7, type: 2}
+  - {fileID: 11400000, guid: 82943caaf42c2df49b177a2efe26784c, type: 2}
+  - {fileID: 11400000, guid: 5c305baddf7add94f835c1de77003fe2, type: 2}
   lockedPieces:
     data: []
-  blockedPositions: []
+  blockedPositions:
+  - {x: 0, y: 2}
+  - {x: 0, y: 0}
   emotionRules:
   - rule:
       rid: 5971275602942492768
+  - rule:
+      rid: 5971275697293885524
   completionRules:
   - rule:
       rid: 5971275602942492764
   zones: []
   aspectSources: []
-  nextLevel: {fileID: 11400000, guid: e7c9dcf272dbd814f961cb3f4b2357ea, type: 2}
+  nextLevel: {fileID: 11400000, guid: bfb6a2f7c66a35949b154966c466fd52, type: 2}
   references:
     version: 2
     RefIds:
     - rid: 5971275602942492764
       type: {class: MinHappyCountCompletionRule, ns: Rules.CompletionRules, asm: TileFeast}
       data:
-        minimumHappyPieces: 3
+        minimumHappyPieces: 5
     - rid: 5971275602942492768
       type: {class: AspectAdjacencyEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
       data:
@@ -47,3 +57,12 @@ MonoBehaviour:
         maxNeighborCount: -1
         emotionWhenMet: 2
         emotionWhenNotMet: 0
+    - rid: 5971275697293885524
+      type: {class: AspectAdjacencyEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+        neighborAspect: {fileID: 11400000, guid: 50bfa8231b9e7a34f83bd360d8bd7756, type: 2}
+        minNeighborCount: 1
+        maxNeighborCount: -1
+        emotionWhenMet: 0
+        emotionWhenNotMet: 2

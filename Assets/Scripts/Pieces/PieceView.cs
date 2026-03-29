@@ -70,6 +70,7 @@ namespace Pieces
         private void OnEvaluationChanged(EmotionEvaluationResult result)
         {
             if (_piece == null) return;
+            if (!_piece.Piece.hasEmotions) return;
 
             PieceEmotion emotion = PieceEmotion.Neutral;
             PieceEmotionState matchedState = null;

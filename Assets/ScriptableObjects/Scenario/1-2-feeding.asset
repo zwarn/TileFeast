@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d6ea39cb86f48948228dc942f4fdb44, type: 3}
+  m_Name: 1-2-feeding
+  m_EditorClassIdentifier: 
+  gridSize: {x: 6, y: 6}
+  availablePieces:
+  - {fileID: 11400000, guid: f471bf4eb397abf4998417fad845e8d7, type: 2}
+  - {fileID: 11400000, guid: 222c256883cee384ba3716fc4ea8c33a, type: 2}
+  - {fileID: 11400000, guid: eacde9b1ff9c4fb4cbd4eef0e6b0bcbf, type: 2}
+  - {fileID: 11400000, guid: 3e8d45ed764c9a740958a57268152b29, type: 2}
+  - {fileID: 11400000, guid: 222c256883cee384ba3716fc4ea8c33a, type: 2}
+  - {fileID: 11400000, guid: 15f218341685c614987477f6beb06c15, type: 2}
+  - {fileID: 11400000, guid: 55d6a3d2e653e4d43a0e97a79f0b2a26, type: 2}
+  - {fileID: 11400000, guid: 320e7ba74dc5de64db83ca8ed555b3b1, type: 2}
+  lockedPieces:
+    data:
+    - type:
+        piece: {fileID: 11400000, guid: fcaf821bdea451b41a3ee00a1862e83e, type: 2}
+      instances:
+      - position: {x: 1, y: 2}
+        rotation: 0
+      - position: {x: 3, y: 3}
+        rotation: 0
+  blockedPositions:
+  - {x: 4, y: 0}
+  - {x: 3, y: 0}
+  emotionRules:
+  - rule:
+      rid: 5971275697293885521
+  completionRules:
+  - rule:
+      rid: 5971275602942492769
+  zones: []
+  aspectSources: []
+  nextLevel: {fileID: 11400000, guid: bfde0f1dd1e17a042adfec06072487c1, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 5971275602942492769
+      type: {class: MinHappyCountCompletionRule, ns: Rules.CompletionRules, asm: TileFeast}
+      data:
+        minimumHappyPieces: 4
+    - rid: 5971275697293885521
+      type: {class: AspectAdjacencyEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        applyToAspect: {fileID: 0}
+        neighborAspect: {fileID: 11400000, guid: 50bfa8231b9e7a34f83bd360d8bd7756, type: 2}
+        minNeighborCount: 1
+        maxNeighborCount: -1
+        emotionWhenMet: 0
+        emotionWhenNotMet: 2

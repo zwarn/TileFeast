@@ -32,6 +32,12 @@ namespace Pieces.Animation
                 return;
             }
 
+            if (!piece.hasEmotions)
+            {
+                SetAllActive(false);
+                return;
+            }
+
             SetAllActive(true);
 
             leftEye.transform.localPosition = new Vector3(piece.leftEyePosition.x, piece.leftEyePosition.y, 0);
