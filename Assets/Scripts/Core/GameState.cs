@@ -17,6 +17,8 @@ namespace Core
         public Vector2Int GridSize;
         public List<Piece> AvailablePieces;
         public List<Vector2Int> BlockedPositions;
+        public List<Vector2Int> HorizontalWalls;
+        public List<Vector2Int> VerticalWalls;
         public PieceWithRotation PieceInHand;
         public List<PlacedPiece> PlacedPieces;
         public List<EmotionRuleConfig> EmotionRules;
@@ -27,10 +29,14 @@ namespace Core
         public GameState(Vector2Int gridSize, List<Vector2Int> blockedPositions, List<PlacedPiece> placedPieces,
             List<Piece> availablePieces, PieceWithRotation pieceInHand,
             List<EmotionRuleConfig> emotionRules, List<CompletionRuleConfig> completionRules, List<Zone> zones,
-            List<AspectSourceConfig> aspectSources = null)
+            List<AspectSourceConfig> aspectSources = null,
+            List<Vector2Int> horizontalWalls = null,
+            List<Vector2Int> verticalWalls = null)
         {
             GridSize = gridSize;
             BlockedPositions = blockedPositions;
+            HorizontalWalls = horizontalWalls ?? new List<Vector2Int>();
+            VerticalWalls = verticalWalls ?? new List<Vector2Int>();
             PlacedPieces = placedPieces;
             AvailablePieces = availablePieces;
             PieceInHand = pieceInHand;
@@ -49,7 +55,9 @@ namespace Core
                 scenarioSO.emotionRules.ToList(),
                 scenarioSO.completionRules.ToList(),
                 scenarioSO.Zones(),
-                scenarioSO.AspectSources())
+                scenarioSO.AspectSources(),
+                scenarioSO.horizontalWalls?.ToList() ?? new List<Vector2Int>(),
+                scenarioSO.verticalWalls?.ToList() ?? new List<Vector2Int>())
         {
         }
     }

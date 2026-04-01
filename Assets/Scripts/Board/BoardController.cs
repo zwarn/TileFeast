@@ -16,6 +16,8 @@ namespace Board
 
         private List<PlacedPiece> _pieces = new();
         private List<Vector2Int> _blockPositions = new();
+        private List<Vector2Int> _horizontalWalls = new();
+        private List<Vector2Int> _verticalWalls = new();
 
         public List<PlacedPiece> Pieces => _pieces.ToList();
 
@@ -41,6 +43,8 @@ namespace Board
         {
             _pieces = newState.PlacedPieces;
             _blockPositions = newState.BlockedPositions;
+            _horizontalWalls = newState.HorizontalWalls;
+            _verticalWalls = newState.VerticalWalls;
             ResetBoardSize(newState.GridSize);
             RebuildPiecesByPosition();
             BoardResetEvent(Pieces);
@@ -54,10 +58,16 @@ namespace Board
             {
                 MovePieces(translate);
                 MoveBlockedPositions(translate);
+                MoveWalls(_horizontalWalls, translate);
+                MoveWalls(_verticalWalls, translate);
             }
 
             // Remove blocked positions that are now out of bounds
             _blockPositions.RemoveAll(pos => !InBounds(pos));
+
+            // Remove walls that are now out of bounds
+            _horizontalWalls.RemoveAll(w => w.x < 0 || w.x >= _width || w.y < 0 || w.y >= _height - 1);
+            _verticalWalls.RemoveAll(w => w.x < 0 || w.x >= _width - 1 || w.y < 0 || w.y >= _height);
 
             // Rebuild position dictionary BEFORE validation so RemovePiece works correctly
             RebuildPiecesByPosition();
@@ -78,9 +88,13 @@ namespace Board
         private void MoveBlockedPositions(Vector2Int translate)
         {
             for (int i = 0; i < _blockPositions.Count; i++)
-            {
                 _blockPositions[i] += translate;
-            }
+        }
+
+        private void MoveWalls(List<Vector2Int> walls, Vector2Int translate)
+        {
+            for (int i = 0; i < walls.Count; i++)
+                walls[i] += translate;
         }
 
         private void MovePieces(Vector2Int translate)
@@ -137,7 +151,20 @@ namespace Board
 
         public bool IsValid(List<Vector2Int> tiles)
         {
-            return tiles.TrueForAll(IsValid);
+            return tiles.TrueForAll(IsValid) && !CrossesWall(tiles);
+        }
+
+        private bool CrossesWall(List<Vector2Int> tiles)
+        {
+            var tileSet = new HashSet<Vector2Int>(tiles);
+            foreach (var t in tiles)
+            {
+                if (tileSet.Contains(new Vector2Int(t.x, t.y + 1)) && _horizontalWalls.Contains(t))
+                    return true;
+                if (tileSet.Contains(new Vector2Int(t.x + 1, t.y)) && _verticalWalls.Contains(t))
+                    return true;
+            }
+            return false;
         }
 
         public bool IsValid(Vector2Int position)

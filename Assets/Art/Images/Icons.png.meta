@@ -1502,6 +1502,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Icons_VerticalWall
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd39ca4c603b4d3478f2caf5c71870ce
+      internalID: -1710825571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons_HorizontalWall
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 766e1424782d10e4288c24c6f4e74757
+      internalID: 699320953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -1577,9 +1621,11 @@ TextureImporter:
       Icons_62: -2006460959
       Icons_63: 540810025
       Icons_Compute: -1024690757
+      Icons_HorizontalWall: 699320953
       Icons_RemovePiece: -566094424
       Icons_Rules: -156707132
       Icons_Save: -1105771084
+      Icons_VerticalWall: -1710825571
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

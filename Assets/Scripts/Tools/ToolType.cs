@@ -11,5 +11,7 @@
         RemovePieceTool,
         SaveTool,
         CalculateTool,
+        HorizontalWallTool,
+        VerticalWallTool,
     }
 }

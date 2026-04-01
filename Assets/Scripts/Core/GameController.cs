@@ -96,6 +96,74 @@ namespace Core
             OnBoardChanged?.Invoke();
         }
 
+        public void AddHorizontalWall(Vector2Int pos)
+        {
+            if (!IsValidHorizontalWallPosition(pos)) return;
+            if (CurrentState.HorizontalWalls.Contains(pos)) return;
+            if (AnyPlacedPieceCrossesHorizontalWall(pos)) return;
+
+            CurrentState.HorizontalWalls.Add(pos);
+            OnBoardChanged?.Invoke();
+        }
+
+        public void RemoveHorizontalWall(Vector2Int pos)
+        {
+            if (!CurrentState.HorizontalWalls.Remove(pos)) return;
+            OnBoardChanged?.Invoke();
+        }
+
+        public void AddVerticalWall(Vector2Int pos)
+        {
+            if (!IsValidVerticalWallPosition(pos)) return;
+            if (CurrentState.VerticalWalls.Contains(pos)) return;
+            if (AnyPlacedPieceCrossesVerticalWall(pos)) return;
+
+            CurrentState.VerticalWalls.Add(pos);
+            OnBoardChanged?.Invoke();
+        }
+
+        public void RemoveVerticalWall(Vector2Int pos)
+        {
+            if (!CurrentState.VerticalWalls.Remove(pos)) return;
+            OnBoardChanged?.Invoke();
+        }
+
+        private bool IsValidHorizontalWallPosition(Vector2Int pos)
+        {
+            return pos.x >= 0 && pos.x < CurrentState.GridSize.x &&
+                   pos.y >= 0 && pos.y < CurrentState.GridSize.y - 1;
+        }
+
+        private bool IsValidVerticalWallPosition(Vector2Int pos)
+        {
+            return pos.x >= 0 && pos.x < CurrentState.GridSize.x - 1 &&
+                   pos.y >= 0 && pos.y < CurrentState.GridSize.y;
+        }
+
+        private bool AnyPlacedPieceCrossesHorizontalWall(Vector2Int wallPos)
+        {
+            var above = new Vector2Int(wallPos.x, wallPos.y + 1);
+            foreach (var piece in CurrentState.PlacedPieces)
+            {
+                var tiles = new HashSet<Vector2Int>(piece.GetTilePosition());
+                if (tiles.Contains(wallPos) && tiles.Contains(above))
+                    return true;
+            }
+            return false;
+        }
+
+        private bool AnyPlacedPieceCrossesVerticalWall(Vector2Int wallPos)
+        {
+            var right = new Vector2Int(wallPos.x + 1, wallPos.y);
+            foreach (var piece in CurrentState.PlacedPieces)
+            {
+                var tiles = new HashSet<Vector2Int>(piece.GetTilePosition());
+                if (tiles.Contains(wallPos) && tiles.Contains(right))
+                    return true;
+            }
+            return false;
+        }
+
         public Zone PaintZoneTile(Vector2Int position, ZoneSO zoneType, Zone zone)
         {
             if (!IsWithinBounds(position)) return zone;

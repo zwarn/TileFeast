@@ -16,6 +16,8 @@ namespace Scenarios
         [SerializeField] private List<PieceSO> availablePieces;
         [SerializeField] private LockedPieceList lockedPieces;
         public List<Vector2Int> blockedPositions;
+        public List<Vector2Int> horizontalWalls = new();
+        public List<Vector2Int> verticalWalls = new();
         public List<EmotionRuleConfig> emotionRules;
         public List<CompletionRuleConfig> completionRules;
         public List<Zone> zones;

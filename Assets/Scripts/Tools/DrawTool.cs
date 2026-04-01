@@ -80,7 +80,7 @@ namespace Tools
             gameObject.SetActive(false);
         }
 
-        protected Vector2Int GetGridPosition()
+        protected virtual Vector2Int GetGridPosition()
         {
             var worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             return (Vector2Int)grid.WorldToCell(worldPos);

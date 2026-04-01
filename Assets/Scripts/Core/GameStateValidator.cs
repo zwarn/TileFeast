@@ -26,6 +26,8 @@ namespace Core
 
             ValidateGridSize(state, result);
             ValidateBlockedPositions(state, result);
+            ValidateHorizontalWalls(state, result);
+            ValidateVerticalWalls(state, result);
             ValidatePlacedPieces(state, result);
             ValidateZones(state, result);
             ValidateRules(state, result);
@@ -50,6 +52,34 @@ namespace Core
                 if (!IsWithinBounds(pos, state.GridSize))
                 {
                     result.AddError($"Blocked position {pos} is outside grid bounds {state.GridSize}");
+                }
+            }
+        }
+
+        private static void ValidateHorizontalWalls(GameState state, GameStateValidationResult result)
+        {
+            if (state.HorizontalWalls == null) return;
+
+            foreach (var wall in state.HorizontalWalls)
+            {
+                if (wall.x < 0 || wall.x >= state.GridSize.x ||
+                    wall.y < 0 || wall.y >= state.GridSize.y - 1)
+                {
+                    result.AddError($"Horizontal wall {wall} is outside valid range for grid {state.GridSize}");
+                }
+            }
+        }
+
+        private static void ValidateVerticalWalls(GameState state, GameStateValidationResult result)
+        {
+            if (state.VerticalWalls == null) return;
+
+            foreach (var wall in state.VerticalWalls)
+            {
+                if (wall.x < 0 || wall.x >= state.GridSize.x - 1 ||
+                    wall.y < 0 || wall.y >= state.GridSize.y)
+                {
+                    result.AddError($"Vertical wall {wall} is outside valid range for grid {state.GridSize}");
                 }
             }
         }
@@ -80,6 +110,24 @@ namespace Core
                     if (!occupiedPositions.Add(tilePos))
                     {
                         result.AddError($"Multiple pieces overlap at position {tilePos}");
+                    }
+                }
+
+                var tileSet = new HashSet<Vector2Int>(tilePositions);
+                if (state.HorizontalWalls != null)
+                {
+                    foreach (var wall in state.HorizontalWalls)
+                    {
+                        if (tileSet.Contains(wall) && tileSet.Contains(new Vector2Int(wall.x, wall.y + 1)))
+                            result.AddError($"Piece at {placedPiece.Position} crosses horizontal wall at {wall}");
+                    }
+                }
+                if (state.VerticalWalls != null)
+                {
+                    foreach (var wall in state.VerticalWalls)
+                    {
+                        if (tileSet.Contains(wall) && tileSet.Contains(new Vector2Int(wall.x + 1, wall.y)))
+                            result.AddError($"Piece at {placedPiece.Position} crosses vertical wall at {wall}");
                     }
                 }
             }
