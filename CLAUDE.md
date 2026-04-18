@@ -4,114 +4,94 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-TileFeast is a tile placement puzzle game built in Unity 6000.0.23f1. Players place puzzle pieces on a grid board, with scoring based on connected aspects (piece attributes) and zone rules.
+TileFeast is a tile placement puzzle game built in Unity 6000.0.23f1. Players place puzzle pieces on a grid board; each placed piece is evaluated against "happiness rules" that assign it an emotion (Happy/Neutral/Sad), and scenarios are won by satisfying "completion rules" over the resulting emotion state.
 
 ## Build & Development
 
-This is a Unity project - open with Unity Hub or Unity Editor (version 6000.0.23f1).
+Unity project — open with Unity Hub (version 6000.0.23f1). `TileFeast.sln` for IDE integration (Rider/Visual Studio). There is no CLI test suite; EditMode tests live in `TileFeast.Tests.EditMode.csproj` and run via the Unity Test Runner.
 
-**Solution:** `TileFeast.sln` for IDE integration (Rider, Visual Studio)
-
-**Key packages:**
-- Universal Render Pipeline (URP) 17.0.3
-- Input System 1.11.2
-- Zenject (dependency injection) - via Plugins folder
-- Sirenix Odin Inspector - via Plugins folder
+Key packages: URP 17.0.3, Input System 1.11.2, Zenject (Plugins), Sirenix Odin Inspector (Plugins).
 
 ## Architecture
 
 ### Dependency Injection
 
-Uses Zenject framework. All main controllers are registered in `Assets/Scripts/Zenject/MainInstaller.cs`:
-- `GameController` - Central game logic and input handling
-- `BoardController` - Piece placement/removal on grid
-- `ToolController` - Player tool/hand management
-- `PieceSupplyController` - Available pieces inventory
-- `RulesController` - Rule validation
-- `ScenarioController` - Level loading
-- `HighlightController` - Visual placement feedback
+All controllers are bound in `Assets/Scripts/Infrastructure/MainInstaller.cs` as `FromInstance` singletons (serialized scene references). When adding a new controller, register it there.
 
-### Core Systems
+Currently bound: `ToolController`, `BoardController`, `PieceSupplyController`, `RulesController`, `ScenarioController`, `ScenarioPersistence`, `EditorModeController`, `GameController`, `HighlightController`, `ZoneController`, `CameraController`, `PieceRepository`, `SolverRunner`, plus individual tool instances (`GrabTool`, `ZoneTool`, `ShapeTool`).
 
-**GameState** (`Core/GameState.cs`) - Holds all game state:
-- Grid size, blocked positions
-- Placed pieces, available pieces, piece in hand
-- Active placement rules, score rules, zones
+### Core flow
 
-**GameController** (`Core/GameController.cs`) - Central coordinator:
-- Loads scenarios via `LoadScenario(ScenarioSO)`
-- Routes input to ToolController (Q/E or mouse scroll for rotation, right-click)
-- Fires `OnChangeGameState` and `OnBoardChanged` events
+- `Core/GameState.cs` — immutable-ish container: `GridSize`, blocked positions, `PlacedPieces`, `AvailablePieces`, `PieceInHand`, `HappinessRules`, `CompletionRules`, `Zones`.
+- `Core/GameController.cs` — central coordinator. `LoadScenario(ScenarioSO)`, `SpawnPiece`, `ReturnAllNonLockedPiecesToSupply`. Fires `OnChangeGameState` and `OnBoardChanged`.
+- `Board/BoardController.cs` — grid management. `PlacePiece`, `RemovePiece`, `IsValid`, `GetPieceByPosition`. Events: `OnBoardReset`, `OnPiecePlaced`, `OnPieceRemoved`.
+- `Tools/ToolController.cs` — routes input to the active `ToolBase`. Tools include `GrabTool` (pick/place), `ZoneTool`, `ShapeTool`, wall/draw tools, etc.
 
-**BoardController** (`Board/BoardController.cs`) - Grid management:
-- Validates placement (bounds, blocked, empty)
-- Tracks pieces by position via dictionary
-- Events: `OnBoardReset`, `OnPiecePlaced`, `OnPieceRemoved`
+### Piece / shape model
 
-### Data Model
+- `Piece` — base data (shape, sprite, aspects, locked flag). `PieceSO` is the asset form. `PieceWithRotation` = piece + rotation. `PlacedPiece` = piece + rotation + `Position`.
+- `Pieces/ShapeHelper.cs` — shape math: `Rotate`, `Normalize`, `AreShapesEqual`, `GetAllNormalizedRotations` (used for deduplication by the solver).
+- Rotation convention: 0 = identity, 1 = 90° CW (−y,x), 2 = 180° (−x,−y), 3 = 270° CW (y,−x). `PlacedPiece.GetTilePosition()` applies rotation then translates by `Position`.
 
-**Piece types:**
-- `Piece` - Base piece data (shape, sprite, aspects, locked flag)
-- `PieceSO` - ScriptableObject asset defining a piece
-- `PieceWithRotation` - Piece instance with rotation state
-- `PlacedPiece` - Piece placed on board with position
+### Emotion rule system (`Assets/Scripts/Rules/`)
 
-**ScenarioSO** (`Scenario/ScenarioSO.cs`) - Level configuration asset containing:
-- Grid size and blocked positions
-- Available and locked pieces
-- Placement rules, score rules, zones
-- Next level reference
+Replaces the older PlacementRule/ScoreRule/ZoneRule model — do NOT add new rules in those old shapes.
 
-### Rules System
+- `HappinessRuleSO` — stateless `Evaluate(PlacedPiece, EmotionContext) → EmotionEffect?`. Implementations live under `Rules/EmotionRules/`.
+- `EmotionEffect` — `{ PieceEmotion Emotion, string Reason, HappinessRuleSO Source }`.
+- `PieceEmotionState` — a piece's accumulated effects; `FinalEmotion` = most negative wins (`PieceEmotion` enum: Happy=0, Neutral=1, Sad=2; cast to int).
+- `EmotionEvaluationResult` — aggregated `PieceStates`, `HappyCount`, `NeutralCount`, `SadCount`. Score = `HappyCount`.
+- `CompletionRuleSO` — stateless `IsMet(EmotionEvaluationResult, GameState)`. Implementations under `Rules/CompletionRules/`.
+- `RulesController` — evaluates state and fires `OnEvaluationChanged`, `OnHappinessRulesReset`, `OnCompletionRulesReset`.
+- `Rules/RulesHelper.cs` — `ConvertTiles(Dict<Vector2Int, PlacedPiece>, w, h)`, `GetGroups`, `GetNeighborPieces` — use these rather than reimplementing adjacency.
+- `Rules/` also contains `AspectSources/`, `Checks/`, `Filters/`, `Components/`, `Conclusions/` — composable building blocks used to assemble rule SOs in the inspector.
 
-Located in `Assets/Scripts/Rules/`:
+Zones are pure spatial markers (`Zones/Zone.cs`, no embedded rule); any zone-aware behavior comes from a happiness rule that consults `EmotionContext.Zones`.
 
-**Placement Rules** (`PlacementRules/`) - Validate piece placement:
-- `PlacementRuleSO` - Base class
-- `PlacementRuleAspectAdjacencySO` - Aspect adjacency requirements
+### Scenario
 
-**Score Rules** (`ScoreRules/`) - Calculate points:
-- `ScoreRuleSO` - Base class
-- `BiggestConnectedAspectScoreRuleSO` - Points for connected aspects
+`Scenarios/ScenarioSO.cs` — level asset. Holds grid size, blocked positions, available + locked pieces, happiness rules, completion rules, zones, next-level reference. `ScenarioController` loads; `ScenarioPersistence` serializes edits from the in-game editor.
 
-**Zone Rules** (`Board/Zone/`) - Region-specific rules:
-- `OnlyAspectAllowedRuleSO` - Restrict aspects in zones
-- `LeaveEmptyForBonusRuleSO` - Bonus for empty spaces
+### Solver (`Assets/Scripts/Solver/`)
 
-### Tool System
+Exhaustive backtracking auto-solver. Construction must happen on the Unity main thread (it clones ScriptableObjects via `Object.Instantiate`); `SolveAsync(CancellationToken)` runs on a background `Task.Run`. Precomputes unique rotations per piece using `ShapeHelper` dedup. Records solutions where all `CompletionRule`s pass; score = `HappyCount`. Thread-safe via volatile counters + lock on `_results`. `SolverRunner` is the MonoBehaviour orchestrator; `UI.Solver.SolverPanel` shows results.
 
-Located in `Assets/Scripts/Hand/Tool/`:
-- `ITool` interface for tool actions
-- `GrabTool` - Main tool for picking up and placing pieces
-- `ToolController` - Manages active tool, routes input
+### UI pattern
 
-## Key Directories
+Panels instantiate entries via `_container.InstantiatePrefab(prefab, parent)` so DI resolves on children. Entry scripts are MonoBehaviours with `SetRule()` / `SetData()` methods, wiring events in `OnEnable`/`OnDisable`. TMP_Text for labels. `UI/` mirrors the domain: `UI/Rules/`, `UI/Scenarios/`, `UI/Solver/`, `UI/Tools/`, `UI/Zones/`, `UI/Pieces/`, `UI/Common/`.
+
+## Directory map
 
 ```
 Assets/Scripts/
-├── Board/           # Board controller, view, zones
-├── Core/            # GameController, GameState
-├── Hand/Tool/       # Player tool system
-├── Piece/           # Piece data, aspects, supply
-├── Rules/           # Placement and score rules
-├── Scenario/        # Level configuration
-├── UI/              # UI components
-└── Zenject/         # DI installer
+├── Board/           BoardController, view
+├── Cameras/         CameraController
+├── Core/            GameController, GameState
+├── Infrastructure/  MainInstaller (Zenject bindings)
+├── Pieces/          Piece data, aspects, supply, ShapeHelper
+├── Rules/           Emotion/happiness/completion rules + building blocks
+├── Scenarios/       ScenarioSO, ScenarioController, persistence
+├── Solver/          AutoSolver, SolverRunner
+├── Tools/           GrabTool, ZoneTool, ShapeTool, wall/draw/resize/etc.
+├── UI/              Panels mirroring domain folders
+└── Zones/           Zone spatial markers, ZoneController
 
-Assets/ScriptableObjects/  # Game data assets (pieces, scenarios, rules)
-Assets/Editor/             # Editor tools (PieceBatchCreatorWindow, SpriteSheetCopier)
+Assets/ScriptableObjects/   # Pieces, Scenario, Rules, Zones, Aspects, Tool
+Assets/Editor/              # PieceBatchCreatorWindow, SpriteSheetCopier
 ```
+
+Namespaces follow folder names (`Pieces`, `Core`, `Board`, `Rules`, `Rules.CompletionRules`, `Zones`, `Scenarios`, `Solver`, `UI.Solver`, `UI.Rules`, `Infrastructure`).
 
 ## Input
 
-- **Q/E or Mouse Scroll** - Rotate piece in hand
-- **Left Click** - Place/pick up piece (via ToolController)
-- **Right Click** - Tool secondary action
+- **Q / E / Mouse Scroll** — rotate piece in hand
+- **Left Click** — primary tool action (place / pick up via `GrabTool`)
+- **Right Click** — tool secondary action
 
-## Creating New Content
+## Creating new content
 
-**New Piece:** Create PieceSO asset in `Assets/ScriptableObjects/Pieces/` or use Editor > Piece Batch Creator
-
-**New Scenario:** Create ScenarioSO asset in `Assets/ScriptableObjects/Scenario/` - configure grid size, pieces, rules, zones
-
-**New Rule:** Extend `PlacementRuleSO` or `ScoreRuleSO` in the appropriate Rules subfolder
+- **Piece:** `PieceSO` under `Assets/ScriptableObjects/Pieces/` (or use Editor → Piece Batch Creator).
+- **Scenario:** `ScenarioSO` under `Assets/ScriptableObjects/Scenario/` — configure grid, pieces, happiness + completion rules, zones.
+- **Happiness rule:** subclass `HappinessRuleSO` under `Rules/EmotionRules/`. Prefer composing existing `AspectSources` / `Checks` / `Filters` / `Conclusions` components over bespoke logic.
+- **Completion rule:** subclass `CompletionRuleSO` under `Rules/CompletionRules/`.
+- **Tool:** subclass `ToolBase` under `Tools/`, bind the instance in `MainInstaller`.
