@@ -14,17 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSize: {x: 5, y: 5}
   availablePieces:
+  - {fileID: 11400000, guid: 41c4c5ba7ae24424f922fef16034019a, type: 2}
   - {fileID: 11400000, guid: 0a29adb05d252d541a86ecd980d3eeda, type: 2}
   - {fileID: 11400000, guid: deccc9439bc64ff4b85f0eb794eb7ac8, type: 2}
   - {fileID: 11400000, guid: 0bb162a1668fe2b439ca339a47d89026, type: 2}
-  - {fileID: 11400000, guid: 41c4c5ba7ae24424f922fef16034019a, type: 2}
   - {fileID: 11400000, guid: df192e3a2a654b24da2cd0a5810d5237, type: 2}
   lockedPieces:
     data: []
   blockedPositions: []
+  horizontalWalls:
+  - {x: 2, y: 1}
+  verticalWalls:
+  - {x: 2, y: 2}
+  - {x: 1, y: 1}
+  - {x: 1, y: 2}
+  - {x: 1, y: 3}
   emotionRules:
-  - rule:
-      rid: 5971275602942492763
+  - rid: 8328046741951610880
   completionRules:
   - rule:
       rid: 5971275602942492762
@@ -38,8 +44,23 @@ MonoBehaviour:
       type: {class: MinHappyCountCompletionRule, ns: Rules.CompletionRules, asm: TileFeast}
       data:
         minimumHappyPieces: 3
-    - rid: 5971275602942492763
-      type: {class: PlacedEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+    - rid: 8328046741951610880
+      type: {class: EmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
       data:
-        applyToAspect: {fileID: 0}
-        emotion: 0
+        filter:
+          rid: 8328046741951610881
+        check:
+          rid: 8328046741951610882
+        conclusion:
+          rid: 8328046741951610883
+    - rid: 8328046741951610881
+      type: {class: AllPiecesFilter, ns: Rules.Filters, asm: TileFeast}
+      data: 
+    - rid: 8328046741951610882
+      type: {class: AlwaysPassCheck, ns: Rules.Checks, asm: TileFeast}
+      data: 
+    - rid: 8328046741951610883
+      type: {class: BinaryEmotionConclusion, ns: Rules.Conclusions, asm: TileFeast}
+      data:
+        whenPassed: 0
+        whenFailed: 1

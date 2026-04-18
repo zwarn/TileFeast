@@ -18,10 +18,10 @@ namespace Scenarios
         public List<Vector2Int> blockedPositions;
         public List<Vector2Int> horizontalWalls = new();
         public List<Vector2Int> verticalWalls = new();
-        public List<EmotionRuleConfig> emotionRules;
+        [SerializeReference] public List<EmotionRule> emotionRules = new();
         public List<CompletionRuleConfig> completionRules;
         public List<Zone> zones;
-        [SerializeField] private List<AspectSourceConfig> aspectSources;
+        [SerializeReference] private List<AspectSource> aspectSources = new();
         public ScenarioSO nextLevel;
 
         public List<Piece> AvailablePieces()
@@ -39,9 +39,9 @@ namespace Scenarios
             return zones.Select(zone => zone.Clone()).ToList();
         }
 
-        public List<AspectSourceConfig> AspectSources()
+        public List<AspectSource> AspectSources()
         {
-            return aspectSources?.ToList() ?? new List<AspectSourceConfig>();
+            return aspectSources?.ToList() ?? new List<AspectSource>();
         }
     }
 }

@@ -35,13 +35,12 @@ MonoBehaviour:
   - {x: 3, y: 4}
   - {x: 2, y: 2}
   - {x: 1, y: 5}
+  horizontalWalls: []
+  verticalWalls: []
   emotionRules:
-  - rule:
-      rid: 5971275697293885527
-  - rule:
-      rid: 5971275697293885528
-  - rule:
-      rid: 5971275697293885529
+  - rid: 8328046741951610966
+  - rid: 8328046741951610970
+  - rid: 8328046741951610974
   completionRules:
   - rule:
       rid: 5971275697293885532
@@ -51,28 +50,73 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 5971275697293885527
-      type: {class: LargestAspectGroupEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
-      data:
-        applyToAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
-        groupAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
-        emotionWhenTrue: 0
-        emotionWhenFalse: 2
-    - rid: 5971275697293885528
-      type: {class: LargestAspectGroupEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
-      data:
-        applyToAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
-        groupAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
-        emotionWhenTrue: 0
-        emotionWhenFalse: 2
-    - rid: 5971275697293885529
-      type: {class: LargestAspectGroupEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
-      data:
-        applyToAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
-        groupAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
-        emotionWhenTrue: 0
-        emotionWhenFalse: 2
     - rid: 5971275697293885532
       type: {class: MinHappyCountCompletionRule, ns: Rules.CompletionRules, asm: TileFeast}
       data:
         minimumHappyPieces: 5
+    - rid: 8328046741951610966
+      type: {class: EmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        filter:
+          rid: 8328046741951610978
+        check:
+          rid: 8328046741951610979
+        conclusion:
+          rid: 8328046741951610969
+    - rid: 8328046741951610969
+      type: {class: BinaryEmotionConclusion, ns: Rules.Conclusions, asm: TileFeast}
+      data:
+        whenPassed: 0
+        whenFailed: 2
+    - rid: 8328046741951610970
+      type: {class: EmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        filter:
+          rid: 8328046741951610980
+        check:
+          rid: 8328046741951610981
+        conclusion:
+          rid: 8328046741951610973
+    - rid: 8328046741951610973
+      type: {class: BinaryEmotionConclusion, ns: Rules.Conclusions, asm: TileFeast}
+      data:
+        whenPassed: 0
+        whenFailed: 2
+    - rid: 8328046741951610974
+      type: {class: EmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        filter:
+          rid: 8328046741951610982
+        check:
+          rid: 8328046741951610983
+        conclusion:
+          rid: 8328046741951610977
+    - rid: 8328046741951610977
+      type: {class: BinaryEmotionConclusion, ns: Rules.Conclusions, asm: TileFeast}
+      data:
+        whenPassed: 0
+        whenFailed: 2
+    - rid: 8328046741951610978
+      type: {class: HasAspectFilter, ns: Rules.Filters, asm: TileFeast}
+      data:
+        aspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+    - rid: 8328046741951610979
+      type: {class: LargestAspectGroupMembershipCheck, ns: Rules.Checks, asm: TileFeast}
+      data:
+        groupAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+    - rid: 8328046741951610980
+      type: {class: HasAspectFilter, ns: Rules.Filters, asm: TileFeast}
+      data:
+        aspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+    - rid: 8328046741951610981
+      type: {class: LargestAspectGroupMembershipCheck, ns: Rules.Checks, asm: TileFeast}
+      data:
+        groupAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+    - rid: 8328046741951610982
+      type: {class: HasAspectFilter, ns: Rules.Filters, asm: TileFeast}
+      data:
+        aspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
+    - rid: 8328046741951610983
+      type: {class: LargestAspectGroupMembershipCheck, ns: Rules.Checks, asm: TileFeast}
+      data:
+        groupAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}

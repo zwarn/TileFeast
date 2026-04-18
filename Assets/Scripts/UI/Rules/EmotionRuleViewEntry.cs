@@ -8,9 +8,10 @@ namespace UI.Rules
     {
         [SerializeField] private TMP_Text descriptionLabel;
 
-        public void SetRule(EmotionRuleConfig config)
+        public void SetRule(EmotionRule rule)
         {
-            if (descriptionLabel != null) descriptionLabel.text = config.rule.GetDescription();
+            if (descriptionLabel != null && rule != null)
+                descriptionLabel.text = rule.GetDescription();
         }
     }
 }

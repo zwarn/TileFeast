@@ -34,9 +34,10 @@ MonoBehaviour:
   blockedPositions:
   - {x: 4, y: 0}
   - {x: 3, y: 0}
+  horizontalWalls: []
+  verticalWalls: []
   emotionRules:
-  - rule:
-      rid: 5971275697293885521
+  - rid: 8328046741951610959
   completionRules:
   - rule:
       rid: 5971275602942492769
@@ -50,12 +51,33 @@ MonoBehaviour:
       type: {class: MinHappyCountCompletionRule, ns: Rules.CompletionRules, asm: TileFeast}
       data:
         minimumHappyPieces: 4
-    - rid: 5971275697293885521
-      type: {class: AspectAdjacencyEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+    - rid: 8328046741951610959
+      type: {class: EmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
       data:
-        applyToAspect: {fileID: 0}
-        neighborAspect: {fileID: 11400000, guid: 50bfa8231b9e7a34f83bd360d8bd7756, type: 2}
-        minNeighborCount: 1
-        maxNeighborCount: -1
-        emotionWhenMet: 0
-        emotionWhenNotMet: 2
+        filter:
+          rid: 8328046741951610960
+        check:
+          rid: 8328046741951610963
+        conclusion:
+          rid: 8328046741951610962
+    - rid: 8328046741951610960
+      type: {class: AllPiecesFilter, ns: Rules.Filters, asm: TileFeast}
+      data: 
+    - rid: 8328046741951610962
+      type: {class: BinaryEmotionConclusion, ns: Rules.Conclusions, asm: TileFeast}
+      data:
+        whenPassed: 0
+        whenFailed: 2
+    - rid: 8328046741951610963
+      type: {class: NeighborCountCheck, ns: Rules.Checks, asm: TileFeast}
+      data:
+        neighborFilter:
+          rid: 8328046741951610964
+        countRange:
+          min: 1
+          max: -1
+        mode: 0
+    - rid: 8328046741951610964
+      type: {class: HasAspectFilter, ns: Rules.Filters, asm: TileFeast}
+      data:
+        aspect: {fileID: 11400000, guid: 50bfa8231b9e7a34f83bd360d8bd7756, type: 2}

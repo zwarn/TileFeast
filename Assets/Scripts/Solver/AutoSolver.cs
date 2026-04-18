@@ -32,7 +32,7 @@ namespace Solver
         private readonly List<Piece> _availablePieces;
         private readonly int _maxResults;
 
-        private readonly List<EmotionRuleConfig> _emotionRuleConfigs;
+        private readonly List<EmotionRule> _emotionRules;
         private readonly List<CompletionRuleConfig> _completionRuleConfigs;
         private readonly List<Zone> _clonedZones;
 
@@ -56,8 +56,8 @@ namespace Solver
             _blockedPositions = new HashSet<Vector2Int>(scenario.blockedPositions);
             _availablePieces = scenario.AvailablePieces();
 
-            // Rules are stateless — no cloning needed, just store configs directly
-            _emotionRuleConfigs = scenario.emotionRules.ToList();
+            // Rules are stateless — no cloning needed, just store references directly
+            _emotionRules = scenario.emotionRules.ToList();
             _completionRuleConfigs = scenario.completionRules.ToList();
 
             _clonedZones = scenario.Zones();
@@ -159,7 +159,7 @@ namespace Solver
                 _currentPlacements.ToList(),
                 new List<Piece>(),  // all pieces placed
                 null,
-                _emotionRuleConfigs,
+                _emotionRules,
                 _completionRuleConfigs,
                 _clonedZones
             );
@@ -169,8 +169,9 @@ namespace Solver
             // Evaluate emotions for all placed pieces (stateless — thread safe)
             var pieceStates = _currentPlacements.Select(placed =>
             {
-                var effects = _emotionRuleConfigs
-                    .Select(config => config.rule.Evaluate(placed, context))
+                var effects = _emotionRules
+                    .Where(rule => rule != null)
+                    .Select(rule => rule.Evaluate(placed, context))
                     .Where(e => e != null)
                     .ToList();
                 return new PieceEmotionState(placed, effects);

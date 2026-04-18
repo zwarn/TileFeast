@@ -26,14 +26,16 @@ namespace UI.Rules
             _rulesController.OnEmotionRulesReset -= RebuildList;
         }
 
-        private void RebuildList(List<EmotionRuleConfig> rules)
+        private void RebuildList(List<EmotionRule> rules)
         {
             Clear();
-            foreach (var config in rules)
+            if (rules == null) return;
+            foreach (var rule in rules)
             {
+                if (rule == null) continue;
                 var go = _container.InstantiatePrefab(prefab, parent);
                 var entry = go.GetComponent<EmotionRuleViewEntry>();
-                entry.SetRule(config);
+                entry.SetRule(rule);
                 _entries.Add(entry);
             }
         }

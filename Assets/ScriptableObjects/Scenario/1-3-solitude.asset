@@ -30,11 +30,11 @@ MonoBehaviour:
   blockedPositions:
   - {x: 0, y: 2}
   - {x: 0, y: 0}
+  horizontalWalls: []
+  verticalWalls: []
   emotionRules:
-  - rule:
-      rid: 5971275602942492768
-  - rule:
-      rid: 5971275697293885524
+  - rid: 8328046741951610984
+  - rid: 8328046741951610988
   completionRules:
   - rule:
       rid: 5971275602942492764
@@ -48,21 +48,60 @@ MonoBehaviour:
       type: {class: MinHappyCountCompletionRule, ns: Rules.CompletionRules, asm: TileFeast}
       data:
         minimumHappyPieces: 5
-    - rid: 5971275602942492768
-      type: {class: AspectAdjacencyEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+    - rid: 8328046741951610984
+      type: {class: EmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
       data:
-        applyToAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
-        neighborAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
-        minNeighborCount: 1
-        maxNeighborCount: -1
-        emotionWhenMet: 2
-        emotionWhenNotMet: 0
-    - rid: 5971275697293885524
-      type: {class: AspectAdjacencyEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+        filter:
+          rid: 8328046741951610992
+        check:
+          rid: 8328046741951610993
+        conclusion:
+          rid: 8328046741951610987
+    - rid: 8328046741951610987
+      type: {class: BinaryEmotionConclusion, ns: Rules.Conclusions, asm: TileFeast}
       data:
-        applyToAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
-        neighborAspect: {fileID: 11400000, guid: 50bfa8231b9e7a34f83bd360d8bd7756, type: 2}
-        minNeighborCount: 1
-        maxNeighborCount: -1
-        emotionWhenMet: 0
-        emotionWhenNotMet: 2
+        whenPassed: 0
+        whenFailed: 2
+    - rid: 8328046741951610988
+      type: {class: EmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        filter:
+          rid: 8328046741951610995
+        check:
+          rid: 8328046741951610998
+        conclusion:
+          rid: 8328046741951610991
+    - rid: 8328046741951610991
+      type: {class: BinaryEmotionConclusion, ns: Rules.Conclusions, asm: TileFeast}
+      data:
+        whenPassed: 0
+        whenFailed: 2
+    - rid: 8328046741951610992
+      type: {class: HasAspectFilter, ns: Rules.Filters, asm: TileFeast}
+      data:
+        aspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+    - rid: 8328046741951610993
+      type: {class: NeighborCountCheck, ns: Rules.Checks, asm: TileFeast}
+      data:
+        neighborFilter:
+          rid: 8328046741951610994
+        countRange:
+          min: 1
+          max: -1
+        mode: 0
+    - rid: 8328046741951610994
+      type: {class: HasAspectFilter, ns: Rules.Filters, asm: TileFeast}
+      data:
+        aspect: {fileID: 11400000, guid: 50bfa8231b9e7a34f83bd360d8bd7756, type: 2}
+    - rid: 8328046741951610995
+      type: {class: HasAspectFilter, ns: Rules.Filters, asm: TileFeast}
+      data:
+        aspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+    - rid: 8328046741951610998
+      type: {class: PieceMatchesFilterCheck, ns: Rules.Checks, asm: TileFeast}
+      data:
+        subject:
+          rid: 8328046741951610999
+    - rid: 8328046741951610999
+      type: {class: OnEdgeFilter, ns: Rules.Filters, asm: TileFeast}
+      data: 

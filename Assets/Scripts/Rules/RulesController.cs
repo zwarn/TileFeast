@@ -19,10 +19,10 @@ namespace Rules
         [Inject] private ZoneController _zoneController;
 
         public event Action<EmotionEvaluationResult> OnEvaluationChanged;
-        public event Action<List<EmotionRuleConfig>> OnEmotionRulesReset;
+        public event Action<List<EmotionRule>> OnEmotionRulesReset;
         public event Action<List<CompletionRuleConfig>> OnCompletionRulesReset;
 
-        private List<EmotionRuleConfig> _emotionRules = new();
+        private List<EmotionRule> _emotionRules = new();
         private List<CompletionRuleConfig> _completionRules = new();
         private Vector2Int _gridSize;
 
@@ -84,15 +84,16 @@ namespace Rules
                 placed.DynamicAspects.Clear();
 
             foreach (var placed in state.PlacedPieces)
-            foreach (var config in state.AspectSources)
-                config.source.Apply(placed, context);
+            foreach (var source in state.AspectSources)
+                source?.Apply(placed, context);
 
             var pieceStates = state.PlacedPieces
                 .Where(placed => placed.Piece.hasEmotions)
                 .Select(placed =>
             {
                 var effects = _emotionRules
-                    .Select(config => config.rule.Evaluate(placed, context))
+                    .Where(rule => rule != null)
+                    .Select(rule => rule.Evaluate(placed, context))
                     .Where(effect => effect != null)
                     .ToList();
                 return new PieceEmotionState(placed, effects);

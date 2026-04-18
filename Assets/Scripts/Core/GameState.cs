@@ -21,15 +21,15 @@ namespace Core
         public List<Vector2Int> VerticalWalls;
         public PieceWithRotation PieceInHand;
         public List<PlacedPiece> PlacedPieces;
-        public List<EmotionRuleConfig> EmotionRules;
+        public List<EmotionRule> EmotionRules;
         public List<CompletionRuleConfig> CompletionRules;
         public List<Zone> Zones;
-        public List<AspectSourceConfig> AspectSources;
+        public List<AspectSource> AspectSources;
 
         public GameState(Vector2Int gridSize, List<Vector2Int> blockedPositions, List<PlacedPiece> placedPieces,
             List<Piece> availablePieces, PieceWithRotation pieceInHand,
-            List<EmotionRuleConfig> emotionRules, List<CompletionRuleConfig> completionRules, List<Zone> zones,
-            List<AspectSourceConfig> aspectSources = null,
+            List<EmotionRule> emotionRules, List<CompletionRuleConfig> completionRules, List<Zone> zones,
+            List<AspectSource> aspectSources = null,
             List<Vector2Int> horizontalWalls = null,
             List<Vector2Int> verticalWalls = null)
         {
@@ -43,7 +43,7 @@ namespace Core
             EmotionRules = emotionRules;
             CompletionRules = completionRules;
             Zones = zones;
-            AspectSources = aspectSources ?? new List<AspectSourceConfig>();
+            AspectSources = aspectSources ?? new List<AspectSource>();
         }
 
         public GameState(ScenarioSO scenarioSO) :

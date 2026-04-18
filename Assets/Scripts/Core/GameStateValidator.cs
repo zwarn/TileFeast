@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Rules.AspectSources;
 using Rules.CompletionRules;
-using Rules.EmotionRules;
 using UnityEngine;
 
 namespace Core
@@ -170,23 +168,18 @@ namespace Core
             {
                 for (int i = 0; i < state.EmotionRules.Count; i++)
                 {
-                    var config = state.EmotionRules[i];
-                    if (config.rule == null)
+                    var rule = state.EmotionRules[i];
+                    if (rule == null)
                     {
-                        result.AddError($"Emotion rule at index {i} has no rule assigned");
+                        result.AddError($"Emotion rule at index {i} is null");
                         continue;
                     }
-
-                    if (config.rule is AspectAdjacencyEmotionRule adj)
-                    {
-                        if (adj.neighborAspect == null)
-                            result.AddError($"AspectAdjacencyEmotionRule at index {i}: neighborAspect is not assigned");
-                    }
-                    else if (config.rule is ZoneProximityEmotionRule zone)
-                    {
-                        if (zone.targetZoneType == null)
-                            result.AddError($"ZoneProximityEmotionRule at index {i}: targetZoneType is not assigned");
-                    }
+                    if (rule.filter == null)
+                        result.AddError($"Emotion rule at index {i}: filter is not assigned");
+                    if (rule.check == null)
+                        result.AddError($"Emotion rule at index {i}: check is not assigned");
+                    if (rule.conclusion == null)
+                        result.AddError($"Emotion rule at index {i}: conclusion is not assigned");
                 }
             }
 
@@ -218,19 +211,10 @@ namespace Core
             {
                 for (int i = 0; i < state.AspectSources.Count; i++)
                 {
-                    var config = state.AspectSources[i];
-                    if (config.source == null)
+                    var source = state.AspectSources[i];
+                    if (source == null)
                     {
-                        result.AddError($"Aspect source at index {i} has no source assigned");
-                        continue;
-                    }
-
-                    if (config.source is ZoneAspectGranter granter)
-                    {
-                        if (granter.targetZone == null)
-                            result.AddError($"ZoneAspectGranter at index {i}: targetZone is not assigned");
-                        if (granter.grantedAspect == null)
-                            result.AddError($"ZoneAspectGranter at index {i}: grantedAspect is not assigned");
+                        result.AddError($"Aspect source at index {i} is null");
                     }
                 }
             }
