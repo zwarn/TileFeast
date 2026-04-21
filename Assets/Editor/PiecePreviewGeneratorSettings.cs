@@ -9,6 +9,12 @@ namespace Editor
     public class PiecePreviewGeneratorSettings : ScriptableObject
     {
         public List<AspectTilesetEntry> aspectTilesets = new List<AspectTilesetEntry>();
+
+        [Header("Face Sprites (drag sub-sprites from face.png)")]
+        public Sprite leftEyeSprite;
+        public Sprite rightEyeSprite;
+        public Sprite smallMouthSprite;
+        public Sprite bigMouthSprite;
     }
 
     [Serializable]

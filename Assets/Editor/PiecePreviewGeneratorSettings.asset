@@ -19,3 +19,7 @@ MonoBehaviour:
     tileset: {fileID: 11400000, guid: 221bdd4fb1809e542b49d0faf3f9dabd, type: 2}
   - aspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
     tileset: {fileID: 11400000, guid: ce5fb9471b607d843af96de8b667f431, type: 2}
+  leftEyeSprite: {fileID: -8817426130257391540, guid: 4b36b6ef689725f48b85b487a980f205, type: 3}
+  rightEyeSprite: {fileID: 3060230111996817670, guid: 4b36b6ef689725f48b85b487a980f205, type: 3}
+  smallMouthSprite: {fileID: -421059957, guid: 77af7bb9993dfb84a851327d5e88e70c, type: 3}
+  bigMouthSprite: {fileID: 1039014098, guid: 77af7bb9993dfb84a851327d5e88e70c, type: 3}

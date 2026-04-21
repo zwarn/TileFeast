@@ -4,6 +4,7 @@ using System.Linq;
 using Pieces;
 using Pieces.Aspects;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -14,6 +15,7 @@ namespace Editor
         private const string SettingsPath = "Assets/Editor/PiecePreviewGeneratorSettings.asset";
         private const string OutputFolder = "Assets/Art/Images/GeneratedPreviews";
         private const string PiecesFolder = "Assets/ScriptableObjects/Pieces";
+        private const string GameControllerPrefabPath = "Assets/Prefabs/GameController.prefab";
 
         private PiecePreviewGeneratorSettings _settings;
         private SerializedObject _settingsSO;
@@ -23,6 +25,12 @@ namespace Editor
         private AspectSO _batchAspect;
         private string _batchSaveFolder = PiecesFolder;
         private bool _batchGeneratePreviews = true;
+
+        // Add-new-shape state
+        private string _newShapeName = "";
+        private string _newShapeText = "";
+        private int _newPivotCol;
+        private int _newPivotRow;
 
         [MenuItem("Tools/Piece Tool")]
         public static void Open() => GetWindow<PiecePreviewGenerator>("Piece Tool");
@@ -44,6 +52,17 @@ namespace Editor
 
             EditorGUILayout.Space();
 
+            // ── Face Sprites ─────────────────────────────────────────────────
+            GUILayout.Label("Face Sprites", EditorStyles.boldLabel);
+            _settingsSO.Update();
+            EditorGUILayout.PropertyField(_settingsSO.FindProperty("leftEyeSprite"), new GUIContent("Left Eye"));
+            EditorGUILayout.PropertyField(_settingsSO.FindProperty("rightEyeSprite"), new GUIContent("Right Eye"));
+            EditorGUILayout.PropertyField(_settingsSO.FindProperty("smallMouthSprite"), new GUIContent("Small Mouth"));
+            EditorGUILayout.PropertyField(_settingsSO.FindProperty("bigMouthSprite"), new GUIContent("Big Mouth"));
+            _settingsSO.ApplyModifiedProperties();
+
+            EditorGUILayout.Space();
+
             // ── Batch Create Pieces ──────────────────────────────────────────
             GUILayout.Label("Batch Create Pieces", EditorStyles.boldLabel);
 
@@ -55,6 +74,26 @@ namespace Editor
             GUI.enabled = _batchAspect != null;
             if (GUILayout.Button("Create All Shapes for Aspect"))
                 CreateAllShapesForAspect();
+            GUI.enabled = true;
+
+            EditorGUILayout.Space();
+
+            // ── Add New Shape ────────────────────────────────────────────────
+            GUILayout.Label("Add New Shape", EditorStyles.boldLabel);
+
+            _newShapeName = EditorGUILayout.TextField("Shape Name", _newShapeName);
+
+            EditorGUILayout.LabelField("Shape (rows top-to-bottom, X=filled, O=empty)");
+            _newShapeText = EditorGUILayout.TextArea(_newShapeText, GUILayout.MinHeight(60));
+
+            EditorGUILayout.BeginHorizontal();
+            _newPivotCol = EditorGUILayout.IntField("Pivot Col (from left)", _newPivotCol);
+            _newPivotRow = EditorGUILayout.IntField("Pivot Row (from top)", _newPivotRow);
+            EditorGUILayout.EndHorizontal();
+
+            GUI.enabled = !string.IsNullOrWhiteSpace(_newShapeName) && !string.IsNullOrWhiteSpace(_newShapeText);
+            if (GUILayout.Button("Create New Shape"))
+                CreateNewShape();
             GUI.enabled = true;
 
             EditorGUILayout.Space();
@@ -113,40 +152,9 @@ namespace Editor
                     $"{aspectObjectName}-{shapeName} ({i + 1}/{shapeNames.Length})",
                     (float)i / shapeNames.Length);
 
-                string pieceName = $"{aspectObjectName}-{shapeName}";
-                string assetPath = $"{_batchSaveFolder}/{pieceName}.asset";
-
-                var existing = AssetDatabase.LoadAssetAtPath<PieceSO>(assetPath);
-                if (existing != null)
-                {
-                    bool changed = false;
-                    if (existing.shapeName != shapeName)
-                    {
-                        existing.shapeName = shapeName;
-                        existing.LoadShapeFromJSON();
-                        changed = true;
-                    }
-                    if (existing.aspects == null || !existing.aspects.Contains(_batchAspect))
-                    {
-                        existing.aspects = new List<AspectSO> { _batchAspect };
-                        changed = true;
-                    }
-                    if (changed) EditorUtility.SetDirty(existing);
-                    created.Add(existing);
-                    updatedCount++;
-                }
-                else
-                {
-                    var pso = CreateInstance<PieceSO>();
-                    pso.shapeName = shapeName;
-                    pso.aspects = new List<AspectSO> { _batchAspect };
-                    pso.shape = new List<Vector2Int>();
-                    AssetDatabase.CreateAsset(pso, assetPath);
-                    pso.LoadShapeFromJSON();
-                    EditorUtility.SetDirty(pso);
-                    created.Add(pso);
-                    newCount++;
-                }
+                var (pso, wasNew) = UpsertPieceAsset(_batchAspect, aspectObjectName, shapeName, _batchSaveFolder);
+                created.Add(pso);
+                if (wasNew) newCount++; else updatedCount++;
             }
 
             EditorUtility.ClearProgressBar();
@@ -156,6 +164,231 @@ namespace Editor
 
             if (_batchGeneratePreviews && created.Count > 0)
                 GeneratePreviews(created);
+        }
+
+        private (PieceSO piece, bool wasNew) UpsertPieceAsset(
+            AspectSO aspect, string aspectObjectName, string shapeName, string saveFolder)
+        {
+            string pieceName = $"{aspectObjectName}-{shapeName}";
+            string assetPath = $"{saveFolder}/{pieceName}.asset";
+
+            var existing = AssetDatabase.LoadAssetAtPath<PieceSO>(assetPath);
+            if (existing != null)
+            {
+                bool changed = false;
+                if (existing.shapeName != shapeName)
+                {
+                    existing.shapeName = shapeName;
+                    existing.LoadShapeFromJSON();
+                    changed = true;
+                }
+                if (existing.aspects == null || !existing.aspects.Contains(aspect))
+                {
+                    existing.aspects = new List<AspectSO> { aspect };
+                    changed = true;
+                }
+                if (changed) EditorUtility.SetDirty(existing);
+                return (existing, false);
+            }
+
+            var pso = CreateInstance<PieceSO>();
+            pso.shapeName = shapeName;
+            pso.aspects = new List<AspectSO> { aspect };
+            pso.shape = new List<Vector2Int>();
+            AssetDatabase.CreateAsset(pso, assetPath);
+            pso.LoadShapeFromJSON();
+            EditorUtility.SetDirty(pso);
+            return (pso, true);
+        }
+
+        // ------------------------------------------------------------------ add new shape
+
+        private void CreateNewShape()
+        {
+            string name = _newShapeName.Trim();
+            if (string.IsNullOrEmpty(name))
+            {
+                Debug.LogError("Create New Shape: name is empty.");
+                return;
+            }
+
+            var rawLines = _newShapeText.Replace("\r", "").Split('\n');
+            var rows = rawLines.Where(l => !string.IsNullOrWhiteSpace(l)).Select(l => l.Trim()).ToArray();
+
+            if (rows.Length == 0)
+            {
+                Debug.LogError("Create New Shape: shape is empty.");
+                return;
+            }
+
+            int width = rows[0].Length;
+            foreach (var row in rows)
+            {
+                if (row.Length != width)
+                {
+                    Debug.LogError($"Create New Shape: rows are not all the same width (expected {width}, got '{row}' of length {row.Length}).");
+                    return;
+                }
+                foreach (var ch in row)
+                {
+                    if (ch != 'X' && ch != 'O')
+                    {
+                        Debug.LogError($"Create New Shape: invalid character '{ch}' — use only 'X' (filled) and 'O' (empty).");
+                        return;
+                    }
+                }
+            }
+
+            if (!rows.Any(r => r.Contains('X')))
+            {
+                Debug.LogError("Create New Shape: shape has no filled ('X') cells.");
+                return;
+            }
+
+            if (_newPivotCol < 0 || _newPivotCol >= width || _newPivotRow < 0 || _newPivotRow >= rows.Length)
+            {
+                Debug.LogError($"Create New Shape: pivot ({_newPivotCol}, {_newPivotRow}) is outside shape bounds ({width} cols × {rows.Length} rows).");
+                return;
+            }
+
+            var existingNames = ShapeExporter.ReadShapeNames();
+            if (existingNames.Contains(name))
+            {
+                Debug.LogError($"Create New Shape: a shape named '{name}' already exists in shapes.json. Pick a different name.");
+                return;
+            }
+
+            // ── Append to shapes.json ───────────────────────────────────────
+            string entry = ShapeExporter.BuildJsonEntryFromRows(name, rows, _newPivotCol, _newPivotRow);
+            ShapeExporter.AppendShapeEntry(entry);
+            Debug.Log($"Create New Shape: appended '{name}' to shapes.json.");
+
+            // ── Create a PieceSO for every mapped aspect with a tileset ─────
+            if (!AssetDatabase.IsValidFolder(PiecesFolder))
+            {
+                string parent = Path.GetDirectoryName(PiecesFolder).Replace('\\', '/');
+                string child = Path.GetFileName(PiecesFolder);
+                AssetDatabase.CreateFolder(parent, child);
+            }
+
+            var created = new List<PieceSO>();
+            foreach (var mapping in _settings.aspectTilesets)
+            {
+                if (mapping.aspect == null) continue;
+                if (mapping.tileset == null)
+                {
+                    Debug.LogWarning($"Create New Shape: aspect '{((Object)mapping.aspect).name}' has no tileset mapped — skipping piece creation for it.");
+                    continue;
+                }
+
+                string aspectObjectName = ((Object)mapping.aspect).name;
+                var (pso, _) = UpsertPieceAsset(mapping.aspect, aspectObjectName, name, PiecesFolder);
+                created.Add(pso);
+            }
+
+            AssetDatabase.SaveAssets();
+
+            if (created.Count == 0)
+            {
+                Debug.LogWarning("Create New Shape: no aspects with tilesets are configured — JSON was updated but no PieceSOs created.");
+                return;
+            }
+
+            // ── Previews ────────────────────────────────────────────────────
+            GeneratePreviews(created);
+
+            // ── Register in PieceRepository ─────────────────────────────────
+            AddPiecesToRepository(created);
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            Debug.Log($"Create New Shape: '{name}' added — {created.Count} PieceSO(s) created, previews generated, registered in PieceRepository.");
+
+            // Clear form on success
+            _newShapeName = "";
+            _newShapeText = "";
+            _newPivotCol = 0;
+            _newPivotRow = 0;
+            GUI.FocusControl(null);
+        }
+
+        private void AddPiecesToRepository(List<PieceSO> newPieces)
+        {
+            int sceneUpdates = AddPiecesToSceneInstances(newPieces);
+            int prefabAdded = AddPiecesToPrefab(newPieces);
+
+            if (sceneUpdates == 0 && prefabAdded == 0)
+                Debug.LogWarning("Create New Shape: no PieceRepository found in any loaded scene or on the GameController prefab — the new pieces were NOT registered. Open the scene containing PieceRepository and run again.");
+        }
+
+        private int AddPiecesToSceneInstances(List<PieceSO> newPieces)
+        {
+            // PieceRepository.allPieces is typically overridden on the scene instance
+            // (it masks whatever the prefab has), so the scene is the authoritative target.
+            var repos = Object.FindObjectsByType<Pieces.PieceRepository>(
+                FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+            int reposUpdated = 0;
+            foreach (var repo in repos)
+            {
+                int added = AppendToAllPieces(repo, newPieces);
+                if (added <= 0) continue;
+
+                EditorUtility.SetDirty(repo);
+                EditorSceneManager.MarkSceneDirty(repo.gameObject.scene);
+                reposUpdated++;
+                Debug.Log($"Create New Shape: added {added} piece(s) to PieceRepository in scene '{repo.gameObject.scene.name}'. (Save the scene to persist.)");
+            }
+            return reposUpdated;
+        }
+
+        private int AddPiecesToPrefab(List<PieceSO> newPieces)
+        {
+            if (!File.Exists(GameControllerPrefabPath))
+                return 0;
+
+            var prefabRoot = PrefabUtility.LoadPrefabContents(GameControllerPrefabPath);
+            try
+            {
+                var repo = prefabRoot.GetComponentInChildren<Pieces.PieceRepository>(includeInactive: true);
+                if (repo == null) return 0;
+
+                int added = AppendToAllPieces(repo, newPieces);
+                if (added <= 0) return 0;
+
+                PrefabUtility.SaveAsPrefabAsset(prefabRoot, GameControllerPrefabPath);
+                Debug.Log($"Create New Shape: added {added} piece(s) to PieceRepository on {GameControllerPrefabPath}.");
+                return added;
+            }
+            finally
+            {
+                PrefabUtility.UnloadPrefabContents(prefabRoot);
+            }
+        }
+
+        private static int AppendToAllPieces(Pieces.PieceRepository repo, List<PieceSO> newPieces)
+        {
+            var so = new SerializedObject(repo);
+            var arr = so.FindProperty("allPieces");
+
+            var existing = new HashSet<Object>();
+            for (int i = 0; i < arr.arraySize; i++)
+                existing.Add(arr.GetArrayElementAtIndex(i).objectReferenceValue);
+
+            int added = 0;
+            foreach (var p in newPieces)
+            {
+                if (p == null || existing.Contains(p)) continue;
+                int idx = arr.arraySize;
+                arr.InsertArrayElementAtIndex(idx);
+                arr.GetArrayElementAtIndex(idx).objectReferenceValue = p;
+                existing.Add(p);
+                added++;
+            }
+
+            if (added > 0) so.ApplyModifiedPropertiesWithoutUndo();
+            return added;
         }
 
         private void GeneratePreviews(List<PieceSO> pieces)
@@ -181,6 +414,11 @@ namespace Editor
 
         private bool GeneratePreview(PieceSO pso)
         {
+            // Belt-and-suspenders: re-load shape + face data from JSON right before composing,
+            // so any asset-database churn between create-and-preview can't leave these stale.
+            if (!string.IsNullOrEmpty(pso.shapeName))
+                pso.LoadShapeFromJSON();
+
             if (pso.shape == null || pso.shape.Count == 0)
             {
                 Debug.LogWarning($"PiecePreviewGenerator: '{pso.name}' has no shape, skipping.");
@@ -271,6 +509,21 @@ namespace Editor
             return result;
         }
 
+        // ------------------------------------------------------------------ face sprite lookup
+
+        private Sprite GetFaceSprite(string slot)
+        {
+            if (_settings == null) return null;
+            return slot switch
+            {
+                "Left Eye"   => _settings.leftEyeSprite,
+                "Right Eye"  => _settings.rightEyeSprite,
+                "Small Mouth"=> _settings.smallMouthSprite,
+                "Big Mouth"  => _settings.bigMouthSprite,
+                _ => null
+            };
+        }
+
         // ------------------------------------------------------------------ texture composition
 
         private Texture2D CompositeTexture(
@@ -297,9 +550,9 @@ namespace Editor
 
             if (!withFace) { tex.Apply(); return tex; }
 
-            // Eyes
-            var leftEyeSprite  = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/Images/Eyes/LeftEye.png");
-            var rightEyeSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/Images/Eyes/RightEye.png");
+            // Face sprites are assigned directly in the tool settings window.
+            var leftEyeSprite  = GetFaceSprite("Left Eye");
+            var rightEyeSprite = GetFaceSprite("Right Eye");
 
             if (leftEyeSprite != null)
             {
@@ -316,13 +569,9 @@ namespace Editor
                     (pso.rightEyePosition.y - minY) * tilePixels + tilePixels / 2);
             }
 
-            // Mouth
             if (pso.hasMouth)
             {
-                string mouthPath = pso.mouthDouble
-                    ? "Assets/Art/Images/Eyes/BigMouth.png"
-                    : "Assets/Art/Images/Eyes/SmallMouth.png";
-                var mouthSprite = AssetDatabase.LoadAssetAtPath<Sprite>(mouthPath);
+                var mouthSprite = GetFaceSprite(pso.mouthDouble ? "Big Mouth" : "Small Mouth");
                 if (mouthSprite != null)
                 {
                     EnsureReadable(mouthSprite.texture);
@@ -378,6 +627,10 @@ namespace Editor
                 else
                     pso.sprite = sprite;
                 EditorUtility.SetDirty(pso);
+            }
+            else
+            {
+                Debug.LogWarning($"PiecePreviewGenerator: wrote {assetPath} but failed to load it as Sprite — '{assignTo}' on '{pso.name}' will remain unchanged.");
             }
 
             return sprite;

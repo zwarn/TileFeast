@@ -131,6 +131,85 @@ namespace Editor
 
         // ------------------------------------------------------------------ json building
 
+        /// <summary>
+        /// Builds a shapes.json entry from raw rows (top-to-bottom) and an explicit pivot.
+        /// Face data (eyes/mouth) is derived from the piece-space shape using the same
+        /// transform PieceSO.LoadShapeFromJSON applies: (col - pivotCol, pivotRow - row).
+        /// </summary>
+        public static string BuildJsonEntryFromRows(string name, string[] rows, int pivotCol, int pivotRow)
+        {
+            var shape = new List<Vector2Int>();
+            for (int r = 0; r < rows.Length; r++)
+            {
+                string row = rows[r];
+                for (int c = 0; c < row.Length; c++)
+                {
+                    if (row[c] == 'X')
+                        shape.Add(new Vector2Int(c - pivotCol, pivotRow - r));
+                }
+            }
+
+            FaceData fd = ComputeFaceData(shape);
+
+            var sb = new StringBuilder();
+            sb.Append("  {\n");
+            sb.Append($"    \"name\": \"{name}\",\n");
+            sb.Append($"    \"pivot\": [{pivotCol}, {pivotRow}],\n");
+
+            var quoted = new List<string>(rows.Length);
+            foreach (var row in rows) quoted.Add($"\"{row}\"");
+            sb.Append($"    \"shape\": [{string.Join(", ", quoted)}],\n");
+
+            sb.Append($"    \"leftEye\": [{fd.leftEye.x}, {fd.leftEye.y}],\n");
+            sb.Append($"    \"rightEye\": [{fd.rightEye.x}, {fd.rightEye.y}]");
+            if (fd.hasMouth)
+            {
+                string mx = fd.mouthPosition.x == Mathf.Floor(fd.mouthPosition.x)
+                    ? $"{(int)fd.mouthPosition.x}"
+                    : fd.mouthPosition.x.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture);
+                sb.Append($",\n    \"mouth\": [{mx}, {(int)fd.mouthPosition.y}],");
+                sb.Append($"\n    \"mouthDouble\": {(fd.mouthDouble ? "true" : "false")}");
+            }
+            sb.Append("\n  }");
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Appends a single entry (already JSON-formatted via BuildJsonEntryFromRows) to shapes.json,
+        /// preserving the existing layout, and triggers an asset reimport so ShapesJsonPostprocessor fires.
+        /// </summary>
+        public static void AppendShapeEntry(string entry)
+        {
+            if (!AssetDatabase.IsValidFolder("Assets/Shapes"))
+                AssetDatabase.CreateFolder("Assets", "Shapes");
+
+            string path = Path.GetFullPath(ShapesJsonPath);
+
+            if (!File.Exists(path))
+            {
+                File.WriteAllText(path, "[\n" + entry + "\n]", Encoding.UTF8);
+            }
+            else
+            {
+                string text = File.ReadAllText(path);
+                int closeIdx = text.LastIndexOf(']');
+                if (closeIdx < 0)
+                {
+                    File.WriteAllText(path, "[\n" + entry + "\n]", Encoding.UTF8);
+                }
+                else
+                {
+                    string head = text.Substring(0, closeIdx).TrimEnd();
+                    if (head == "[" || head.Length == 0)
+                        File.WriteAllText(path, "[\n" + entry + "\n]", Encoding.UTF8);
+                    else
+                        File.WriteAllText(path, head + ",\n" + entry + "\n]", Encoding.UTF8);
+                }
+            }
+
+            AssetDatabase.ImportAsset(ShapesJsonPath, ImportAssetOptions.ForceUpdate);
+        }
+
         private static string BuildJsonEntry(string shapeName, List<Vector2Int> shape)
         {
             int minX = shape.Min(p => p.x);
