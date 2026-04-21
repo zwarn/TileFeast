@@ -250,5 +250,14 @@
     "rightEye": [0, 1],
     "mouth": [0.5, 0],
     "mouthDouble": true
+  },
+  {
+    "name": "WPiece",
+    "pivot": [1, 1],
+    "shape": ["XOO", "XXO", "OXX"],
+    "leftEye": [-1, 1],
+    "rightEye": [-1, 1],
+    "mouth": [0.5, -1],
+    "mouthDouble": true
   }
 ]
