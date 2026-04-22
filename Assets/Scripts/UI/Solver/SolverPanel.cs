@@ -51,8 +51,17 @@ namespace UI.Solver
         {
             if (!_solverRunner.IsRunning) return;
 
-            triedLabel.text = $"Tried: {_solverRunner.TriedCount:N0}";
+            triedLabel.text = _solverRunner.FoundCount > 0
+                ? $"Best: {_solverRunner.BestScore}"
+                : "Best: —";
             foundLabel.text = $"Found: {_solverRunner.FoundCount}";
+
+            long tried = _solverRunner.TopLevelTriedCount;
+            long total = _solverRunner.TotalTopLevelPositions;
+            string progress = total > 0
+                ? $"{tried:N0}/{total:N0} ({100.0 * tried / total:F1}%)"
+                : "—";
+            statusLabel.text = $"Solving... {progress}";
         }
 
         public void OnSolveClicked()
@@ -68,7 +77,7 @@ namespace UI.Solver
         private void HandleSolverStarted()
         {
             statusLabel.text = "Solving...";
-            triedLabel.text = "Tried: 0";
+            triedLabel.text = "Best: —";
             foundLabel.text = "Found: 0";
             ClearResults();
             RefreshButtons();
@@ -77,7 +86,7 @@ namespace UI.Solver
         private void HandleSolverComplete(IReadOnlyList<SolverResult> results)
         {
             statusLabel.text = $"Done. {results.Count} solution(s) found.";
-            triedLabel.text = $"Tried: {_solverRunner.TriedCount:N0}";
+            triedLabel.text = results.Count > 0 ? $"Best: {results[0].Score}" : "Best: —";
             foundLabel.text = $"Found: {_solverRunner.FoundCount}";
             PopulateResults(results);
             RefreshButtons();

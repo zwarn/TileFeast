@@ -26,6 +26,9 @@ namespace Solver
 
         public long TriedCount => _solver != null ? Interlocked.Read(ref _solver.TriedCount) : 0;
         public int FoundCount => _solver?.FoundCount ?? 0;
+        public int BestScore => _solver?.BestScore ?? 0;
+        public long TopLevelTriedCount => _solver != null ? Interlocked.Read(ref _solver.TopLevelTriedCount) : 0;
+        public long TotalTopLevelPositions => _solver?.TotalTopLevelPositions ?? 0;
         public bool IsRunning => _solveTask != null && !_solveTask.IsCompleted;
         public IReadOnlyList<SolverResult> Results => _results;
         public int MaxResults => maxResults;

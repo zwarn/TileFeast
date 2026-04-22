@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Core;
 using Pieces;
 using Rules;
+using Rules.AspectSources;
 using Rules.CompletionRules;
 using Rules.EmotionRules;
 using Scenarios;
@@ -21,10 +22,13 @@ namespace Solver
     {
         // Progress counters — written by background thread, read by main thread.
         // FoundCount is volatile (int = 32-bit, volatile is valid).
-        // TriedCount is long (64-bit); volatile is not valid for long in C#,
-        // so callers must use Interlocked.Read(ref solver.TriedCount) for a safe cross-thread read.
+        // TriedCount/TopLevelTriedCount are long (64-bit); callers must use
+        // Interlocked.Read(ref solver.TriedCount) for a safe cross-thread read.
         public long TriedCount;
         public volatile int FoundCount;
+        public volatile int BestScore;
+        public long TopLevelTriedCount;
+        public long TotalTopLevelPositions;
 
         private readonly int _width;
         private readonly int _height;
@@ -35,6 +39,7 @@ namespace Solver
         private readonly List<EmotionRule> _emotionRules;
         private readonly List<CompletionRuleConfig> _completionRuleConfigs;
         private readonly List<Zone> _clonedZones;
+        private readonly List<AspectSource> _aspectSources;
 
         // Precomputed unique rotation indices per piece (indexed by _availablePieces index)
         private readonly List<int>[] _uniqueRotations;
@@ -61,6 +66,7 @@ namespace Solver
             _completionRuleConfigs = scenario.completionRules.ToList();
 
             _clonedZones = scenario.Zones();
+            _aspectSources = scenario.AspectSources();
 
             // Pre-place locked pieces onto the solver board
             foreach (var locked in scenario.LockedPieces())
@@ -79,6 +85,10 @@ namespace Solver
             {
                 _uniqueRotations[i] = ComputeUniqueRotations(_availablePieces[i].shape);
             }
+
+            TotalTopLevelPositions = _availablePieces.Count > 0
+                ? _uniqueRotations[0].Count * (long)_width * _height
+                : 0;
         }
 
         public Task<List<SolverResult>> SolveAsync(CancellationToken ct)
@@ -121,6 +131,7 @@ namespace Solver
                     for (int x = 0; x < _width; x++)
                     {
                         var position = new Vector2Int(x, y);
+                        if (depth == 0) Interlocked.Increment(ref TopLevelTriedCount);
                         var tiles = ComputeTiles(piece.shape, rotation, position);
 
                         if (!IsValidPlacement(tiles)) continue;
@@ -161,13 +172,23 @@ namespace Solver
                 null,
                 _emotionRules,
                 _completionRuleConfigs,
-                _clonedZones
+                _clonedZones,
+                _aspectSources
             );
 
             var context = new EmotionContext(gameState, tileArray, _clonedZones);
 
-            // Evaluate emotions for all placed pieces (stateless — thread safe)
-            var pieceStates = _currentPlacements.Select(placed =>
+            // Aspect source phase: mirrors RulesController.Evaluate
+            foreach (var placed in _currentPlacements)
+                placed.DynamicAspects.Clear();
+            foreach (var placed in _currentPlacements)
+            foreach (var source in _aspectSources)
+                source?.Apply(placed, context);
+
+            // Evaluate emotions — only pieces with hasEmotions, mirroring RulesController
+            var pieceStates = _currentPlacements
+                .Where(placed => placed.Piece.hasEmotions)
+                .Select(placed =>
             {
                 var effects = _emotionRules
                     .Where(rule => rule != null)
@@ -202,6 +223,8 @@ namespace Solver
 
                 if (_results.Count > _maxResults)
                     _results.RemoveAt(_results.Count - 1);
+
+                BestScore = _results[0].Score;
             }
 
             Interlocked.Increment(ref FoundCount);
