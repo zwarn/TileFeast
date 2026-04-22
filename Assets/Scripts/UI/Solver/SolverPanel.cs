@@ -5,6 +5,7 @@ using Tools;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using Toggle = UnityEngine.UI.Toggle;
 
 namespace UI.Solver
 {
@@ -15,6 +16,8 @@ namespace UI.Solver
         [SerializeField] private TMP_Text statusLabel;
         [SerializeField] private Button solveButton;
         [SerializeField] private Button stopButton;
+        [SerializeField] private Toggle forwardCheckToggle;
+        [SerializeField] private Toggle fullCoverageToggle;
         [SerializeField] private Transform resultsContainer;
         [SerializeField] private Transform viewParent;
         [SerializeField] private SolverResultEntry resultEntryPrefab;
@@ -27,6 +30,18 @@ namespace UI.Solver
             _toolController.OnToolChanged += UpdateVisibility;
             _solverRunner.OnSolverStarted += HandleSolverStarted;
             _solverRunner.OnSolverComplete += HandleSolverComplete;
+
+            if (forwardCheckToggle != null)
+            {
+                _solverRunner.ForwardCheckEnabled = forwardCheckToggle.isOn;
+                forwardCheckToggle.onValueChanged.AddListener(OnForwardCheckChanged);
+            }
+            if (fullCoverageToggle != null)
+            {
+                _solverRunner.FullCoverageEnabled = fullCoverageToggle.isOn;
+                fullCoverageToggle.onValueChanged.AddListener(OnFullCoverageChanged);
+            }
+
             RefreshButtons();
         }
 
@@ -35,7 +50,13 @@ namespace UI.Solver
             _toolController.OnToolChanged -= UpdateVisibility;
             _solverRunner.OnSolverStarted -= HandleSolverStarted;
             _solverRunner.OnSolverComplete -= HandleSolverComplete;
+
+            if (forwardCheckToggle != null) forwardCheckToggle.onValueChanged.RemoveListener(OnForwardCheckChanged);
+            if (fullCoverageToggle != null) fullCoverageToggle.onValueChanged.RemoveListener(OnFullCoverageChanged);
         }
+
+        private void OnForwardCheckChanged(bool value) => _solverRunner.ForwardCheckEnabled = value;
+        private void OnFullCoverageChanged(bool value) => _solverRunner.FullCoverageEnabled = value;
 
         private void UpdateVisibility(ToolType toolType)
         {

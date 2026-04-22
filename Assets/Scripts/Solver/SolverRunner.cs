@@ -17,6 +17,9 @@ namespace Solver
 
         [SerializeField] private int maxResults = 5;
 
+        public bool ForwardCheckEnabled { get; set; } = false;
+        public bool FullCoverageEnabled { get; set; } = false;
+
         private AutoSolver _solver;
         private CancellationTokenSource _cts;
         private Task<List<SolverResult>> _solveTask;
@@ -43,7 +46,8 @@ namespace Solver
             _results = new List<SolverResult>();
 
             // AutoSolver constructor clones ScriptableObjects — must run on main thread
-            _solver = new AutoSolver(_scenarioController.CurrentScenario, maxResults);
+            _solver = new AutoSolver(_scenarioController.CurrentScenario, maxResults,
+                ForwardCheckEnabled, FullCoverageEnabled);
 
             _cts = new CancellationTokenSource();
             _solveTask = _solver.SolveAsync(_cts.Token);
@@ -84,8 +88,10 @@ namespace Solver
 
                 if (gamePiece == null) continue;
 
-                _gameController.DeletePieceFromSupply(gamePiece);
-                _gameController.SpawnPiece(gamePiece, placement.Position, placement.Rotation);
+                // Spawn before deleting from supply: if SpawnPiece fails (e.g. wall crossing
+                // or occupied cell), the piece stays in supply instead of being permanently lost.
+                if (_gameController.SpawnPiece(gamePiece, placement.Position, placement.Rotation))
+                    _gameController.DeletePieceFromSupply(gamePiece);
             }
         }
 
