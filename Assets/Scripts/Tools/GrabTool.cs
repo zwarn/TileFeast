@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Board;
+using BoardExpansion;
 using Core;
 using Pieces;
 using UI.Pieces;
@@ -11,92 +13,95 @@ namespace Tools
     public class GrabTool : ToolBase
     {
         [SerializeField] private PieceView pieceView;
+        [SerializeField] private BoardExpansionView boardExpansionView;
         [SerializeField] private Grid grid;
 
         [Inject] private GameController _gameController;
+        [Inject] private BoardController _boardController;
 
         private bool _isSelected;
         private bool _processedMouseDown;
+        private IPlaceable _currentPlaceable;
 
         private void OnEnable()
         {
-            _gameController.OnHandChanged += UpdatePieceView;
+            _gameController.OnHandChanged += UpdatePlaceable;
+            _gameController.RegisterPieceHandFactory(
+                piece => new PlaceablePiece(piece, pieceView, _gameController));
         }
 
         private void OnDisable()
         {
-            _gameController.OnHandChanged -= UpdatePieceView;
+            _gameController.OnHandChanged -= UpdatePlaceable;
         }
 
         private void Update()
         {
             if (!_isSelected) return;
 
-            // Handle board input when not over supply panel
-            if (!IsPointerOverSupplyPanel())
-            {
-                HandleBoardInput();
-            }
+            var boardCell = GetBoardPosition();
+            _currentPlaceable?.UpdatePreview(boardCell);
 
-            // Reset flag on any mouse up (after processing)
+            if (!IsPointerOverSupplyPanel())
+                HandleBoardInput();
+
             if (Input.GetMouseButtonUp(0))
-            {
                 _processedMouseDown = false;
-            }
 
             HandleRotationInput();
         }
 
         private void HandleBoardInput()
         {
-            // Click to grab or place
+            var boardCell = GetBoardPosition();
+
             if (Input.GetMouseButtonDown(0))
             {
                 _processedMouseDown = true;
 
-                if (_gameController.IsHandEmpty())
+                if (_currentPlaceable == null)
                 {
-                    var position = GetBoardPosition();
-                    _gameController.GrabPieceFromBoardInHand(position);
+                    var grabbed = _gameController.GrabPieceFromBoardInHand(boardCell);
+                    if (grabbed != null)
+                    {
+                        var placeable = new PlaceablePiece(grabbed, pieceView, _gameController);
+                        _gameController.SetItemInHand(placeable);
+                    }
                 }
                 else
                 {
-                    var position = GetBoardPosition();
-                    _gameController.PutPieceInHandOnBoard(position);
+                    bool success = _currentPlaceable.TryPlace(boardCell);
+                    if (success) _gameController.ClearItemInHand();
                 }
             }
 
-            // Release over board with piece (for drag from UI to board)
-            if (Input.GetMouseButtonUp(0) && !_processedMouseDown && !_gameController.IsHandEmpty())
+            if (Input.GetMouseButtonUp(0) && !_processedMouseDown && _currentPlaceable != null)
             {
-                var position = GetBoardPosition();
-                _gameController.PutPieceInHandOnBoard(position);
+                bool success = _currentPlaceable.TryPlace(boardCell);
+                if (success) _gameController.ClearItemInHand();
             }
 
-            if (Input.GetMouseButtonDown(1) && !_gameController.IsHandEmpty())
-            {
-                _gameController.ReturnPieceInHandToSupply();
-            }
+            if (Input.GetMouseButtonDown(1) && _currentPlaceable != null)
+                _gameController.DiscardItemInHand();
         }
 
         private void HandleRotationInput()
         {
-            var piece = _gameController.GetPieceInHand();
-            if (piece == null) return;
+            if (_currentPlaceable == null) return;
 
             var mouseScroll = Input.mouseScrollDelta.y;
 
             if (Input.GetKeyUp(KeyCode.Q) || mouseScroll > 0.5f)
-                piece.Rotate(1);
+                _currentPlaceable.Rotate(1);
 
             if (Input.GetKeyUp(KeyCode.E) || mouseScroll < -0.5f)
-                piece.Rotate(-1);
+                _currentPlaceable.Rotate(-1);
         }
 
         public override void OnSelect()
         {
             _isSelected = true;
-            pieceView.SetData(_gameController.GetPieceInHand());
+            UpdatePlaceable();
             gameObject.SetActive(true);
         }
 
@@ -104,9 +109,7 @@ namespace Tools
         {
             _isSelected = false;
             if (!_gameController.IsHandEmpty())
-            {
-                _gameController.ReturnPieceInHandToSupply();
-            }
+                _gameController.DiscardItemInHand();
 
             gameObject.SetActive(false);
         }
@@ -130,17 +133,23 @@ namespace Tools
             foreach (var result in results)
             {
                 if (result.gameObject.GetComponentInParent<PieceSelectionPanel>() != null)
-                {
                     return true;
-                }
             }
 
             return false;
         }
 
-        private void UpdatePieceView()
+        private void UpdatePlaceable()
         {
-            pieceView.SetData(_gameController.GetPieceInHand());
+            if (_currentPlaceable != null)
+                _currentPlaceable.PreviewObject.SetActive(false);
+
+            _currentPlaceable = _gameController.GetItemInHand();
+
+            if (_currentPlaceable != null)
+                _currentPlaceable.PreviewObject.SetActive(true);
+            else
+                pieceView.SetData(null);
         }
     }
 }

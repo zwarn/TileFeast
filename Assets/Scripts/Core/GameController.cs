@@ -29,6 +29,9 @@ namespace Core
         public event Action<Vector2Int> OnTileChanged;
         public event Action OnHandChanged;
 
+        private IPlaceable _itemInHand;
+        private Func<PieceWithRotation, IPlaceable> _pieceInHandFactory;
+
         [ShowInInspector, ReadOnly] public GameState CurrentState { get; private set; }
 
         public void LoadScenario(ScenarioSO scenario)
@@ -42,6 +45,9 @@ namespace Core
                                string.Join("\n", (IEnumerable<string>)validationResult.Errors));
                 return;
             }
+
+            if (!IsHandEmpty())
+                ClearItemInHand();
 
             CurrentState = newState;
             _toolController.ChangeTool(ToolType.GrabTool);
@@ -191,21 +197,13 @@ namespace Core
         }
 
 
-        public void PutPieceInHandOnBoard(Vector2Int position)
+        // Called by PlaceablePiece.TryPlace — places piece on board, returns success.
+        public bool PlacePieceInHand(PieceWithRotation piece, Vector2Int position)
         {
-            var piece = GetPieceInHand();
-            if (piece == null)
-            {
-                Debug.LogError("Tried PutPieceInHandOnBoard with empty hand");
-                return;
-            }
-
             var success = _boardController.PlacePiece(piece, position);
             if (success)
-            {
-                ClearPieceInHand();
                 OnBoardChanged?.Invoke();
-            }
+            return success;
         }
 
         public bool SpawnPiece(Piece piece, Vector2Int position, int rotation)
@@ -242,75 +240,66 @@ namespace Core
             _pieceSupply.DeleteAllPieces();
         }
 
-        public void GrabPieceFromBoardInHand(Vector2Int position)
+        // Grabs a piece from the board and fires OnHandChanged so GrabTool can wrap it.
+        // Returns the PieceWithRotation on success (null if invalid or locked).
+        public PieceWithRotation GrabPieceFromBoardInHand(Vector2Int position)
         {
-            if (!IsHandEmpty())
-            {
-                Debug.LogError("Tried GrabPieceFromBoardInHand with piece in hand");
-                return;
-            }
+            if (!IsHandEmpty()) return null;
 
             var placedPiece = _boardController.GetPiece(position);
-            if (placedPiece == null) return;
-            if (placedPiece.IsLocked()) return;
+            if (placedPiece == null) return null;
+            if (placedPiece.IsLocked()) return null;
 
             _boardController.RemovePiece(placedPiece);
-
-            var piece = new PieceWithRotation(placedPiece.Piece, placedPiece.Rotation);
-            SetPieceInHand(piece);
             OnBoardChanged?.Invoke();
+            return new PieceWithRotation(placedPiece.Piece, placedPiece.Rotation);
         }
 
-        public void MovePieceFromSupplyToHand(Piece piece)
+        // Removes piece from supply; fires OnHandChanged so GrabTool can wrap it.
+        // Returns the PieceWithRotation ready to be held.
+        public PieceWithRotation GrabPieceFromSupplyForHand(Piece piece)
         {
-            if (!IsHandEmpty())
-            {
-                Debug.LogError("Tried MovePieceFromSupplyToHand with piece in hand");
-                return;
-            }
-
-            GrabPieceFromSupply(piece);
-            SetPieceInHand(piece);
+            _pieceSupply.RemovePiece(piece);
+            return new PieceWithRotation(piece, 0);
         }
 
-        public void ReturnPieceInHandToSupply()
+        // Sets any IPlaceable as the current in-hand item (used by GrabTool and BoardExpansion supply).
+        public void SetItemInHand(IPlaceable item)
         {
-            if (IsHandEmpty())
-            {
-                Debug.LogError("Tried ReturnPieceInHandToSupply with empty hand");
-                return;
-            }
-
-            var piece = GetPieceInHand();
-            ReturnPieceToSupply(piece);
-            ClearPieceInHand();
+            _itemInHand = item;
+            CurrentState.HasPieceInHand = item is PlaceablePiece;
+            OnHandChanged?.Invoke();
         }
 
-        private void ReturnPieceToSupply(PieceWithRotation piece)
+        public IPlaceable GetItemInHand() => _itemInHand;
+
+        // Clears hand state without calling OnDiscard (used after successful placement).
+        public void ClearItemInHand()
         {
-            if (piece == null) return;
-            _pieceSupply.AddPiece(piece);
+            _itemInHand = null;
+            CurrentState.HasPieceInHand = false;
+            OnHandChanged?.Invoke();
         }
 
-
-        public PieceWithRotation GetPieceInHand()
+        // Discards the current in-hand item: clears state, calls OnDiscard for cleanup.
+        public void DiscardItemInHand()
         {
-            return CurrentState?.PieceInHand;
+            if (_itemInHand == null) return;
+            var item = _itemInHand;
+            _itemInHand = null;
+            CurrentState.HasPieceInHand = false;
+            item.OnDiscard();
+            OnHandChanged?.Invoke();
         }
+
+        // Adds a piece back to the supply (called by PlaceablePiece.OnDiscard).
+        public void ReturnPieceToSupply(Piece piece) => _pieceSupply.AddPiece(piece);
 
         public void RequestReturnPieceInHand()
         {
-            if (_toolController.CurrentTool.Data.type != ToolType.GrabTool)
-            {
-                return;
-            }
-
-            if (IsHandEmpty())
-            {
-                return;
-            }
-
-            ReturnPieceInHandToSupply();
+            if (_toolController.CurrentTool.Data.type != ToolType.GrabTool) return;
+            if (IsHandEmpty()) return;
+            DiscardItemInHand();
         }
 
         public void ReturnPieceOnBoardToSupply(PlacedPiece piece)
@@ -331,9 +320,7 @@ namespace Core
             }
 
             if (!IsHandEmpty())
-            {
-                ReturnPieceInHandToSupply();
-            }
+                DiscardItemInHand();
 
             OnBoardChanged?.Invoke();
         }
@@ -341,48 +328,35 @@ namespace Core
         public void RequestGrabPieceFromSupply(Piece piece)
         {
             _toolController.ChangeTool(ToolType.GrabTool);
-
-            if (!IsHandEmpty())
-            {
-                ReturnPieceInHandToSupply();
-            }
-
-            MovePieceFromSupplyToHand(piece);
+            if (!IsHandEmpty()) DiscardItemInHand();
+            var pieceWithRotation = GrabPieceFromSupplyForHand(piece);
+            var placeable = _pieceInHandFactory?.Invoke(pieceWithRotation);
+            if (placeable != null) SetItemInHand(placeable);
         }
 
-        private void SetPieceInHand(PieceWithRotation piece)
+        // GrabTool registers this factory so GameController can create PlaceablePiece
+        // without knowing about PieceView.
+        public void RegisterPieceHandFactory(Func<PieceWithRotation, IPlaceable> factory)
         {
-            CurrentState.PieceInHand = piece;
-            OnHandChanged?.Invoke();
+            _pieceInHandFactory = factory;
         }
 
-        private void SetPieceInHand(Piece piece)
-        {
-            SetPieceInHand(new PieceWithRotation(piece, 0));
-        }
-
-        private void ClearPieceInHand()
-        {
-            CurrentState.PieceInHand = null;
-            OnHandChanged?.Invoke();
-        }
-
-        public bool IsHandEmpty()
-        {
-            return CurrentState?.PieceInHand == null;
-        }
-
-
-        private void GrabPieceFromSupply(Piece piece)
-        {
-            _pieceSupply.RemovePiece(piece);
-        }
+        public bool IsHandEmpty() => _itemInHand == null;
 
 
         private bool IsWithinBounds(Vector2Int position)
         {
             return position.x >= 0 && position.x < CurrentState.GridSize.x &&
                    position.y >= 0 && position.y < CurrentState.GridSize.y;
+        }
+
+        public void ExpandBoard(List<Vector2Int> absoluteTiles)
+        {
+            _boardController.AddActiveTiles(absoluteTiles, CurrentState);
+            _cameraController.HandleBoardResize(CurrentState.GridSize);
+            _zoneController.HandleBoardResize(CurrentState.GridSize, Vector2Int.zero);
+            _rulesController.HandleBoardResize(CurrentState.GridSize);
+            OnBoardChanged?.Invoke();
         }
 
         public void ChangeBoardSize(Vector2Int deltaSize, Vector2Int translate)

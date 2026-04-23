@@ -85,6 +85,66 @@ namespace Board
             OnBoardResize?.Invoke();
         }
 
+        // Expands the board to include the given absolute tile positions.
+        // Extends GridSize to the new bounding box, calls HandleBoardResize to translate
+        // existing pieces/walls, then reconciles blocked positions so exactly the
+        // union of old active tiles and newTiles is unblocked.
+        public void AddActiveTiles(List<Vector2Int> newTiles, GameState state)
+        {
+            if (newTiles == null || newTiles.Count == 0) return;
+
+            // 1. Capture current active set before any resize.
+            var currentActive = new HashSet<Vector2Int>();
+            for (int x = 0; x < _width; x++)
+                for (int y = 0; y < _height; y++)
+                {
+                    var pos = new Vector2Int(x, y);
+                    if (!_blockPositions.Contains(pos))
+                        currentActive.Add(pos);
+                }
+
+            // 2. Compute bounding box over current active + new tiles.
+            int minX = int.MaxValue, minY = int.MaxValue;
+            int maxX = int.MinValue, maxY = int.MinValue;
+
+            foreach (var p in currentActive.Concat(newTiles))
+            {
+                if (p.x < minX) minX = p.x;
+                if (p.y < minY) minY = p.y;
+                if (p.x > maxX) maxX = p.x;
+                if (p.y > maxY) maxY = p.y;
+            }
+
+            // 3. Compute translate and new size.
+            var translate = new Vector2Int(-minX, -minY);
+            var newSize = new Vector2Int(maxX - minX + 1, maxY - minY + 1);
+            state.GridSize = newSize;
+
+            // 4. Build the final active set (translated).
+            var finalActive = new HashSet<Vector2Int>(
+                currentActive.Select(p => p + translate)
+                    .Concat(newTiles.Select(p => p + translate)));
+
+            // 5. Call HandleBoardResize to translate pieces/walls/blocks and fire OnBoardResize.
+            HandleBoardResize(newSize, translate);
+
+            // 6. Reconcile blocked positions for the new bounding box.
+            for (int x = 0; x < newSize.x; x++)
+            {
+                for (int y = 0; y < newSize.y; y++)
+                {
+                    var pos = new Vector2Int(x, y);
+                    if (finalActive.Contains(pos))
+                        _blockPositions.Remove(pos);
+                    else if (!_blockPositions.Contains(pos))
+                        _blockPositions.Add(pos);
+                }
+            }
+
+            // 7. Re-fire so BoardView redraws the updated block layout.
+            OnBoardResize?.Invoke();
+        }
+
         private void MoveBlockedPositions(Vector2Int translate)
         {
             for (int i = 0; i < _blockPositions.Count; i++)

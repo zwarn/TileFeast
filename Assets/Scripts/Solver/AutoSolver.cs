@@ -147,7 +147,6 @@ namespace Solver
                     blockedList,   // shared read-only reference — completion rules don't mutate it
                     null,          // PlacedPieces is set per terminal call
                     new List<Piece>(),
-                    null,
                     emotionRules,
                     completionRules,
                     zones,

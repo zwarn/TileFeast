@@ -560,6 +560,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b9dd8d0c80489f9da16417ad502792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hand.Tool.GrabTool
+--- !u!4 &1189801355 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1020416006338187551, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
+  m_PrefabInstance: {fileID: 6166601787790805258}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1362100616 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3077955860448957653, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
@@ -681,6 +686,79 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9e04bf9704f23f489c9d3a6d218d87b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &1951637861
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1189801355}
+    m_Modifications:
+    - target: {fileID: 5452547252447558390, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_Name
+      value: BoardExpansionView InHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894911182587129502, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894911182587129502, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894911182587129502, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894911182587129502, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894911182587129502, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894911182587129502, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894911182587129502, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894911182587129502, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894911182587129502, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894911182587129502, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+--- !u!4 &1951637862 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5894911182587129502, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+  m_PrefabInstance: {fileID: 1951637861}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1951637863 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5118248346831813510, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+  m_PrefabInstance: {fileID: 1951637861}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3488d2f28196aa4ea2c9ffdd249b28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1959155271 stripped
@@ -1230,6 +1308,10 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 737069547}
+    - target: {fileID: 2173764912647236278, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
+      propertyPath: boardExpansionView
+      value: 
+      objectReference: {fileID: 1951637863}
     - target: {fileID: 2757519602020495987, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
       propertyPath: grid
       value: 
@@ -1304,7 +1386,10 @@ PrefabInstance:
       objectReference: {fileID: 737069547}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1020416006338187551, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1951637862}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ce4360abedec244aa7e1aff1e306d47, type: 3}
 --- !u!1001 &7131457861256526942
