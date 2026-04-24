@@ -7,7 +7,7 @@ namespace BoardExpansion
 {
     public class BoardExpansionPreviewGenerator
     {
-        private const int P = 16; // pixels per tile
+        private const int P = 32; // pixels per tile
 
         private readonly BoardExpansionPreviewSettings _settings;
 
