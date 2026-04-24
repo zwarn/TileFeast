@@ -35,6 +35,17 @@ namespace Tools
         {
             if (!_isSelected) return;
 
+            if (_currentPlaceable is BoardExpansion.BoardExpansion)
+            {
+                var worldPos  = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var cell      = (Vector2Int)grid.WorldToCell(worldPos);
+                var cellWorld = grid.CellToWorld(new Vector3Int(cell.x, cell.y, 0));
+                boardExpansionView.transform.localPosition = new Vector3(
+                    cellWorld.x + 1 - worldPos.x,
+                    cellWorld.y + 1 - worldPos.y,
+                    boardExpansionView.transform.localPosition.z);
+            }
+
             if (!IsPointerOverSupplyPanel())
                 HandleBoardInput();
 
@@ -88,7 +99,7 @@ namespace Tools
             _currentPlaceable.Rotate(dir);
 
             if (_currentPlaceable is BoardExpansion.BoardExpansion be)
-                boardExpansionView.SetShape(be.CurrentShape, be.PreviewTile);
+                boardExpansionView.SetData(be);
         }
 
         public override void OnSelect()
@@ -138,7 +149,10 @@ namespace Tools
             if (_currentPlaceable is PlaceablePiece)
                 pieceView.SetData(null);
             else if (_currentPlaceable is BoardExpansion.BoardExpansion)
+            {
+                boardExpansionView.transform.localPosition = Vector3.zero;
                 boardExpansionView.gameObject.SetActive(false);
+            }
 
             _currentPlaceable = _gameController.GetItemInHand();
 
@@ -147,7 +161,8 @@ namespace Tools
                 pieceView.SetData(pp.Piece);
             else if (_currentPlaceable is BoardExpansion.BoardExpansion be)
             {
-                boardExpansionView.SetShape(be.CurrentShape, be.PreviewTile);
+                boardExpansionView.transform.localPosition = Vector3.zero;
+                boardExpansionView.SetData(be);
                 boardExpansionView.gameObject.SetActive(true);
             }
             else

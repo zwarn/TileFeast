@@ -696,6 +696,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1189801355}
     m_Modifications:
+    - target: {fileID: 1100492605810134578, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_TileAnchor.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137703402697380282, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
+      propertyPath: m_TileAnchor.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5452547252447558390, guid: 4e5a651fb2e59244aabe75dbf4e24012, type: 3}
       propertyPath: m_Name
       value: BoardExpansionView InHand
@@ -1247,6 +1255,10 @@ PrefabInstance:
       propertyPath: pieceSupplyController
       value: 
       objectReference: {fileID: 754699921}
+    - target: {fileID: 946102014491244084, guid: f84ac95eb881b9e46b096d1297905b23, type: 3}
+      propertyPath: boardExpansionPreviewSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 1ea4a63cd627d5e439fc60c5de1d0e6e, type: 2}
     - target: {fileID: 1729562849038814228, guid: f84ac95eb881b9e46b096d1297905b23, type: 3}
       propertyPath: m_Name
       value: SceneContext

@@ -8,23 +8,65 @@ namespace BoardExpansion
     public class BoardExpansionView : MonoBehaviour
     {
         [SerializeField] private Tilemap previewTilemap;
+        [SerializeField] private TileBase defaultTile;
 
-        public void SetShape(List<Vector2Int> shapeOffsets, TileBase tile)
+        [Header("Walls")]
+        [SerializeField] private Tilemap horizontalWallTilemap;
+        [SerializeField] private TileBase horizontalWallTile;
+        [SerializeField] private Tilemap verticalWallTilemap;
+        [SerializeField] private TileBase verticalWallTile;
+
+        [Header("Zones")]
+        [SerializeField] private Tilemap zoneTilemap;
+
+        private static readonly Color PreviewColor = new Color(1f, 1f, 1f, 0.6f);
+
+        public void SetData(BoardExpansion expansion)
         {
-            previewTilemap.ClearAllTiles();
-            previewTilemap.SetTiles(
-                shapeOffsets.Select(offset =>
-                    new TileChangeData(
-                        new Vector3Int(offset.x, offset.y, 0),
-                        tile,
-                        new Color(1f, 1f, 1f, 0.6f),
-                        Matrix4x4.identity))
-                .ToArray(), false);
+            // Offset all tilemaps so the bounding-box center tile sits on the parent origin
+            // (the cursor world position). The -0.5 term shifts from tile corner to tile center.
+            var c = expansion.CurrentCenter;
+            var base3 = new Vector3(-c.x - 0.5f, -c.y - 0.5f, 0f);
+            previewTilemap.transform.localPosition          = base3;
+            zoneTilemap.transform.localPosition             = base3;
+            horizontalWallTilemap.transform.localPosition   = base3 + new Vector3(0f,   -0.5f, 0f);
+            verticalWallTilemap.transform.localPosition     = base3 + new Vector3(-0.5f, 0f,   0f);
+
+            SetTiles(previewTilemap, expansion.CurrentShape
+                .Select(p => MakeTile(p.x, p.y, defaultTile)));
+
+            SetTiles(horizontalWallTilemap, expansion.CurrentHorizontalWalls
+                .Select(w => MakeTile(w.x, w.y + 1, horizontalWallTile)));
+
+            SetTiles(verticalWallTilemap, expansion.CurrentVerticalWalls
+                .Select(v => MakeTile(v.x + 1, v.y, verticalWallTile)));
+
+            zoneTilemap.ClearAllTiles();
+            foreach (var zone in expansion.CurrentZones)
+            {
+                if (zone?.zoneType?.zoneTile == null) continue;
+                var tiles = zone.positions
+                    .Select(p => MakeTile(p.x, p.y, zone.zoneType.zoneTile))
+                    .ToArray();
+                zoneTilemap.SetTiles(tiles, false);
+            }
         }
 
         private void OnDisable()
         {
             previewTilemap.ClearAllTiles();
+            horizontalWallTilemap.ClearAllTiles();
+            verticalWallTilemap.ClearAllTiles();
+            zoneTilemap.ClearAllTiles();
         }
+
+        private static void SetTiles(Tilemap tilemap, IEnumerable<TileChangeData> tiles)
+        {
+            tilemap.ClearAllTiles();
+            tilemap.SetTiles(tiles.ToArray(), false);
+        }
+
+        private static TileChangeData MakeTile(int x, int y, TileBase tile)
+            => new TileChangeData(new Vector3Int(x, y, 0), tile, PreviewColor, Matrix4x4.identity);
     }
 }

@@ -1,4 +1,5 @@
 using Board;
+using BoardExpansion;
 using Cameras;
 using Zones;
 using Core;
@@ -28,6 +29,7 @@ namespace Infrastructure
         [SerializeField] private CameraController cameraController;
         [SerializeField] private PieceRepository pieceRepository;
         [SerializeField] private SolverRunner solverRunner;
+        [SerializeField] private BoardExpansionPreviewSettings boardExpansionPreviewSettings;
         [Header("Tools")] [SerializeField] private GrabTool grabTool;
         [SerializeField] private ZoneTool zoneTool;
         [SerializeField] private ShapeTool shapeTool;
@@ -53,6 +55,7 @@ namespace Infrastructure
             Container.Bind<ShapeTool>().FromInstance(shapeTool);
 
             Container.Bind<SolverRunner>().FromInstance(solverRunner);
+            Container.Bind<BoardExpansionPreviewSettings>().FromInstance(boardExpansionPreviewSettings);
         }
     }
 }

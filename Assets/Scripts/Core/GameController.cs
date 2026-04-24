@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Board;
+using BoardExpansion;
 using Zones;
 using Tools;
 using Cameras;
@@ -23,6 +24,7 @@ namespace Core
         [Inject] private ZoneController _zoneController;
         [Inject] private RulesController _rulesController;
         [Inject] private CameraController _cameraController;
+        [Inject] private BoardExpansionPreviewSettings _boardExpansionPreviewSettings;
 
         public event Action<GameState> OnChangeGameState;
         public event Action OnBoardChanged;
@@ -55,6 +57,9 @@ namespace Core
                 .Where(item => item != null)
                 .ToList();
             _pieceSupply.ReplaceItems(supplyItems);
+
+            var expansionGenerator = new BoardExpansionPreviewGenerator(_boardExpansionPreviewSettings);
+            _pieceSupply.AddItem(RandomBoardExpansionFactory.Create(expansionGenerator, this));
 
             _toolController.ChangeTool(ToolType.GrabTool);
             OnChangeGameState?.Invoke(CurrentState);
