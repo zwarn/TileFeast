@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Board;
 using BoardExpansion;
 using Core;
 using Pieces;
@@ -17,7 +16,6 @@ namespace Tools
         [SerializeField] private Grid grid;
 
         [Inject] private GameController _gameController;
-        [Inject] private BoardController _boardController;
 
         private bool _isSelected;
         private bool _processedMouseDown;
@@ -26,8 +24,6 @@ namespace Tools
         private void OnEnable()
         {
             _gameController.OnHandChanged += UpdatePlaceable;
-            _gameController.RegisterPieceHandFactory(
-                piece => new PlaceablePiece(piece, pieceView, _gameController));
         }
 
         private void OnDisable()
@@ -38,9 +34,6 @@ namespace Tools
         private void Update()
         {
             if (!_isSelected) return;
-
-            var boardCell = GetBoardPosition();
-            _currentPlaceable?.UpdatePreview(boardCell);
 
             if (!IsPointerOverSupplyPanel())
                 HandleBoardInput();
@@ -63,22 +56,19 @@ namespace Tools
                 {
                     var grabbed = _gameController.GrabPieceFromBoardInHand(boardCell);
                     if (grabbed != null)
-                    {
-                        var placeable = new PlaceablePiece(grabbed, pieceView, _gameController);
-                        _gameController.SetItemInHand(placeable);
-                    }
+                        _gameController.SetItemInHand(new PlaceablePiece(grabbed, _gameController));
                 }
                 else
                 {
-                    bool success = _currentPlaceable.TryPlace(boardCell);
-                    if (success) _gameController.ClearItemInHand();
+                    if (_currentPlaceable.TryPlace(boardCell))
+                        _gameController.ClearItemInHand();
                 }
             }
 
             if (Input.GetMouseButtonUp(0) && !_processedMouseDown && _currentPlaceable != null)
             {
-                bool success = _currentPlaceable.TryPlace(boardCell);
-                if (success) _gameController.ClearItemInHand();
+                if (_currentPlaceable.TryPlace(boardCell))
+                    _gameController.ClearItemInHand();
             }
 
             if (Input.GetMouseButtonDown(1) && _currentPlaceable != null)
@@ -89,13 +79,16 @@ namespace Tools
         {
             if (_currentPlaceable == null) return;
 
-            var mouseScroll = Input.mouseScrollDelta.y;
+            var scroll = Input.mouseScrollDelta.y;
+            int dir = 0;
+            if (Input.GetKeyUp(KeyCode.Q) || scroll > 0.5f) dir = 1;
+            else if (Input.GetKeyUp(KeyCode.E) || scroll < -0.5f) dir = -1;
+            if (dir == 0) return;
 
-            if (Input.GetKeyUp(KeyCode.Q) || mouseScroll > 0.5f)
-                _currentPlaceable.Rotate(1);
+            _currentPlaceable.Rotate(dir);
 
-            if (Input.GetKeyUp(KeyCode.E) || mouseScroll < -0.5f)
-                _currentPlaceable.Rotate(-1);
+            if (_currentPlaceable is BoardExpansion.BoardExpansion be)
+                boardExpansionView.SetShape(be.CurrentShape, be.PreviewTile);
         }
 
         public override void OnSelect()
@@ -141,15 +134,27 @@ namespace Tools
 
         private void UpdatePlaceable()
         {
-            if (_currentPlaceable != null)
-                _currentPlaceable.PreviewObject.SetActive(false);
+            // Deactivate old preview
+            if (_currentPlaceable is PlaceablePiece)
+                pieceView.SetData(null);
+            else if (_currentPlaceable is BoardExpansion.BoardExpansion)
+                boardExpansionView.gameObject.SetActive(false);
 
             _currentPlaceable = _gameController.GetItemInHand();
 
-            if (_currentPlaceable != null)
-                _currentPlaceable.PreviewObject.SetActive(true);
+            // Activate new preview
+            if (_currentPlaceable is PlaceablePiece pp)
+                pieceView.SetData(pp.Piece);
+            else if (_currentPlaceable is BoardExpansion.BoardExpansion be)
+            {
+                boardExpansionView.SetShape(be.CurrentShape, be.PreviewTile);
+                boardExpansionView.gameObject.SetActive(true);
+            }
             else
+            {
                 pieceView.SetData(null);
+                boardExpansionView.gameObject.SetActive(false);
+            }
         }
     }
 }

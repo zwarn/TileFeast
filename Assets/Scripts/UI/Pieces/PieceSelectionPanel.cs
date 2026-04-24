@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Core;
-using Pieces;
 using Pieces.Supply;
 using Tools;
 using UnityEngine;
@@ -16,7 +15,7 @@ namespace UI.Pieces
         [SerializeField] private Transform entryParent;
         [SerializeField] private Transform visualParent;
 
-        private readonly Dictionary<Piece, PieceSelectionEntry> _entries = new();
+        private readonly Dictionary<IPlaceable, PieceSelectionEntry> _entries = new();
         [Inject] private DiContainer _container;
         [Inject] private PieceSupplyController _pieceSupply;
         [Inject] private ToolController _toolController;
@@ -24,17 +23,17 @@ namespace UI.Pieces
 
         private void OnEnable()
         {
-            _pieceSupply.OnPieceAdded += PieceAdded;
-            _pieceSupply.OnPieceRemoved += PieceRemoved;
-            _pieceSupply.OnPiecesReplaced += PiecesReplaced;
+            _pieceSupply.OnItemAdded += ItemAdded;
+            _pieceSupply.OnItemRemoved += ItemRemoved;
+            _pieceSupply.OnItemsReplaced += ItemsReplaced;
             _toolController.OnToolChanged += UpdateVisibility;
         }
 
         private void OnDisable()
         {
-            _pieceSupply.OnPieceAdded -= PieceAdded;
-            _pieceSupply.OnPieceRemoved -= PieceRemoved;
-            _pieceSupply.OnPiecesReplaced -= PiecesReplaced;
+            _pieceSupply.OnItemAdded -= ItemAdded;
+            _pieceSupply.OnItemRemoved -= ItemRemoved;
+            _pieceSupply.OnItemsReplaced -= ItemsReplaced;
             _toolController.OnToolChanged -= UpdateVisibility;
         }
 
@@ -46,43 +45,32 @@ namespace UI.Pieces
                 toolType != ToolType.CalculateTool);
         }
 
-        private void PiecesReplaced(List<Piece> pieces)
+        private void ItemsReplaced(List<IPlaceable> items)
         {
             foreach (var entry in _entries) Destroy(entry.Value.gameObject);
             _entries.Clear();
-            pieces.ForEach(PieceAdded);
+            items.ForEach(ItemAdded);
         }
 
-        private void PieceRemoved(Piece piece)
+        private void ItemRemoved(IPlaceable item)
         {
-            var entry = _entries[piece];
+            if (!_entries.TryGetValue(item, out var entry)) return;
             Destroy(entry.gameObject);
-            _entries.Remove(piece);
+            _entries.Remove(item);
         }
 
-        private void PieceAdded(Piece piece)
+        private void ItemAdded(IPlaceable item)
         {
             var entryObject = _container.InstantiatePrefab(prefab, entryParent);
             var entry = entryObject.GetComponent<PieceSelectionEntry>();
-            entry.SetData(piece);
-            _entries.Add(piece, entry);
+            entry.SetData(item);
+            _entries.Add(item, entry);
         }
 
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-        }
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
-        }
-
-        public void OnDrag(PointerEventData eventData)
-        {
-        }
-
-        public void OnDrop(PointerEventData eventData)
-        {
-        }
+        public void OnBeginDrag(PointerEventData eventData) { }
+        public void OnEndDrag(PointerEventData eventData) { }
+        public void OnDrag(PointerEventData eventData) { }
+        public void OnDrop(PointerEventData eventData) { }
 
         public void OnPointerClick(PointerEventData eventData)
         {

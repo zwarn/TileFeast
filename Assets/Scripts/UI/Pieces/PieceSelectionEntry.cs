@@ -1,5 +1,4 @@
-﻿using Core;
-using Pieces;
+using Core;
 using Tools;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,18 +13,18 @@ namespace UI.Pieces
         [Inject] private GameController _gameController;
         [Inject] private ToolController _toolController;
 
-        private Piece _piece;
+        private IPlaceable _item;
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Right &&
                 _toolController.CurrentToolType == ToolType.RemovePieceTool)
             {
-                _gameController.DeletePieceFromSupply(_piece);
+                _gameController.DeleteFromSupply(_item);
                 return;
             }
 
-            _gameController.RequestGrabPieceFromSupply(_piece);
+            _gameController.RequestGrabFromSupply(_item);
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -37,10 +36,10 @@ namespace UI.Pieces
 
         public void OnEndDrag(PointerEventData eventData) { }
 
-        public void SetData(Piece piece)
+        public void SetData(IPlaceable item)
         {
-            _piece = piece;
-            image.sprite = piece.previewSprite != null ? piece.previewSprite : piece.sprite;
+            _item = item;
+            image.sprite = item.PreviewSprite;
         }
     }
 }

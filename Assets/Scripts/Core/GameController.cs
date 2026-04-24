@@ -30,7 +30,6 @@ namespace Core
         public event Action OnHandChanged;
 
         private IPlaceable _itemInHand;
-        private Func<PieceWithRotation, IPlaceable> _pieceInHandFactory;
 
         [ShowInInspector, ReadOnly] public GameState CurrentState { get; private set; }
 
@@ -50,20 +49,22 @@ namespace Core
                 ClearItemInHand();
 
             CurrentState = newState;
+
+            var supplyItems = newState.AvailablePieces
+                .Select(CreatePieceForSupply)
+                .Where(item => item != null)
+                .ToList();
+            _pieceSupply.ReplaceItems(supplyItems);
+
             _toolController.ChangeTool(ToolType.GrabTool);
             OnChangeGameState?.Invoke(CurrentState);
             OnBoardChanged?.Invoke();
         }
 
-
         public void LockTile(Vector2Int position, bool locked)
         {
             var pieceAtPosition = _boardController.GetPiece(position);
-            if (pieceAtPosition == null)
-            {
-                return;
-            }
-
+            if (pieceAtPosition == null) return;
             pieceAtPosition.Lock(locked);
         }
 
@@ -72,17 +73,13 @@ namespace Core
             if (!IsWithinBounds(position)) return;
             if (CurrentState.BlockedPositions.Contains(position)) return;
 
-            // Remove any piece at this position and return to supply
             var placedPiece = _boardController.GetPiece(position);
             if (placedPiece != null)
             {
-                if (placedPiece.IsLocked())
-                {
-                    return;
-                }
+                if (placedPiece.IsLocked()) return;
 
                 _boardController.RemovePiece(placedPiece);
-                _pieceSupply.AddPiece(placedPiece.Piece);
+                ReturnPieceToSupply(placedPiece.Piece);
             }
 
             _zoneController.RemoveTilesFromZones(new List<Vector2Int> { position });
@@ -196,7 +193,6 @@ namespace Core
             OnBoardChanged?.Invoke();
         }
 
-
         // Called by PlaceablePiece.TryPlace — places piece on board, returns success.
         public bool PlacePieceInHand(PieceWithRotation piece, Vector2Int position)
         {
@@ -209,39 +205,40 @@ namespace Core
         public bool SpawnPiece(Piece piece, Vector2Int position, int rotation)
         {
             var rotatedPiece = new PieceWithRotation(piece, rotation);
-
             var success = _boardController.PlacePiece(rotatedPiece, position);
             if (success)
-            {
                 OnBoardChanged?.Invoke();
-            }
-
             return success;
         }
 
         public void DeletePieceFromBoard(Vector2Int position)
         {
             var placedPiece = _boardController.GetPiece(position);
-            if (placedPiece == null)
-            {
-                return;
-            }
-            
+            if (placedPiece == null) return;
             _boardController.RemovePiece(placedPiece);
         }
 
+        // Removes a specific IPlaceable item from the supply permanently.
+        public void DeleteFromSupply(IPlaceable item)
+        {
+            _pieceSupply.RemoveItem(item);
+        }
+
+        // Kept for SolverRunner and other callers that identify pieces by Piece reference.
         public void DeletePieceFromSupply(Piece piece)
         {
-            _pieceSupply.RemovePiece(piece);
+            var item = _pieceSupply.Items
+                .OfType<PlaceablePiece>()
+                .FirstOrDefault(pp => pp.Piece.Piece == piece);
+            if (item != null) _pieceSupply.RemoveItem(item);
         }
 
         public void ClearPieceSupply()
         {
-            _pieceSupply.DeleteAllPieces();
+            _pieceSupply.DeleteAllItems();
         }
 
-        // Grabs a piece from the board and fires OnHandChanged so GrabTool can wrap it.
-        // Returns the PieceWithRotation on success (null if invalid or locked).
+        // Grabs a piece from the board. Returns the PieceWithRotation on success (null if invalid or locked).
         public PieceWithRotation GrabPieceFromBoardInHand(Vector2Int position)
         {
             if (!IsHandEmpty()) return null;
@@ -255,15 +252,7 @@ namespace Core
             return new PieceWithRotation(placedPiece.Piece, placedPiece.Rotation);
         }
 
-        // Removes piece from supply; fires OnHandChanged so GrabTool can wrap it.
-        // Returns the PieceWithRotation ready to be held.
-        public PieceWithRotation GrabPieceFromSupplyForHand(Piece piece)
-        {
-            _pieceSupply.RemovePiece(piece);
-            return new PieceWithRotation(piece, 0);
-        }
-
-        // Sets any IPlaceable as the current in-hand item (used by GrabTool and BoardExpansion supply).
+        // Sets any IPlaceable as the current in-hand item.
         public void SetItemInHand(IPlaceable item)
         {
             _itemInHand = item;
@@ -292,8 +281,23 @@ namespace Core
             OnHandChanged?.Invoke();
         }
 
-        // Adds a piece back to the supply (called by PlaceablePiece.OnDiscard).
-        public void ReturnPieceToSupply(Piece piece) => _pieceSupply.AddPiece(piece);
+        // Grabs an IPlaceable from the supply and puts it in hand.
+        public void RequestGrabFromSupply(IPlaceable item)
+        {
+            _toolController.ChangeTool(ToolType.GrabTool);
+            if (!IsHandEmpty()) DiscardItemInHand();
+            _pieceSupply.RemoveItem(item);
+            SetItemInHand(item);
+        }
+
+        private IPlaceable CreatePieceForSupply(Piece piece)
+            => new PlaceablePiece(new PieceWithRotation(piece, 0), this);
+
+        public void ReturnToSupply(IPlaceable item)
+            => _pieceSupply.AddItem(item);
+
+        private void ReturnPieceToSupply(Piece piece)
+            => _pieceSupply.AddItem(CreatePieceForSupply(piece));
 
         public void RequestReturnPieceInHand()
         {
@@ -305,7 +309,7 @@ namespace Core
         public void ReturnPieceOnBoardToSupply(PlacedPiece piece)
         {
             _boardController.RemovePiece(piece);
-            _pieceSupply.AddPiece(piece.Piece);
+            ReturnPieceToSupply(piece.Piece);
         }
 
         public void ReturnAllNonLockedPiecesToSupply()
@@ -315,9 +319,7 @@ namespace Core
                 .ToList();
 
             foreach (var piece in piecesToReturn)
-            {
                 ReturnPieceOnBoardToSupply(piece);
-            }
 
             if (!IsHandEmpty())
                 DiscardItemInHand();
@@ -325,24 +327,7 @@ namespace Core
             OnBoardChanged?.Invoke();
         }
 
-        public void RequestGrabPieceFromSupply(Piece piece)
-        {
-            _toolController.ChangeTool(ToolType.GrabTool);
-            if (!IsHandEmpty()) DiscardItemInHand();
-            var pieceWithRotation = GrabPieceFromSupplyForHand(piece);
-            var placeable = _pieceInHandFactory?.Invoke(pieceWithRotation);
-            if (placeable != null) SetItemInHand(placeable);
-        }
-
-        // GrabTool registers this factory so GameController can create PlaceablePiece
-        // without knowing about PieceView.
-        public void RegisterPieceHandFactory(Func<PieceWithRotation, IPlaceable> factory)
-        {
-            _pieceInHandFactory = factory;
-        }
-
         public bool IsHandEmpty() => _itemInHand == null;
-
 
         private bool IsWithinBounds(Vector2Int position)
         {
@@ -362,10 +347,7 @@ namespace Core
         public void ChangeBoardSize(Vector2Int deltaSize, Vector2Int translate)
         {
             var targetGridSize = (CurrentState.GridSize + deltaSize);
-            if (targetGridSize.x <= 0 || targetGridSize.y <= 0)
-            {
-                return;
-            }
+            if (targetGridSize.x <= 0 || targetGridSize.y <= 0) return;
 
             CurrentState.GridSize += deltaSize;
 

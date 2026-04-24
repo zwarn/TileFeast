@@ -1,72 +1,43 @@
 using System;
 using System.Collections.Generic;
-using Core;
+using Tools;
 using UnityEngine;
-using Zenject;
 
 namespace Pieces.Supply
 {
     public class PieceSupplyController : MonoBehaviour
     {
-        private List<Piece> pieces;
-        [Inject] private GameController _gameController;
+        private readonly List<IPlaceable> _items = new();
 
-        public event Action<Piece> OnPieceAdded;
-        public event Action<Piece> OnPieceRemoved;
-        public event Action<List<Piece>> OnPiecesReplaced;
+        public IReadOnlyList<IPlaceable> Items => _items;
 
-        private void OnEnable()
+        public event Action<IPlaceable> OnItemAdded;
+        public event Action<IPlaceable> OnItemRemoved;
+        public event Action<List<IPlaceable>> OnItemsReplaced;
+
+        public void AddItem(IPlaceable item)
         {
-            _gameController.OnChangeGameState += UpdateState;
+            _items.Add(item);
+            OnItemAdded?.Invoke(item);
         }
 
-        private void OnDisable()
+        public void RemoveItem(IPlaceable item)
         {
-            _gameController.OnChangeGameState -= UpdateState;
-        }
-        
-        public void UpdateState(GameState newState)
-        {
-            pieces = newState.AvailablePieces;
-            ReplacePiecesEvent(pieces);
+            if (_items.Remove(item))
+                OnItemRemoved?.Invoke(item);
         }
 
-        public void RemovePiece(Piece piece)
+        public void ReplaceItems(List<IPlaceable> items)
         {
-            pieces.Remove(piece);
-            RemovePieceEvent(piece);
+            _items.Clear();
+            _items.AddRange(items);
+            OnItemsReplaced?.Invoke(_items);
         }
 
-        public void AddPiece(PieceWithRotation piece)
+        public void DeleteAllItems()
         {
-            AddPiece(piece.Piece);
-        }
-
-        public void AddPiece(Piece piece)
-        {
-            pieces.Add(piece);
-            AddPieceEvent(piece);
-        }
-
-        public void DeleteAllPieces()
-        {
-            pieces.Clear();
-            ReplacePiecesEvent(pieces);
-        }
-
-        public void RemovePieceEvent(Piece piece)
-        {
-            OnPieceRemoved?.Invoke(piece);
-        }
-
-        public void AddPieceEvent(Piece piece)
-        {
-            OnPieceAdded?.Invoke(piece);
-        }
-
-        public void ReplacePiecesEvent(List<Piece> newPieces)
-        {
-            OnPiecesReplaced?.Invoke(newPieces);
+            _items.Clear();
+            OnItemsReplaced?.Invoke(_items);
         }
     }
 }
