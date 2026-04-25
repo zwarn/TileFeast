@@ -27,13 +27,12 @@ MonoBehaviour:
   lockedPieces:
     data: []
   blockedPositions: []
+  horizontalWalls: []
+  verticalWalls: []
   emotionRules:
-  - rule:
-      rid: 5971275488626737286
-  - rule:
-      rid: 5971275488626737287
-  - rule:
-      rid: 5971275488626737289
+  - rid: -2
+  - rid: -2
+  - rid: -2
   completionRules: []
   zones:
   - zoneType: {fileID: 11400000, guid: 3877253959cd90a459e2f29ab0942b49, type: 2}
@@ -51,42 +50,10 @@ MonoBehaviour:
     - {x: 5, y: 6}
     - {x: 6, y: 5}
     - {x: 4, y: 5}
-  aspectSources:
-  - source:
-      rid: 5971275488626737288
+  aspectSources: []
   nextLevel: {fileID: 11400000, guid: a2558fd68420fe840b4d6f046f7f7042, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 5971275488626737286
-      type: {class: AspectAdjacencyEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
-      data:
-        applyToAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
-        neighborAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
-        minNeighborCount: 1
-        maxNeighborCount: -1
-        emotionWhenMet: 0
-        emotionWhenNotMet: 1
-    - rid: 5971275488626737287
-      type: {class: AspectAdjacencyEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
-      data:
-        applyToAspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
-        neighborAspect: {fileID: 11400000, guid: 6a1b203cc547a794881bee77a5025b89, type: 2}
-        minNeighborCount: 1
-        maxNeighborCount: -1
-        emotionWhenMet: 0
-        emotionWhenNotMet: 2
-    - rid: 5971275488626737288
-      type: {class: ZoneAspectGranter, ns: Rules.AspectSources, asm: TileFeast}
-      data:
-        targetZone: {fileID: 11400000, guid: c723682be344b4f4cb8aa248046dcccb, type: 2}
-        grantedAspect: {fileID: 11400000, guid: 6a1b203cc547a794881bee77a5025b89, type: 2}
-        includeAdjacent: 0
-    - rid: 5971275488626737289
-      type: {class: ZoneProximityEmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
-      data:
-        applyToAspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
-        targetZoneType: {fileID: 11400000, guid: c723682be344b4f4cb8aa248046dcccb, type: 2}
-        mode: 0
-        emotionWhenTrue: 2
-        emotionWhenFalse: 1
+    - rid: -2
+      type: {class: , ns: , asm: }

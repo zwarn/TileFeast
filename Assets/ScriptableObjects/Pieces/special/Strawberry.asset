@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shape:
   - {x: 0, y: 0}
-  shapeName: Strwberry
+  shapeName: 
   sprite: {fileID: 1775669009216684005, guid: 26029e51932be104c9348d0a578d1449, type: 3}
   previewSprite: {fileID: 1775669009216684005, guid: 26029e51932be104c9348d0a578d1449, type: 3}
   aspects:
