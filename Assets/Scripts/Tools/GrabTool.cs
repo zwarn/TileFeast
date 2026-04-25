@@ -35,7 +35,7 @@ namespace Tools
         {
             if (!_isSelected) return;
 
-            if (_currentPlaceable is BoardExpansion.BoardExpansion)
+            if (_currentPlaceable is BoardExpansion.BoardExpansion be)
             {
                 var worldPos  = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 var cell      = (Vector2Int)grid.WorldToCell(worldPos);
@@ -44,6 +44,7 @@ namespace Tools
                     cellWorld.x + 1 - worldPos.x,
                     cellWorld.y + 1 - worldPos.y,
                     boardExpansionView.transform.localPosition.z);
+                boardExpansionView.SetPreviewValid(be.IsValidPlacement(GetBoardPosition()));
             }
 
             if (!IsPointerOverSupplyPanel())

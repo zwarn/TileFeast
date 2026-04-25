@@ -19,7 +19,8 @@ namespace BoardExpansion
         [Header("Zones")]
         [SerializeField] private Tilemap zoneTilemap;
 
-        private static readonly Color PreviewColor = new Color(1f, 1f, 1f, 0.6f);
+        private static readonly Color PreviewColor   = new Color(1f, 1f, 1f, 0.6f);
+        private static readonly Color InvalidTint    = new Color(1f, 0.35f, 0.35f, 0.6f);
 
         public void SetData(BoardExpansion expansion)
         {
@@ -50,6 +51,15 @@ namespace BoardExpansion
                     .ToArray();
                 zoneTilemap.SetTiles(tiles, false);
             }
+        }
+
+        public void SetPreviewValid(bool valid)
+        {
+            var tint = valid ? Color.white : InvalidTint;
+            previewTilemap.color        = tint;
+            horizontalWallTilemap.color = tint;
+            verticalWallTilemap.color   = tint;
+            zoneTilemap.color           = tint;
         }
 
         private void OnDisable()

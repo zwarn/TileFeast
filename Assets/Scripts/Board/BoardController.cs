@@ -89,9 +89,9 @@ namespace Board
         // Extends GridSize to the new bounding box, calls HandleBoardResize to translate
         // existing pieces/walls, then reconciles blocked positions so exactly the
         // union of old active tiles and newTiles is unblocked.
-        public void AddActiveTiles(List<Vector2Int> newTiles, GameState state)
+        public Vector2Int AddActiveTiles(List<Vector2Int> newTiles, GameState state)
         {
-            if (newTiles == null || newTiles.Count == 0) return;
+            if (newTiles == null || newTiles.Count == 0) return Vector2Int.zero;
 
             // 1. Capture current active set before any resize.
             var currentActive = new HashSet<Vector2Int>();
@@ -143,6 +143,7 @@ namespace Board
 
             // 7. Re-fire so BoardView redraws the updated block layout.
             OnBoardResize?.Invoke();
+            return translate;
         }
 
         private void MoveBlockedPositions(Vector2Int translate)

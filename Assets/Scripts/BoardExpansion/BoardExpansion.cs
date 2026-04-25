@@ -88,12 +88,25 @@ namespace BoardExpansion
             }
         }
 
+        public bool IsValidPlacement(Vector2Int boardCell)
+        {
+            var offset = boardCell - CurrentCenter;
+            var absoluteTiles = CurrentShape.Select(p => p + offset).ToList();
+            return _gameController.IsExpansionValid(absoluteTiles);
+        }
+
         public bool TryPlace(Vector2Int boardCell)
         {
-            var shape  = CurrentShape;
-            var center = CurrentCenter;
-            var absoluteTiles = shape.Select(p => p - center + boardCell).ToList();
-            _gameController.ExpandBoard(absoluteTiles);
+            if (!IsValidPlacement(boardCell)) return false;
+
+            var offset = boardCell - CurrentCenter;
+            var absoluteTiles  = CurrentShape.Select(p => p + offset).ToList();
+            var absoluteHWalls = CurrentHorizontalWalls.Select(w => w + offset).ToList();
+            var absoluteVWalls = CurrentVerticalWalls.Select(w => w + offset).ToList();
+            var absoluteZones  = CurrentZones
+                .Select(z => new Zone(z.zoneType, z.positions.Select(p => p + offset).ToList()))
+                .ToList();
+            _gameController.ExpandBoard(absoluteTiles, absoluteHWalls, absoluteVWalls, absoluteZones);
             return true;
         }
 

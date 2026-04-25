@@ -340,12 +340,48 @@ namespace Core
                    position.y >= 0 && position.y < CurrentState.GridSize.y;
         }
 
-        public void ExpandBoard(List<Vector2Int> absoluteTiles)
+        public bool IsExpansionValid(List<Vector2Int> absoluteTiles)
         {
-            _boardController.AddActiveTiles(absoluteTiles, CurrentState);
+            foreach (var tile in absoluteTiles)
+            {
+                var dirs = new[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+                foreach (var dir in dirs)
+                    if (IsActiveTile(tile + dir)) return true;
+            }
+            return false;
+        }
+
+        private bool IsActiveTile(Vector2Int pos)
+        {
+            return pos.x >= 0 && pos.x < CurrentState.GridSize.x &&
+                   pos.y >= 0 && pos.y < CurrentState.GridSize.y &&
+                   !CurrentState.BlockedPositions.Contains(pos);
+        }
+
+        public void ExpandBoard(List<Vector2Int> absoluteTiles, List<Vector2Int> hWalls = null, List<Vector2Int> vWalls = null, List<Zone> zones = null)
+        {
+            var translate = _boardController.AddActiveTiles(absoluteTiles, CurrentState);
             _cameraController.HandleBoardResize(CurrentState.GridSize);
             _zoneController.HandleBoardResize(CurrentState.GridSize, Vector2Int.zero);
             _rulesController.HandleBoardResize(CurrentState.GridSize);
+
+            if (hWalls != null)
+                foreach (var w in hWalls)
+                    AddHorizontalWall(w + translate);
+
+            if (vWalls != null)
+                foreach (var w in vWalls)
+                    AddVerticalWall(w + translate);
+
+            if (zones != null)
+                foreach (var zone in zones)
+                {
+                    if (zone?.zoneType == null || zone.positions.Count == 0) continue;
+                    Zone painted = null;
+                    foreach (var pos in zone.positions)
+                        painted = PaintZoneTile(pos + translate, zone.zoneType, painted);
+                }
+
             OnBoardChanged?.Invoke();
         }
 
