@@ -92,7 +92,9 @@ namespace BoardExpansion
         {
             var offset = boardCell - CurrentCenter;
             var absoluteTiles = CurrentShape.Select(p => p + offset).ToList();
-            return _gameController.IsExpansionValid(absoluteTiles);
+            var absoluteHWalls = CurrentHorizontalWalls.Select(w => w + offset).ToList();
+            var absoluteVWalls = CurrentVerticalWalls.Select(w => w + offset).ToList();
+            return _gameController.IsExpansionValid(absoluteTiles, absoluteHWalls, absoluteVWalls);
         }
 
         public bool TryPlace(Vector2Int boardCell)

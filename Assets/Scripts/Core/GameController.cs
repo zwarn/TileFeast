@@ -340,15 +340,27 @@ namespace Core
                    position.y >= 0 && position.y < CurrentState.GridSize.y;
         }
 
-        public bool IsExpansionValid(List<Vector2Int> absoluteTiles)
+        public bool IsExpansionValid(List<Vector2Int> absoluteTiles, List<Vector2Int> hWalls = null, List<Vector2Int> vWalls = null)
         {
+            var adjacencyMet = false;
             foreach (var tile in absoluteTiles)
             {
                 var dirs = new[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
                 foreach (var dir in dirs)
-                    if (IsActiveTile(tile + dir)) return true;
+                    if (IsActiveTile(tile + dir)) { adjacencyMet = true; break; }
+                if (adjacencyMet) break;
             }
-            return false;
+            if (!adjacencyMet) return false;
+
+            if (hWalls != null)
+                foreach (var w in hWalls)
+                    if (AnyPlacedPieceCrossesHorizontalWall(w)) return false;
+
+            if (vWalls != null)
+                foreach (var w in vWalls)
+                    if (AnyPlacedPieceCrossesVerticalWall(w)) return false;
+
+            return true;
         }
 
         private bool IsActiveTile(Vector2Int pos)
