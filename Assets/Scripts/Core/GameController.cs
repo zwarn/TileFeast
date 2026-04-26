@@ -60,6 +60,8 @@ namespace Core
 
             var expansionGenerator = new BoardExpansionPreviewGenerator(_boardExpansionPreviewSettings);
             _pieceSupply.AddItem(RandomBoardExpansionFactory.Create(expansionGenerator, this));
+            var wallPlacementGenerator = new WallPlacementPreviewGenerator(_boardExpansionPreviewSettings);
+            _pieceSupply.AddItem(RandomWallPlacementFactory.Create(wallPlacementGenerator, this));
 
             _toolController.ChangeTool(ToolType.GrabTool);
             OnChangeGameState?.Invoke(CurrentState);
@@ -157,6 +159,7 @@ namespace Core
                 if (tiles.Contains(wallPos) && tiles.Contains(above))
                     return true;
             }
+
             return false;
         }
 
@@ -169,6 +172,7 @@ namespace Core
                 if (tiles.Contains(wallPos) && tiles.Contains(right))
                     return true;
             }
+
             return false;
         }
 
@@ -340,25 +344,65 @@ namespace Core
                    position.y >= 0 && position.y < CurrentState.GridSize.y;
         }
 
-        public bool IsExpansionValid(List<Vector2Int> absoluteTiles, List<Vector2Int> hWalls = null, List<Vector2Int> vWalls = null)
+        // Returns true when every wall in hWalls/vWalls can be placed: within bounds, adjacent
+        // tiles on both sides are active, not already occupied by a wall, and no placed piece crosses it.
+        public bool IsWallPlacementValid(List<Vector2Int> hWalls, List<Vector2Int> vWalls)
+        {
+            if (hWalls.Count == 0 && vWalls.Count == 0) return false;
+
+            foreach (var w in hWalls)
+            {
+                if (!IsValidHorizontalWallPosition(w)) return false;
+                if (!IsActiveTile(w) || !IsActiveTile(new Vector2Int(w.x, w.y + 1))) return false;
+                if (CurrentState.HorizontalWalls.Contains(w)) return false;
+                if (AnyPlacedPieceCrossesHorizontalWall(w)) return false;
+            }
+
+            foreach (var w in vWalls)
+            {
+                if (!IsValidVerticalWallPosition(w)) return false;
+                if (!IsActiveTile(w) || !IsActiveTile(new Vector2Int(w.x + 1, w.y))) return false;
+                if (CurrentState.VerticalWalls.Contains(w)) return false;
+                if (AnyPlacedPieceCrossesVerticalWall(w)) return false;
+            }
+
+            return true;
+        }
+
+        public void PlaceWalls(List<Vector2Int> hWalls, List<Vector2Int> vWalls)
+        {
+            foreach (var w in hWalls) AddHorizontalWall(w);
+            foreach (var w in vWalls) AddVerticalWall(w);
+        }
+
+        public bool IsExpansionValid(List<Vector2Int> absoluteTiles, List<Vector2Int> hWalls = null,
+            List<Vector2Int> vWalls = null)
         {
             var adjacencyMet = false;
             foreach (var tile in absoluteTiles)
             {
                 var dirs = new[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
                 foreach (var dir in dirs)
-                    if (IsActiveTile(tile + dir)) { adjacencyMet = true; break; }
+                    if (IsActiveTile(tile + dir))
+                    {
+                        adjacencyMet = true;
+                        break;
+                    }
+
                 if (adjacencyMet) break;
             }
+
             if (!adjacencyMet) return false;
 
             if (hWalls != null)
                 foreach (var w in hWalls)
-                    if (AnyPlacedPieceCrossesHorizontalWall(w)) return false;
+                    if (AnyPlacedPieceCrossesHorizontalWall(w))
+                        return false;
 
             if (vWalls != null)
                 foreach (var w in vWalls)
-                    if (AnyPlacedPieceCrossesVerticalWall(w)) return false;
+                    if (AnyPlacedPieceCrossesVerticalWall(w))
+                        return false;
 
             return true;
         }
@@ -370,7 +414,8 @@ namespace Core
                    !CurrentState.BlockedPositions.Contains(pos);
         }
 
-        public void ExpandBoard(List<Vector2Int> absoluteTiles, List<Vector2Int> hWalls = null, List<Vector2Int> vWalls = null, List<Zone> zones = null)
+        public void ExpandBoard(List<Vector2Int> absoluteTiles, List<Vector2Int> hWalls = null,
+            List<Vector2Int> vWalls = null, List<Zone> zones = null)
         {
             var translate = _boardController.AddActiveTiles(absoluteTiles, CurrentState);
             _cameraController.HandleBoardResize(CurrentState.GridSize);
