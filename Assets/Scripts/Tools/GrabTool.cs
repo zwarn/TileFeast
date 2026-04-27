@@ -14,6 +14,7 @@ namespace Tools
         [SerializeField] private PieceView pieceView;
         [SerializeField] private BoardExpansionView boardExpansionView;
         [SerializeField] private WallPlacementView wallPlacementView;
+        [SerializeField] private ZonePlacementView zonePlacementView;
         [SerializeField] private Grid grid;
 
         [Inject] private GameController _gameController;
@@ -57,6 +58,17 @@ namespace Tools
                     cellWorld.y + 1 - worldPos.y,
                     wallPlacementView.transform.localPosition.z);
                 wallPlacementView.SetPreviewValid(wp.IsValidPlacement(GetBoardPosition()));
+            }
+            else if (_currentPlaceable is BoardExpansion.ZonePlacement zp)
+            {
+                var worldPos  = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var cell      = (Vector2Int)grid.WorldToCell(worldPos);
+                var cellWorld = grid.CellToWorld(new Vector3Int(cell.x, cell.y, 0));
+                zonePlacementView.transform.localPosition = new Vector3(
+                    cellWorld.x + 1 - worldPos.x,
+                    cellWorld.y + 1 - worldPos.y,
+                    zonePlacementView.transform.localPosition.z);
+                zonePlacementView.SetPreviewValid(zp.IsValidPlacement(GetBoardPosition()));
             }
 
             if (!IsPointerOverSupplyPanel())
@@ -115,6 +127,8 @@ namespace Tools
                 boardExpansionView.SetData(be);
             else if (_currentPlaceable is BoardExpansion.WallPlacement wp)
                 wallPlacementView.SetData(wp);
+            else if (_currentPlaceable is BoardExpansion.ZonePlacement zp)
+                zonePlacementView.SetData(zp);
         }
 
         public override void OnSelect()
@@ -173,6 +187,11 @@ namespace Tools
                 wallPlacementView.transform.localPosition = Vector3.zero;
                 wallPlacementView.gameObject.SetActive(false);
             }
+            else if (_currentPlaceable is BoardExpansion.ZonePlacement)
+            {
+                zonePlacementView.transform.localPosition = Vector3.zero;
+                zonePlacementView.gameObject.SetActive(false);
+            }
 
             _currentPlaceable = _gameController.GetItemInHand();
 
@@ -191,11 +210,18 @@ namespace Tools
                 wallPlacementView.SetData(wp2);
                 wallPlacementView.gameObject.SetActive(true);
             }
+            else if (_currentPlaceable is BoardExpansion.ZonePlacement zp2)
+            {
+                zonePlacementView.transform.localPosition = Vector3.zero;
+                zonePlacementView.SetData(zp2);
+                zonePlacementView.gameObject.SetActive(true);
+            }
             else
             {
                 pieceView.SetData(null);
                 boardExpansionView.gameObject.SetActive(false);
                 wallPlacementView.gameObject.SetActive(false);
+                zonePlacementView.gameObject.SetActive(false);
             }
         }
     }

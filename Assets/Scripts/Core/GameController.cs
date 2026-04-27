@@ -25,6 +25,7 @@ namespace Core
         [Inject] private RulesController _rulesController;
         [Inject] private CameraController _cameraController;
         [Inject] private BoardExpansionPreviewSettings _boardExpansionPreviewSettings;
+        [Inject] private ZonePlacementSettings _zonePlacementSettings;
 
         public event Action<GameState> OnChangeGameState;
         public event Action OnBoardChanged;
@@ -62,6 +63,9 @@ namespace Core
             _pieceSupply.AddItem(RandomBoardExpansionFactory.Create(expansionGenerator, this));
             var wallPlacementGenerator = new WallPlacementPreviewGenerator(_boardExpansionPreviewSettings);
             _pieceSupply.AddItem(RandomWallPlacementFactory.Create(wallPlacementGenerator, this));
+            var zonePlacementGenerator = new ZonePlacementPreviewGenerator();
+            _pieceSupply.AddItem(RandomZonePlacementFactory.Create(zonePlacementGenerator, this,
+                _zonePlacementSettings.zoneType));
 
             _toolController.ChangeTool(ToolType.GrabTool);
             OnChangeGameState?.Invoke(CurrentState);
@@ -373,6 +377,19 @@ namespace Core
         {
             foreach (var w in hWalls) AddHorizontalWall(w);
             foreach (var w in vWalls) AddVerticalWall(w);
+        }
+
+        // All tiles must be active (within bounds, not blocked). Overriding an existing zone is allowed.
+        public bool IsZonePlacementValid(List<Vector2Int> absoluteTiles)
+            => absoluteTiles.Count > 0 && absoluteTiles.TrueForAll(IsActiveTile);
+
+        public void ApplyZonePlacement(ZoneSO zoneType, List<Vector2Int> tiles)
+        {
+            var zone = new Zone(zoneType, new List<Vector2Int>());
+            CurrentState.Zones.Add(zone);
+            _zoneController.AddTilesToZone(zone, tiles);
+            CurrentState.Zones.RemoveAll(z => z.positions.Count == 0);
+            OnBoardChanged?.Invoke();
         }
 
         public bool IsExpansionValid(List<Vector2Int> absoluteTiles, List<Vector2Int> hWalls = null,

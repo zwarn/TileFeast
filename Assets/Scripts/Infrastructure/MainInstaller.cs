@@ -30,6 +30,7 @@ namespace Infrastructure
         [SerializeField] private PieceRepository pieceRepository;
         [SerializeField] private SolverRunner solverRunner;
         [SerializeField] private BoardExpansionPreviewSettings boardExpansionPreviewSettings;
+        [SerializeField] private ZonePlacementSettings zonePlacementSettings;
         [Header("Tools")] [SerializeField] private GrabTool grabTool;
         [SerializeField] private ZoneTool zoneTool;
         [SerializeField] private ShapeTool shapeTool;
@@ -56,6 +57,7 @@ namespace Infrastructure
 
             Container.Bind<SolverRunner>().FromInstance(solverRunner);
             Container.Bind<BoardExpansionPreviewSettings>().FromInstance(boardExpansionPreviewSettings);
+            Container.Bind<ZonePlacementSettings>().FromInstance(zonePlacementSettings);
         }
     }
 }
