@@ -14,7 +14,8 @@
       "Bash(find \"C:\\\\Users\\\\Admin\\\\Documents\\\\GitHub\\\\TileFeast\\\\Assets\\\\Scripts\"\" -type f -name \"*.cs \")",
       "Bash(xargs grep:*)",
       "Bash(grep -E \"\\\\.cs$\")",
-      "Bash(find C:UsersAdminDocumentsGitHubTileFeastAssetsScripts -name ScenarioSO.cs -o -name BoardController.cs -o -name GameController.cs -o -name GameState.cs -o -name PlacedPiece.cs -o -name *Tool*.cs)"
+      "Bash(find C:UsersAdminDocumentsGitHubTileFeastAssetsScripts -name ScenarioSO.cs -o -name BoardController.cs -o -name GameController.cs -o -name GameState.cs -o -name PlacedPiece.cs -o -name *Tool*.cs)",
+      "Bash(xargs wc *)"
     ]
   }
 }

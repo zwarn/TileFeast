@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Pieces.Aspects;
+using Rules.EmotionRules;
 using UnityEngine;
 
 namespace Pieces
@@ -13,6 +14,7 @@ namespace Pieces
         public Sprite sprite;
         public Sprite previewSprite;
         public List<Aspect> aspects;
+        public List<EmotionRule> PersonalRules = new();
 
         public Vector2Int leftEyePosition;
         public Vector2Int rightEyePosition;

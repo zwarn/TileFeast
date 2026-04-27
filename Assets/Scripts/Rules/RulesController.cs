@@ -94,6 +94,9 @@ namespace Rules
                 var effects = _emotionRules
                     .Where(rule => rule != null)
                     .Select(rule => rule.Evaluate(placed, context))
+                    .Concat(placed.Piece.PersonalRules
+                        .Where(rule => rule != null)
+                        .Select(rule => rule.EvaluateIgnoreFilter(placed, context)))
                     .Where(effect => effect != null)
                     .ToList();
                 return new PieceEmotionState(placed, effects);

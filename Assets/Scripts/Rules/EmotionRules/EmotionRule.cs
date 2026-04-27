@@ -37,6 +37,16 @@ namespace Rules.EmotionRules
             return conclusion.Build(result, this, check);
         }
 
+        public EmotionEffect EvaluateIgnoreFilter(PlacedPiece piece, EmotionContext context)
+        {
+            if (check == null || conclusion == null) return null;
+
+            var result = check.Evaluate(piece, context);
+            if (result == null) return null;
+
+            return conclusion.Build(result, this, check);
+        }
+
         public string GetDescription()
         {
             var filterText = filter != null ? filter.GetDescription() : "(no filter)";
