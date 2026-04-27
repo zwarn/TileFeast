@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BoardExpansion
+namespace Placeables.WallPlacements
 {
     public class WallPlacementData
     {
         public List<Vector2Int> HorizontalWalls = new();
-        public List<Vector2Int> VerticalWalls   = new();
+        public List<Vector2Int> VerticalWalls = new();
     }
 }

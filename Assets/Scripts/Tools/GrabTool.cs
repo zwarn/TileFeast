@@ -1,7 +1,9 @@
 using System.Collections.Generic;
-using BoardExpansion;
 using Core;
 using Pieces;
+using Placeables.BoardExpansions;
+using Placeables.WallPlacements;
+using Placeables.ZonePlacementS;
 using UI.Pieces;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -37,7 +39,7 @@ namespace Tools
         {
             if (!_isSelected) return;
 
-            if (_currentPlaceable is BoardExpansion.BoardExpansion be)
+            if (_currentPlaceable is BoardExpansion be)
             {
                 var worldPos  = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 var cell      = (Vector2Int)grid.WorldToCell(worldPos);
@@ -48,7 +50,7 @@ namespace Tools
                     boardExpansionView.transform.localPosition.z);
                 boardExpansionView.SetPreviewValid(be.IsValidPlacement(GetBoardPosition()));
             }
-            else if (_currentPlaceable is BoardExpansion.WallPlacement wp)
+            else if (_currentPlaceable is WallPlacement wp)
             {
                 var worldPos  = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 var cell      = (Vector2Int)grid.WorldToCell(worldPos);
@@ -59,7 +61,7 @@ namespace Tools
                     wallPlacementView.transform.localPosition.z);
                 wallPlacementView.SetPreviewValid(wp.IsValidPlacement(GetBoardPosition()));
             }
-            else if (_currentPlaceable is BoardExpansion.ZonePlacement zp)
+            else if (_currentPlaceable is ZonePlacement zp)
             {
                 var worldPos  = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 var cell      = (Vector2Int)grid.WorldToCell(worldPos);
@@ -123,11 +125,11 @@ namespace Tools
 
             _currentPlaceable.Rotate(dir);
 
-            if (_currentPlaceable is BoardExpansion.BoardExpansion be)
+            if (_currentPlaceable is BoardExpansion be)
                 boardExpansionView.SetData(be);
-            else if (_currentPlaceable is BoardExpansion.WallPlacement wp)
+            else if (_currentPlaceable is WallPlacement wp)
                 wallPlacementView.SetData(wp);
-            else if (_currentPlaceable is BoardExpansion.ZonePlacement zp)
+            else if (_currentPlaceable is ZonePlacement zp)
                 zonePlacementView.SetData(zp);
         }
 
@@ -177,17 +179,17 @@ namespace Tools
             // Deactivate old preview
             if (_currentPlaceable is PlaceablePiece)
                 pieceView.SetData(null);
-            else if (_currentPlaceable is BoardExpansion.BoardExpansion)
+            else if (_currentPlaceable is BoardExpansion)
             {
                 boardExpansionView.transform.localPosition = Vector3.zero;
                 boardExpansionView.gameObject.SetActive(false);
             }
-            else if (_currentPlaceable is BoardExpansion.WallPlacement)
+            else if (_currentPlaceable is WallPlacement)
             {
                 wallPlacementView.transform.localPosition = Vector3.zero;
                 wallPlacementView.gameObject.SetActive(false);
             }
-            else if (_currentPlaceable is BoardExpansion.ZonePlacement)
+            else if (_currentPlaceable is ZonePlacement)
             {
                 zonePlacementView.transform.localPosition = Vector3.zero;
                 zonePlacementView.gameObject.SetActive(false);
@@ -198,19 +200,19 @@ namespace Tools
             // Activate new preview
             if (_currentPlaceable is PlaceablePiece pp)
                 pieceView.SetData(pp.Piece);
-            else if (_currentPlaceable is BoardExpansion.BoardExpansion be)
+            else if (_currentPlaceable is BoardExpansion be)
             {
                 boardExpansionView.transform.localPosition = Vector3.zero;
                 boardExpansionView.SetData(be);
                 boardExpansionView.gameObject.SetActive(true);
             }
-            else if (_currentPlaceable is BoardExpansion.WallPlacement wp2)
+            else if (_currentPlaceable is WallPlacement wp2)
             {
                 wallPlacementView.transform.localPosition = Vector3.zero;
                 wallPlacementView.SetData(wp2);
                 wallPlacementView.gameObject.SetActive(true);
             }
-            else if (_currentPlaceable is BoardExpansion.ZonePlacement zp2)
+            else if (_currentPlaceable is ZonePlacement zp2)
             {
                 zonePlacementView.transform.localPosition = Vector3.zero;
                 zonePlacementView.SetData(zp2);

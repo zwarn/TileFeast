@@ -3,24 +3,29 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace BoardExpansion
+namespace Placeables.WallPlacements
 {
     public class WallPlacementView : MonoBehaviour
     {
+        private static readonly Color PreviewColor = new(1f, 1f, 1f, 0.6f);
+        private static readonly Color InvalidTint = new(1f, 0.35f, 0.35f, 0.6f);
         [SerializeField] private Tilemap horizontalWallTilemap;
         [SerializeField] private TileBase horizontalWallTile;
         [SerializeField] private Tilemap verticalWallTilemap;
         [SerializeField] private TileBase verticalWallTile;
 
-        private static readonly Color PreviewColor = new Color(1f, 1f, 1f, 0.6f);
-        private static readonly Color InvalidTint  = new Color(1f, 0.35f, 0.35f, 0.6f);
+        private void OnDisable()
+        {
+            horizontalWallTilemap.ClearAllTiles();
+            verticalWallTilemap.ClearAllTiles();
+        }
 
         public void SetData(WallPlacement placement)
         {
-            var c     = placement.CurrentCenter;
+            var c = placement.CurrentCenter;
             var base3 = new Vector3(-c.x - 0.5f, -c.y - 0.5f, 0f);
-            horizontalWallTilemap.transform.localPosition = base3 + new Vector3(0f,    -0.5f, 0f);
-            verticalWallTilemap.transform.localPosition   = base3 + new Vector3(-0.5f,  0f,   0f);
+            horizontalWallTilemap.transform.localPosition = base3 + new Vector3(0f, -0.5f, 0f);
+            verticalWallTilemap.transform.localPosition = base3 + new Vector3(-0.5f, 0f, 0f);
 
             SetTiles(horizontalWallTilemap, placement.CurrentHorizontalWalls
                 .Select(w => MakeTile(w.x, w.y + 1, horizontalWallTile)));
@@ -33,13 +38,7 @@ namespace BoardExpansion
         {
             var tint = valid ? Color.white : InvalidTint;
             horizontalWallTilemap.color = tint;
-            verticalWallTilemap.color   = tint;
-        }
-
-        private void OnDisable()
-        {
-            horizontalWallTilemap.ClearAllTiles();
-            verticalWallTilemap.ClearAllTiles();
+            verticalWallTilemap.color = tint;
         }
 
         private static void SetTiles(Tilemap tilemap, IEnumerable<TileChangeData> tiles)
@@ -49,6 +48,8 @@ namespace BoardExpansion
         }
 
         private static TileChangeData MakeTile(int x, int y, TileBase tile)
-            => new TileChangeData(new Vector3Int(x, y, 0), tile, PreviewColor, Matrix4x4.identity);
+        {
+            return new TileChangeData(new Vector3Int(x, y, 0), tile, PreviewColor, Matrix4x4.identity);
+        }
     }
 }

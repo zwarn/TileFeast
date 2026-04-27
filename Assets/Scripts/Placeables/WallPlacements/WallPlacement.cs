@@ -4,23 +4,21 @@ using Core;
 using Tools;
 using UnityEngine;
 
-namespace BoardExpansion
+namespace Placeables.WallPlacements
 {
     public class WallPlacement : IPlaceable
     {
         private readonly WallPlacementData _data;
         private readonly GameController _gameController;
-        private readonly Sprite _previewSprite;
         private int _rotation;
 
-        public WallPlacement(WallPlacementData data, WallPlacementPreviewGenerator generator, GameController gameController)
+        public WallPlacement(WallPlacementData data, WallPlacementPreviewGenerator generator,
+            GameController gameController)
         {
             _data = data;
             _gameController = gameController;
-            _previewSprite = generator.Generate(data);
+            PreviewSprite = generator.Generate(data);
         }
-
-        public Sprite PreviewSprite => _previewSprite;
 
         // Same H↔V swap and coordinate rotation as BoardExpansion, but normalisation
         // uses wall positions directly (no shape tiles to derive it from).
@@ -63,25 +61,19 @@ namespace BoardExpansion
             get
             {
                 var all = CurrentHorizontalWalls.Concat(CurrentVerticalWalls).ToList();
-                int maxX = all.Count > 0 ? all.Max(p => p.x) : 0;
-                int maxY = all.Count > 0 ? all.Max(p => p.y) : 0;
+                var maxX = all.Count > 0 ? all.Max(p => p.x) : 0;
+                var maxY = all.Count > 0 ? all.Max(p => p.y) : 0;
                 return new Vector2Int(maxX / 2, maxY / 2);
             }
         }
 
-        public bool IsValidPlacement(Vector2Int boardCell)
-        {
-            var offset   = boardCell - CurrentCenter;
-            var absHWalls = CurrentHorizontalWalls.Select(w => w + offset).ToList();
-            var absVWalls = CurrentVerticalWalls.Select(w => w + offset).ToList();
-            return _gameController.IsWallPlacementValid(absHWalls, absVWalls);
-        }
+        public Sprite PreviewSprite { get; }
 
         public bool TryPlace(Vector2Int boardCell)
         {
             if (!IsValidPlacement(boardCell)) return false;
 
-            var offset   = boardCell - CurrentCenter;
+            var offset = boardCell - CurrentCenter;
             var absHWalls = CurrentHorizontalWalls.Select(w => w + offset).ToList();
             var absVWalls = CurrentVerticalWalls.Select(w => w + offset).ToList();
             _gameController.PlaceWalls(absHWalls, absVWalls);
@@ -94,7 +86,17 @@ namespace BoardExpansion
         }
 
         public void OnDiscard()
-            => _gameController.ReturnToSupply(this);
+        {
+            _gameController.ReturnToSupply(this);
+        }
+
+        public bool IsValidPlacement(Vector2Int boardCell)
+        {
+            var offset = boardCell - CurrentCenter;
+            var absHWalls = CurrentHorizontalWalls.Select(w => w + offset).ToList();
+            var absVWalls = CurrentVerticalWalls.Select(w => w + offset).ToList();
+            return _gameController.IsWallPlacementValid(absHWalls, absVWalls);
+        }
 
         // Minimum (x,y) across all raw rotated wall positions, used as normalisation origin.
         // Both CurrentHorizontalWalls and CurrentVerticalWalls subtract this same offset so
@@ -121,6 +123,7 @@ namespace BoardExpansion
                     raw.AddRange(_data.HorizontalWalls.Select(w => new Vector2Int(w.y, -w.x)));
                     break;
             }
+
             if (raw.Count == 0) return Vector2Int.zero;
             return new Vector2Int(raw.Min(p => p.x), raw.Min(p => p.y));
         }

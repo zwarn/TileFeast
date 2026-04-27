@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace BoardExpansion
+namespace Placeables.BoardExpansions
 {
     [CreateAssetMenu(fileName = "BoardExpansionPreviewSettings", menuName = "BoardExpansion/Preview Settings")]
     public class BoardExpansionPreviewSettings : ScriptableObject

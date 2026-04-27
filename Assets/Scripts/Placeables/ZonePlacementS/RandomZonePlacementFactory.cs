@@ -3,7 +3,7 @@ using Core;
 using UnityEngine;
 using Zones;
 
-namespace BoardExpansion
+namespace Placeables.ZonePlacementS
 {
     public static class RandomZonePlacementFactory
     {
@@ -19,7 +19,7 @@ namespace BoardExpansion
 
         private static ZonePlacementData GenerateData(ZoneSO zoneType, int maxTiles)
         {
-            int tileCount = Random.Range(2, maxTiles + 1);
+            var tileCount = Random.Range(2, maxTiles + 1);
 
             var shape = new HashSet<Vector2Int> { Vector2Int.zero };
             var frontier = new List<Vector2Int>
@@ -29,7 +29,7 @@ namespace BoardExpansion
 
             while (shape.Count < tileCount && frontier.Count > 0)
             {
-                int idx = Random.Range(0, frontier.Count);
+                var idx = Random.Range(0, frontier.Count);
                 var tile = frontier[idx];
                 frontier.RemoveAt(idx);
 

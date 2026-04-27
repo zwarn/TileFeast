@@ -6,23 +6,21 @@ using Tools;
 using UnityEngine;
 using Zones;
 
-namespace BoardExpansion
+namespace Placeables.BoardExpansions
 {
     public class BoardExpansion : IPlaceable
     {
         private readonly BoardExpansionData _data;
         private readonly GameController _gameController;
-        private readonly Sprite _previewSprite;
         private int _rotation;
 
-        public BoardExpansion(BoardExpansionData data, BoardExpansionPreviewGenerator generator, GameController gameController)
+        public BoardExpansion(BoardExpansionData data, BoardExpansionPreviewGenerator generator,
+            GameController gameController)
         {
             _data = data;
             _gameController = gameController;
-            _previewSprite = generator.Generate(data);
+            PreviewSprite = generator.Generate(data);
         }
-
-        public Sprite PreviewSprite => _previewSprite;
 
         public List<Vector2Int> CurrentShape =>
             ShapeHelper.Normalize(ShapeHelper.Rotate(_data.Shape, _rotation));
@@ -82,30 +80,23 @@ namespace BoardExpansion
             get
             {
                 var shape = CurrentShape;
-                int maxX = shape.Count > 0 ? shape.Max(p => p.x) : 0;
-                int maxY = shape.Count > 0 ? shape.Max(p => p.y) : 0;
+                var maxX = shape.Count > 0 ? shape.Max(p => p.x) : 0;
+                var maxY = shape.Count > 0 ? shape.Max(p => p.y) : 0;
                 return new Vector2Int(maxX / 2, maxY / 2);
             }
         }
 
-        public bool IsValidPlacement(Vector2Int boardCell)
-        {
-            var offset = boardCell - CurrentCenter;
-            var absoluteTiles = CurrentShape.Select(p => p + offset).ToList();
-            var absoluteHWalls = CurrentHorizontalWalls.Select(w => w + offset).ToList();
-            var absoluteVWalls = CurrentVerticalWalls.Select(w => w + offset).ToList();
-            return _gameController.IsExpansionValid(absoluteTiles, absoluteHWalls, absoluteVWalls);
-        }
+        public Sprite PreviewSprite { get; }
 
         public bool TryPlace(Vector2Int boardCell)
         {
             if (!IsValidPlacement(boardCell)) return false;
 
             var offset = boardCell - CurrentCenter;
-            var absoluteTiles  = CurrentShape.Select(p => p + offset).ToList();
+            var absoluteTiles = CurrentShape.Select(p => p + offset).ToList();
             var absoluteHWalls = CurrentHorizontalWalls.Select(w => w + offset).ToList();
             var absoluteVWalls = CurrentVerticalWalls.Select(w => w + offset).ToList();
-            var absoluteZones  = CurrentZones
+            var absoluteZones = CurrentZones
                 .Select(z => new Zone(z.zoneType, z.positions.Select(p => p + offset).ToList()))
                 .ToList();
             _gameController.ExpandBoard(absoluteTiles, absoluteHWalls, absoluteVWalls, absoluteZones);
@@ -118,7 +109,18 @@ namespace BoardExpansion
         }
 
         public void OnDiscard()
-            => _gameController.ReturnToSupply(this);
+        {
+            _gameController.ReturnToSupply(this);
+        }
+
+        public bool IsValidPlacement(Vector2Int boardCell)
+        {
+            var offset = boardCell - CurrentCenter;
+            var absoluteTiles = CurrentShape.Select(p => p + offset).ToList();
+            var absoluteHWalls = CurrentHorizontalWalls.Select(w => w + offset).ToList();
+            var absoluteVWalls = CurrentVerticalWalls.Select(w => w + offset).ToList();
+            return _gameController.IsExpansionValid(absoluteTiles, absoluteHWalls, absoluteVWalls);
+        }
 
         private Vector2Int NormOffset()
         {
@@ -130,6 +132,7 @@ namespace BoardExpansion
                 if (p.x < minX) minX = p.x;
                 if (p.y < minY) minY = p.y;
             }
+
             return new Vector2Int(minX, minY);
         }
     }

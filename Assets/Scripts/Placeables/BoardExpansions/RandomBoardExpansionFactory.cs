@@ -3,7 +3,7 @@ using System.Linq;
 using Core;
 using UnityEngine;
 
-namespace BoardExpansion
+namespace Placeables.BoardExpansions
 {
     public static class RandomBoardExpansionFactory
     {
@@ -26,7 +26,7 @@ namespace BoardExpansion
 
             while (shape.Count < tileCount && frontier.Count > 0)
             {
-                int idx = Random.Range(0, frontier.Count);
+                var idx = Random.Range(0, frontier.Count);
                 var tile = frontier[idx];
                 frontier.RemoveAt(idx);
 

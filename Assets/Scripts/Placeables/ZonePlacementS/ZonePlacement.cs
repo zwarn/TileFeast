@@ -6,23 +6,21 @@ using Tools;
 using UnityEngine;
 using Zones;
 
-namespace BoardExpansion
+namespace Placeables.ZonePlacementS
 {
     public class ZonePlacement : IPlaceable
     {
         private readonly ZonePlacementData _data;
         private readonly GameController _gameController;
-        private readonly Sprite _previewSprite;
         private int _rotation;
 
-        public ZonePlacement(ZonePlacementData data, ZonePlacementPreviewGenerator generator, GameController gameController)
+        public ZonePlacement(ZonePlacementData data, ZonePlacementPreviewGenerator generator,
+            GameController gameController)
         {
             _data = data;
             _gameController = gameController;
-            _previewSprite = generator.Generate(data);
+            PreviewSprite = generator.Generate(data);
         }
-
-        public Sprite PreviewSprite => _previewSprite;
 
         public ZoneSO ZoneType => _data.ZoneType;
 
@@ -34,18 +32,13 @@ namespace BoardExpansion
             get
             {
                 var shape = CurrentShape;
-                int maxX = shape.Count > 0 ? shape.Max(p => p.x) : 0;
-                int maxY = shape.Count > 0 ? shape.Max(p => p.y) : 0;
+                var maxX = shape.Count > 0 ? shape.Max(p => p.x) : 0;
+                var maxY = shape.Count > 0 ? shape.Max(p => p.y) : 0;
                 return new Vector2Int(maxX / 2, maxY / 2);
             }
         }
 
-        public bool IsValidPlacement(Vector2Int boardCell)
-        {
-            var offset = boardCell - CurrentCenter;
-            var absoluteTiles = CurrentShape.Select(p => p + offset).ToList();
-            return _gameController.IsZonePlacementValid(absoluteTiles);
-        }
+        public Sprite PreviewSprite { get; }
 
         public bool TryPlace(Vector2Int boardCell)
         {
@@ -63,6 +56,15 @@ namespace BoardExpansion
         }
 
         public void OnDiscard()
-            => _gameController.ReturnToSupply(this);
+        {
+            _gameController.ReturnToSupply(this);
+        }
+
+        public bool IsValidPlacement(Vector2Int boardCell)
+        {
+            var offset = boardCell - CurrentCenter;
+            var absoluteTiles = CurrentShape.Select(p => p + offset).ToList();
+            return _gameController.IsZonePlacementValid(absoluteTiles);
+        }
     }
 }

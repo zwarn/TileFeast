@@ -1,11 +1,12 @@
 using Board;
-using BoardExpansion;
 using Cameras;
 using Zones;
 using Core;
 using Tools;
 using Pieces;
 using Pieces.Supply;
+using Placeables.BoardExpansions;
+using Placeables.ZonePlacementS;
 using Rules;
 using Scenarios;
 using Solver;

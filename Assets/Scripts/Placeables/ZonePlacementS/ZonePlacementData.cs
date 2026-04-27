@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zones;
 
-namespace BoardExpansion
+namespace Placeables.ZonePlacementS
 {
     public class ZonePlacementData
     {
-        public ZoneSO ZoneType;
         public List<Vector2Int> Shape;
+        public ZoneSO ZoneType;
 
         public ZonePlacementData(ZoneSO zoneType, List<Vector2Int> shape)
         {
