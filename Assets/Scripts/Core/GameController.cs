@@ -8,9 +8,13 @@ using Cameras;
 using Pieces;
 using Pieces.Supply;
 using Placeables.BoardExpansions;
+using Placeables.PersonalRulePlacements;
 using Placeables.WallPlacements;
 using Placeables.ZonePlacementS;
 using Rules;
+using Rules.Checks;
+using Rules.Conclusions;
+using Rules.EmotionRules;
 using Scenarios;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -28,6 +32,7 @@ namespace Core
         [Inject] private CameraController _cameraController;
         [Inject] private BoardExpansionPreviewSettings _boardExpansionPreviewSettings;
         [Inject] private ZonePlacementSettings _zonePlacementSettings;
+        [Inject] private PersonalRulePlacementSettings _personalRulePlacementSettings;
 
         public event Action<GameState> OnChangeGameState;
         public event Action OnBoardChanged;
@@ -68,6 +73,11 @@ namespace Core
             var zonePlacementGenerator = new ZonePlacementPreviewGenerator();
             _pieceSupply.AddItem(RandomZonePlacementFactory.Create(zonePlacementGenerator, this,
                 _zonePlacementSettings.zoneType));
+            
+            var rule = new EmotionRule();
+            rule.check = new AlwaysPassCheck();
+            rule.conclusion = new BinaryEmotionConclusion {whenPassed = PieceEmotion.Sad};
+            _pieceSupply.AddItem(new PersonalRulePlacement(rule, _personalRulePlacementSettings.icon, this));
 
             _toolController.ChangeTool(ToolType.GrabTool);
             OnChangeGameState?.Invoke(CurrentState);
@@ -379,6 +389,17 @@ namespace Core
         {
             foreach (var w in hWalls) AddHorizontalWall(w);
             foreach (var w in vWalls) AddVerticalWall(w);
+        }
+
+        public bool HasPieceAt(Vector2Int boardCell) => _boardController.GetPiece(boardCell) != null;
+
+        public bool TryAddPersonalRule(Vector2Int boardCell, Rules.EmotionRules.EmotionRule rule)
+        {
+            var piece = _boardController.GetPiece(boardCell);
+            if (piece == null) return false;
+            piece.Piece.PersonalRules.Add(rule);
+            OnBoardChanged?.Invoke();
+            return true;
         }
 
         // All tiles must be active (within bounds, not blocked). Overriding an existing zone is allowed.

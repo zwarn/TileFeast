@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Core;
 using Pieces;
 using Placeables.BoardExpansions;
+using Placeables.PersonalRulePlacements;
 using Placeables.WallPlacements;
 using Placeables.ZonePlacementS;
 using UI.Pieces;
@@ -17,6 +18,7 @@ namespace Tools
         [SerializeField] private BoardExpansionView boardExpansionView;
         [SerializeField] private WallPlacementView wallPlacementView;
         [SerializeField] private ZonePlacementView zonePlacementView;
+        [SerializeField] private PersonalRulePlacementView personalRulePlacementView;
         [SerializeField] private Grid grid;
 
         [Inject] private GameController _gameController;
@@ -71,6 +73,17 @@ namespace Tools
                     cellWorld.y + 1 - worldPos.y,
                     zonePlacementView.transform.localPosition.z);
                 zonePlacementView.SetPreviewValid(zp.IsValidPlacement(GetBoardPosition()));
+            }
+            else if (_currentPlaceable is PersonalRulePlacement prp)
+            {
+                var worldPos  = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var cell      = (Vector2Int)grid.WorldToCell(worldPos);
+                var cellWorld = grid.CellToWorld(new Vector3Int(cell.x, cell.y, 0));
+                personalRulePlacementView.transform.localPosition = new Vector3(
+                    cellWorld.x + 0.5f - worldPos.x,
+                    cellWorld.y + 0.5f - worldPos.y,
+                    personalRulePlacementView.transform.localPosition.z);
+                personalRulePlacementView.SetPreviewValid(prp.IsValidPlacement(GetBoardPosition()));
             }
 
             if (!IsPointerOverSupplyPanel())
@@ -194,6 +207,11 @@ namespace Tools
                 zonePlacementView.transform.localPosition = Vector3.zero;
                 zonePlacementView.gameObject.SetActive(false);
             }
+            else if (_currentPlaceable is PersonalRulePlacement)
+            {
+                personalRulePlacementView.transform.localPosition = Vector3.zero;
+                personalRulePlacementView.gameObject.SetActive(false);
+            }
 
             _currentPlaceable = _gameController.GetItemInHand();
 
@@ -218,12 +236,19 @@ namespace Tools
                 zonePlacementView.SetData(zp2);
                 zonePlacementView.gameObject.SetActive(true);
             }
+            else if (_currentPlaceable is PersonalRulePlacement prp2)
+            {
+                personalRulePlacementView.transform.localPosition = Vector3.zero;
+                personalRulePlacementView.SetData(prp2);
+                personalRulePlacementView.gameObject.SetActive(true);
+            }
             else
             {
                 pieceView.SetData(null);
                 boardExpansionView.gameObject.SetActive(false);
                 wallPlacementView.gameObject.SetActive(false);
                 zonePlacementView.gameObject.SetActive(false);
+                personalRulePlacementView.gameObject.SetActive(false);
             }
         }
     }

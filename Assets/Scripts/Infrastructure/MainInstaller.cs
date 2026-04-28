@@ -6,6 +6,7 @@ using Tools;
 using Pieces;
 using Pieces.Supply;
 using Placeables.BoardExpansions;
+using Placeables.PersonalRulePlacements;
 using Placeables.ZonePlacementS;
 using Rules;
 using Scenarios;
@@ -30,8 +31,9 @@ namespace Infrastructure
         [SerializeField] private CameraController cameraController;
         [SerializeField] private PieceRepository pieceRepository;
         [SerializeField] private SolverRunner solverRunner;
-        [SerializeField] private BoardExpansionPreviewSettings boardExpansionPreviewSettings;
+        [Header("Settings")] [SerializeField] private BoardExpansionPreviewSettings boardExpansionPreviewSettings;
         [SerializeField] private ZonePlacementSettings zonePlacementSettings;
+        [SerializeField] private PersonalRulePlacementSettings personalRulePlacementSettings;
         [Header("Tools")] [SerializeField] private GrabTool grabTool;
         [SerializeField] private ZoneTool zoneTool;
         [SerializeField] private ShapeTool shapeTool;
@@ -51,14 +53,15 @@ namespace Infrastructure
             Container.Bind<ZoneController>().FromInstance(zoneController);
             Container.Bind<CameraController>().FromInstance(cameraController);
             Container.Bind<PieceRepository>().FromInstance(pieceRepository);
+            Container.Bind<SolverRunner>().FromInstance(solverRunner);
 
             Container.Bind<GrabTool>().FromInstance(grabTool);
             Container.Bind<ZoneTool>().FromInstance(zoneTool);
             Container.Bind<ShapeTool>().FromInstance(shapeTool);
 
-            Container.Bind<SolverRunner>().FromInstance(solverRunner);
             Container.Bind<BoardExpansionPreviewSettings>().FromInstance(boardExpansionPreviewSettings);
             Container.Bind<ZonePlacementSettings>().FromInstance(zonePlacementSettings);
+            Container.Bind<PersonalRulePlacementSettings>().FromInstance(personalRulePlacementSettings);
         }
     }
 }
