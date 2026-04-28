@@ -1,14 +1,23 @@
 ﻿using Pieces.Animation;
 using Pieces.Aspects;
 using Rules;
+using Tools;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
 
 namespace Pieces
 {
-    public class PieceView : MonoBehaviour
+    public class PieceView : MonoBehaviour, IPlaceableView
     {
+        private PlaceablePiece _placeable;
+
+        public void Bind(IPlaceable placeable) => _placeable = (PlaceablePiece)placeable;
+        public void Activate()   => SetData(_placeable.Piece);
+        public void Deactivate() => SetData(null);
+        public void UpdateFrame(Grid grid, Vector3 mouseWorldPos, Vector2Int boardCell) { }
+        public void OnRotated() { }
+
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private AspectListView aspectListView;
         [SerializeField] private FaceView faceView;
