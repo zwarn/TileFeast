@@ -7,6 +7,7 @@ namespace Scenarios
     public class ScenarioController : MonoBehaviour
     {
         [SerializeField] private ScenarioSO scenario;
+        [SerializeField] private bool autoLoadOnStart = true;
 
         [Inject] private GameController _gameController;
 
@@ -14,13 +15,14 @@ namespace Scenarios
 
         private void Start()
         {
-            LoadScenario(scenario);
+            if (autoLoadOnStart && scenario != null)
+                LoadScenario(scenario);
         }
 
-        public void LoadScenario(ScenarioSO incomingScenario)
+        public void LoadScenario(ScenarioSO incomingScenario, bool addProceduralItems = true)
         {
             scenario = incomingScenario;
-            _gameController.LoadScenario(scenario);
+            _gameController.LoadScenario(scenario, addProceduralItems);
         }
 
         public void LoadNextScenario()

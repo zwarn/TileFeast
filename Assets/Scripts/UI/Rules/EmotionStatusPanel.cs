@@ -1,7 +1,7 @@
 using Core;
+using Modes;
 using Rules;
 using Rules.CompletionRules;
-using Scenarios;
 using TMPro;
 using UI.Common;
 using UnityEngine;
@@ -16,8 +16,8 @@ namespace UI.Rules
         [SerializeField] private Checkmark checkmark;
 
         [Inject] private RulesController _rulesController;
-        [Inject] private ScenarioController _scenarioController;
         [Inject] private GameController _gameController;
+        [Inject] private PuzzleModeController _puzzleModeController;
 
         private void OnEnable()
         {
@@ -64,7 +64,7 @@ namespace UI.Rules
 
         public void GoToNextScenario()
         {
-            _scenarioController.LoadNextScenario();
+            _puzzleModeController.AdvanceToNextLevel();
         }
     }
 }

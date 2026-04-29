@@ -43,7 +43,7 @@ namespace Core
 
         [ShowInInspector, ReadOnly] public GameState CurrentState { get; private set; }
 
-        public void LoadScenario(ScenarioSO scenario)
+        public void LoadScenario(ScenarioSO scenario, bool addProceduralItems = true)
         {
             var newState = new GameState(scenario);
 
@@ -66,22 +66,31 @@ namespace Core
                 .ToList();
             _pieceSupply.ReplaceItems(supplyItems);
 
-            var expansionGenerator = new BoardExpansionPreviewGenerator(_boardExpansionPreviewSettings);
-            _pieceSupply.AddItem(RandomBoardExpansionFactory.Create(expansionGenerator, this));
-            var wallPlacementGenerator = new WallPlacementPreviewGenerator(_boardExpansionPreviewSettings);
-            _pieceSupply.AddItem(RandomWallPlacementFactory.Create(wallPlacementGenerator, this));
-            var zonePlacementGenerator = new ZonePlacementPreviewGenerator();
-            _pieceSupply.AddItem(RandomZonePlacementFactory.Create(zonePlacementGenerator, this,
-                _zonePlacementSettings.zoneType));
-            
-            var rule = new EmotionRule();
-            rule.check = new AlwaysPassCheck();
-            rule.conclusion = new BinaryEmotionConclusion {whenPassed = PieceEmotion.Sad};
-            _pieceSupply.AddItem(new PersonalRulePlacement(rule, _personalRulePlacementSettings.icon, this));
+            if (addProceduralItems)
+            {
+                var expansionGenerator = new BoardExpansionPreviewGenerator(_boardExpansionPreviewSettings);
+                _pieceSupply.AddItem(RandomBoardExpansionFactory.Create(expansionGenerator, this));
+                var wallPlacementGenerator = new WallPlacementPreviewGenerator(_boardExpansionPreviewSettings);
+                _pieceSupply.AddItem(RandomWallPlacementFactory.Create(wallPlacementGenerator, this));
+                var zonePlacementGenerator = new ZonePlacementPreviewGenerator();
+                _pieceSupply.AddItem(RandomZonePlacementFactory.Create(zonePlacementGenerator, this,
+                    _zonePlacementSettings.zoneType));
+
+                var rule = new EmotionRule();
+                rule.check = new AlwaysPassCheck();
+                rule.conclusion = new BinaryEmotionConclusion {whenPassed = PieceEmotion.Sad};
+                _pieceSupply.AddItem(new PersonalRulePlacement(rule, _personalRulePlacementSettings.icon, this));
+            }
 
             _toolController.ChangeTool(ToolType.GrabTool);
             OnChangeGameState?.Invoke(CurrentState);
             OnBoardChanged?.Invoke();
+        }
+
+        public void AddEmotionRule(EmotionRule rule)
+        {
+            CurrentState.EmotionRules.Add(rule);
+            OnChangeGameState?.Invoke(CurrentState);
         }
 
         public void LockTile(Vector2Int position, bool locked)

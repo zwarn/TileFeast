@@ -2,6 +2,7 @@ using Board;
 using Cameras;
 using Zones;
 using Core;
+using Modes;
 using Tools;
 using Pieces;
 using Pieces.Supply;
@@ -31,6 +32,9 @@ namespace Infrastructure
         [SerializeField] private CameraController cameraController;
         [SerializeField] private PieceRepository pieceRepository;
         [SerializeField] private SolverRunner solverRunner;
+        [Header("Mode Controllers")] [SerializeField] private PuzzleModeController puzzleModeController;
+        [SerializeField] private RoguelikeModeController roguelikeModeController;
+        [SerializeField] private GameModeBootstrapper gameModeBootstrapper;
         [Header("Settings")] [SerializeField] private BoardExpansionPreviewSettings boardExpansionPreviewSettings;
         [SerializeField] private ZonePlacementSettings zonePlacementSettings;
         [SerializeField] private PersonalRulePlacementSettings personalRulePlacementSettings;
@@ -54,6 +58,10 @@ namespace Infrastructure
             Container.Bind<CameraController>().FromInstance(cameraController);
             Container.Bind<PieceRepository>().FromInstance(pieceRepository);
             Container.Bind<SolverRunner>().FromInstance(solverRunner);
+
+            Container.Bind<PuzzleModeController>().FromInstance(puzzleModeController);
+            Container.Bind<RoguelikeModeController>().FromInstance(roguelikeModeController);
+            Container.Bind<GameModeBootstrapper>().FromInstance(gameModeBootstrapper);
 
             Container.Bind<GrabTool>().FromInstance(grabTool);
             Container.Bind<ZoneTool>().FromInstance(zoneTool);
