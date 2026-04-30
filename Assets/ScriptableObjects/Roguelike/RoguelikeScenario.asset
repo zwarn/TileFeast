@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6ea39cb86f48948228dc942f4fdb44, type: 3}
   m_Name: RoguelikeScenario
   m_EditorClassIdentifier: 
-  gridSize: {x: 9, y: 9}
+  gridSize: {x: 5, y: 5}
   availablePieces: []
   lockedPieces:
     data: []

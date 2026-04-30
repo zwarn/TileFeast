@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d776bf386c73d3340ad5b1cbc9e85ead, type: 3}
+  m_Name: RuleOfferGenerator
+  m_EditorClassIdentifier: 
+  ruleTemplates:
+  - rid: 8328046924485361806
+  - rid: 8328046924485361812
+  - rid: 8328046924485361823
+  references:
+    version: 2
+    RefIds:
+    - rid: 8328046924485361806
+      type: {class: EmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        filter:
+          rid: 8328046924485361810
+        check:
+          rid: 8328046924485361811
+        conclusion:
+          rid: 8328046924485361809
+    - rid: 8328046924485361809
+      type: {class: BinaryEmotionConclusion, ns: Rules.Conclusions, asm: TileFeast}
+      data:
+        whenPassed: 0
+        whenFailed: 1
+    - rid: 8328046924485361810
+      type: {class: HasAspectFilter, ns: Rules.Filters, asm: TileFeast}
+      data:
+        aspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+    - rid: 8328046924485361811
+      type: {class: LargestAspectGroupMembershipCheck, ns: Rules.Checks, asm: TileFeast}
+      data:
+        groupAspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+    - rid: 8328046924485361812
+      type: {class: EmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        filter:
+          rid: 8328046924485361816
+        check:
+          rid: 8328046924485361817
+        conclusion:
+          rid: 8328046924485361815
+    - rid: 8328046924485361815
+      type: {class: BinaryEmotionConclusion, ns: Rules.Conclusions, asm: TileFeast}
+      data:
+        whenPassed: 0
+        whenFailed: 1
+    - rid: 8328046924485361816
+      type: {class: HasAspectFilter, ns: Rules.Filters, asm: TileFeast}
+      data:
+        aspect: {fileID: 11400000, guid: aba27a2187fd2364993b1ef26b4ab2a4, type: 2}
+    - rid: 8328046924485361817
+      type: {class: NeighborCountCheck, ns: Rules.Checks, asm: TileFeast}
+      data:
+        neighborFilter:
+          rid: 8328046924485361818
+        countRange:
+          min: 2
+          max: -1
+        mode: 0
+    - rid: 8328046924485361818
+      type: {class: HasAspectFilter, ns: Rules.Filters, asm: TileFeast}
+      data:
+        aspect: {fileID: 11400000, guid: 79cb967695b705045a9c213c4f2fc191, type: 2}
+    - rid: 8328046924485361823
+      type: {class: EmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        filter:
+          rid: 8328046924485361827
+        check:
+          rid: 8328046924485361828
+        conclusion:
+          rid: 8328046924485361826
+    - rid: 8328046924485361826
+      type: {class: BinaryEmotionConclusion, ns: Rules.Conclusions, asm: TileFeast}
+      data:
+        whenPassed: 0
+        whenFailed: 1
+    - rid: 8328046924485361827
+      type: {class: HasAspectFilter, ns: Rules.Filters, asm: TileFeast}
+      data:
+        aspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}
+    - rid: 8328046924485361828
+      type: {class: NeighborCountCheck, ns: Rules.Checks, asm: TileFeast}
+      data:
+        neighborFilter:
+          rid: 8328046924485361829
+        countRange:
+          min: -1
+          max: 1
+        mode: 0
+    - rid: 8328046924485361829
+      type: {class: HasAspectFilter, ns: Rules.Filters, asm: TileFeast}
+      data:
+        aspect: {fileID: 11400000, guid: 67d7229214fc68c47b9a6a11dc981d01, type: 2}

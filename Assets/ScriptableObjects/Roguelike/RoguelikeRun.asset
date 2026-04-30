@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingScenario: {fileID: 11400000, guid: bd26896ee3f7ccb41a6f3224e9702640, type: 2}
   startingHealth: 20
-  draftGroupsPerTurn: 1
-  offerPool:
-  - {fileID: 11400000, guid: d68ef9bded63d67459e92c390e17bb7d, type: 2}
-  - {fileID: 11400000, guid: 48e47fd1f876d6848ad7e6b37d43531d, type: 2}
-  - {fileID: 11400000, guid: ce1618f69dc473e42aace37f0ac1be6e, type: 2}
+  turnPattern:
+  - type: 0
+    groupCount: 3
+  - type: 2
+    groupCount: 1
+  - type: 1
+    groupCount: 1
+  pieceGenerator: {fileID: 11400000, guid: 3e36fb425f3afd94ba11a47edf334075, type: 2}
+  placeableGenerator: {fileID: 11400000, guid: 96e1a4c7bb402ca449213b80b601e12f, type: 2}
+  ruleGenerator: {fileID: 11400000, guid: 3cd4194e401d81345b124902501204af, type: 2}

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Roguelike.Generators;
 using Scenarios;
 using UnityEngine;
 
@@ -9,7 +10,14 @@ namespace Roguelike
     {
         public ScenarioSO startingScenario;
         public int startingHealth = 10;
-        public int draftGroupsPerTurn = 1;
-        public List<RoguelikeOfferSO> offerPool = new();
+
+        [Header("Turn Schedule")]
+        [Tooltip("Repeating pattern — turn N uses index (N % pattern.Count)")]
+        public List<OfferGroupConfig> turnPattern;
+
+        [Header("Generators")]
+        public PieceOfferGeneratorSO pieceGenerator;
+        public PlaceableOfferGeneratorSO placeableGenerator;
+        public RuleOfferGeneratorSO ruleGenerator;
     }
 }

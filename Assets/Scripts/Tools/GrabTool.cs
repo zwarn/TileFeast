@@ -6,6 +6,7 @@ using Placeables.BoardExpansions;
 using Placeables.PersonalRulePlacements;
 using Placeables.WallPlacements;
 using Placeables.ZonePlacementS;
+using Roguelike;
 using UI.Pieces;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -163,10 +164,12 @@ namespace Tools
 
             _currentPlaceable = _gameController.GetItemInHand();
 
-            if (_currentPlaceable != null && _viewMap.TryGetValue(_currentPlaceable.GetType(), out var view))
+            var forView = _currentPlaceable is DraftPlaceable draft ? draft.Inner : _currentPlaceable;
+
+            if (forView != null && _viewMap.TryGetValue(forView.GetType(), out var view))
             {
                 _activeView = view;
-                _activeView.Bind(_currentPlaceable);
+                _activeView.Bind(forView);
                 _activeView.Activate();
             }
             else

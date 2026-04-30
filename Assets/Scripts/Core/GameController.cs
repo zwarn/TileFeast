@@ -90,7 +90,7 @@ namespace Core
         public void AddEmotionRule(EmotionRule rule)
         {
             CurrentState.EmotionRules.Add(rule);
-            OnChangeGameState?.Invoke(CurrentState);
+            OnBoardChanged?.Invoke();
         }
 
         public void LockTile(Vector2Int position, bool locked)
@@ -292,6 +292,14 @@ namespace Core
             _itemInHand = item;
             CurrentState.HasPieceInHand = item is PlaceablePiece;
             OnHandChanged?.Invoke();
+        }
+
+        // Like SetItemInHand but also switches to GrabTool first (use for non-supply items like draft placeables).
+        public void PutInHand(IPlaceable item)
+        {
+            _toolController.ChangeTool(ToolType.GrabTool);
+            if (!IsHandEmpty()) DiscardItemInHand();
+            SetItemInHand(item);
         }
 
         public IPlaceable GetItemInHand() => _itemInHand;

@@ -17,10 +17,10 @@ namespace UI.Roguelike
         private void OnEnable() => button.onClick.AddListener(OnClick);
         private void OnDisable() => button.onClick.RemoveListener(OnClick);
 
-        public void SetData(RoguelikeOfferSO offer, Action onPick)
+        public void SetData(RoguelikeDraftOffer offer, Action onPick)
         {
-            if (offerImage != null) offerImage.sprite = offer.previewSprite;
-            if (nameText != null) nameText.text = offer.displayName;
+            if (offerImage != null) offerImage.sprite = offer.PreviewSprite;
+            if (nameText != null) nameText.text = offer.DisplayName;
             _onPick = onPick;
         }
 

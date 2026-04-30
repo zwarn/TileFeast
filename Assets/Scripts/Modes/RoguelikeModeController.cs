@@ -4,8 +4,6 @@ using System.Linq;
 using Core;
 using Pieces;
 using Pieces.Supply;
-using Placeables.BoardExpansions;
-using Placeables.PersonalRulePlacements;
 using Roguelike;
 using Rules;
 using Scenarios;
@@ -21,8 +19,6 @@ namespace Modes
         [Inject] private RulesController _rulesController;
         [Inject] private PieceSupplyController _pieceSupplyController;
         [Inject] private GameController _gameController;
-        [Inject] private BoardExpansionPreviewSettings _boardExpansionSettings;
-        [Inject] private PersonalRulePlacementSettings _personalRuleSettings;
 
         public event Action<int> OnHealthChanged;
         public event Action<bool> OnEndTurnAllowedChanged;
@@ -32,6 +28,7 @@ namespace Modes
 
         private RoguelikeRunSO _config;
         private int _currentHealth;
+        private int _turnNumber;
         private readonly List<RoguelikeDraftGroup> _draftGroups = new();
         private bool _active;
 
@@ -56,33 +53,60 @@ namespace Modes
         {
             _config = config;
             _active = true;
+            _turnNumber = 0;
             _currentHealth = config.startingHealth;
             _scenarioController.LoadScenario(config.startingScenario, addProceduralItems: false);
             OnHealthChanged?.Invoke(_currentHealth);
             GenerateAndShowDrafts();
         }
 
-        // Called by the draft panel when the player picks an offer from a group.
         public void PickOffer(RoguelikeDraftGroup group, int offerIdx)
         {
             if (group == null || group.IsResolved) return;
             if (offerIdx < 0 || offerIdx >= group.Options.Count) return;
 
-            group.Options[offerIdx].Apply(CreateApplyContext());
-            group.Resolve(offerIdx);
+            var offer = group.Options[offerIdx];
 
-            NotifyPendingCount();
-            UpdateEndTurnState();
-            ShowNextPendingDraft(skip: group);
+            switch (offer.Type)
+            {
+                case DraftOfferType.Piece:
+                    _pieceSupplyController.AddItem(offer.Placeable);
+                    group.Resolve(offerIdx);
+                    NotifyPendingCount();
+                    UpdateEndTurnState();
+                    ShowNextPendingDraft(skip: group);
+                    break;
+
+                case DraftOfferType.Placeable:
+                    var draft = new DraftPlaceable(
+                        offer.Placeable,
+                        onPlaced: () =>
+                        {
+                            group.Resolve(offerIdx);
+                            NotifyPendingCount();
+                            UpdateEndTurnState();
+                            ShowNextPendingDraft(skip: group);
+                        },
+                        onDiscarded: () => { }
+                    );
+                    _gameController.PutInHand(draft);
+                    break;
+
+                case DraftOfferType.Rule:
+                    _gameController.AddEmotionRule(offer.Rule);
+                    group.Resolve(offerIdx);
+                    NotifyPendingCount();
+                    UpdateEndTurnState();
+                    ShowNextPendingDraft(skip: group);
+                    break;
+            }
         }
 
-        // Called by the draft panel's Back button; dismisses the current group temporarily.
         public void PostponeDraft(RoguelikeDraftGroup group)
         {
             ShowNextPendingDraft(skip: group);
         }
 
-        // Called by the HUD's "Pending Choices" button to surface pending drafts again.
         public void ShowNextPendingDraft() => ShowNextPendingDraft(skip: null);
 
         public void EndTurn()
@@ -116,15 +140,35 @@ namespace Modes
         {
             _draftGroups.Clear();
 
-            if (_config.offerPool.Count < 3)
+            if (_config.turnPattern == null || _config.turnPattern.Count == 0)
             {
-                Debug.LogWarning("[RoguelikeModeController] offerPool has fewer than 3 entries.");
+                Debug.LogWarning("[RoguelikeModeController] turnPattern is empty.");
                 return;
             }
 
-            for (var i = 0; i < _config.draftGroupsPerTurn; i++)
-                _draftGroups.Add(new RoguelikeDraftGroup(PickThreeRandom(_config.offerPool)));
+            var cfg = _config.turnPattern[_turnNumber % _config.turnPattern.Count];
 
+            for (var i = 0; i < cfg.groupCount; i++)
+            {
+                var offers = cfg.type switch
+                {
+                    OfferGroupType.Pieces => _config.pieceGenerator != null
+                        ? _config.pieceGenerator.GenerateGroup(3, _gameController)
+                        : new List<RoguelikeDraftOffer>(),
+                    OfferGroupType.Placeables => _config.placeableGenerator != null
+                        ? _config.placeableGenerator.GenerateGroup(3, _gameController)
+                        : new List<RoguelikeDraftOffer>(),
+                    OfferGroupType.Rules => _config.ruleGenerator != null
+                        ? _config.ruleGenerator.GenerateGroup(3)
+                        : new List<RoguelikeDraftOffer>(),
+                    _ => new List<RoguelikeDraftOffer>()
+                };
+
+                if (offers.Count > 0)
+                    _draftGroups.Add(new RoguelikeDraftGroup(offers, cfg.type));
+            }
+
+            _turnNumber++;
             NotifyPendingCount();
             ShowNextPendingDraft(skip: null);
             UpdateEndTurnState();
@@ -141,28 +185,11 @@ namespace Modes
                     return;
                 }
             }
-            // No other pending groups — panel stays hidden.
-            // Player uses the HUD "Pending Choices" button to resurface the skipped group.
         }
 
         private void NotifyPendingCount() => OnPendingDraftCountChanged?.Invoke(PendingDraftCount);
-
         private void UpdateEndTurnState() => OnEndTurnAllowedChanged?.Invoke(IsEndTurnAllowed());
-
         private void HandleSupplyChanged(IPlaceable _) => UpdateEndTurnState();
         private void HandleSupplyReplaced(List<IPlaceable> _) => UpdateEndTurnState();
-
-        private RoguelikeApplyContext CreateApplyContext() => new()
-        {
-            GameController = _gameController,
-            SupplyController = _pieceSupplyController,
-            BoardExpansionSettings = _boardExpansionSettings,
-            PersonalRuleSettings = _personalRuleSettings,
-        };
-
-        private static List<RoguelikeOfferSO> PickThreeRandom(List<RoguelikeOfferSO> pool)
-        {
-            return pool.OrderBy(_ => UnityEngine.Random.value).Take(3).ToList();
-        }
     }
 }

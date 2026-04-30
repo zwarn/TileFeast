@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 194c220420696434ead8c15c592a43e8, type: 3}
+  m_Name: PlaceableOfferGenerator
+  m_EditorClassIdentifier: 
+  boardExpansionSettings: {fileID: 11400000, guid: 1ea4a63cd627d5e439fc60c5de1d0e6e, type: 2}
+  includeBoardExpansions: 1
+  includeWallPlacements: 1
+  availableZones:
+  - {fileID: 11400000, guid: c723682be344b4f4cb8aa248046dcccb, type: 2}
+  includeZonePlacements: 1
+  personalRuleTemplates:
+  - rid: 8328046924485361830
+  personalRuleIcon: {fileID: -156707132, guid: de56fb665e169d340b4f857a9e503a5d, type: 3}
+  includePersonalRules: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8328046924485361830
+      type: {class: EmotionRule, ns: Rules.EmotionRules, asm: TileFeast}
+      data:
+        filter:
+          rid: -2
+        check:
+          rid: 8328046924485361834
+        conclusion:
+          rid: 8328046924485361833
+    - rid: 8328046924485361833
+      type: {class: BinaryEmotionConclusion, ns: Rules.Conclusions, asm: TileFeast}
+      data:
+        whenPassed: 2
+        whenFailed: 1
+    - rid: 8328046924485361834
+      type: {class: AlwaysPassCheck, ns: Rules.Checks, asm: TileFeast}
+      data: 
