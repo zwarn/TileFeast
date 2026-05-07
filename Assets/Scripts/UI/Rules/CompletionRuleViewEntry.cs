@@ -1,20 +1,23 @@
+using Board;
 using Core;
 using Rules;
 using Rules.CompletionRules;
 using TMPro;
 using UI.Common;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace UI.Rules
 {
-    public class CompletionRuleViewEntry : MonoBehaviour
+    public class CompletionRuleViewEntry : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private TMP_Text descriptionLabel;
         [SerializeField] private TMP_Text progressLabel;
         [SerializeField] private Checkmark checkmark;
 
-        [Inject] private GameController _gameController;
+        [Inject] private GameController   _gameController;
+        [Inject] private HighlightService _highlightService;
 
         private CompletionRuleConfig _config;
         private RulesController _controller;
@@ -39,5 +42,8 @@ namespace UI.Rules
             bool met = _config.rule.IsMet(result, state);
             checkmark.SetState(met);
         }
+
+        public void OnPointerEnter(PointerEventData eventData) => _highlightService?.HighlightAllEmotions();
+        public void OnPointerExit(PointerEventData eventData)  => _highlightService?.ClearAll();
     }
 }

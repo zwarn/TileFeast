@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Pieces;
 using Rules.Components;
 using Rules.Filters;
+using UnityEngine;
 
 namespace Rules.Checks
 {
@@ -71,6 +73,36 @@ namespace Rules.Checks
             return mode == NeighborCountMode.CoveredTiles
                 ? $"{count} adjacent tile(s) of {subject}"
                 : $"{count} adjacent {subject}";
+        }
+
+        public override List<HighlightGroup> GetContextHighlight(
+            IEnumerable<PlacedPiece> filteredPieces, EmotionContext context)
+        {
+            var positions = new HashSet<Vector2Int>();
+            foreach (var piece in filteredPieces)
+            {
+                if (mode == NeighborCountMode.CoveredTiles)
+                {
+                    foreach (var pos in RulesHelper.GetNeighborPositions(piece, context.TileArray))
+                    {
+                        var tile = context.TileArray[pos.x, pos.y];
+                        if (tile != null && (neighborFilter == null || neighborFilter.Matches(tile, context)))
+                            positions.Add(pos);
+                    }
+                }
+                else
+                {
+                    foreach (var neighbor in RulesHelper.GetNeighborPieces(piece, context.TileArray))
+                    {
+                        if (neighborFilter == null || neighborFilter.Matches(neighbor, context))
+                            foreach (var pos in neighbor.GetTilePosition())
+                                positions.Add(pos);
+                    }
+                }
+            }
+
+            if (positions.Count == 0) return new List<HighlightGroup>();
+            return new List<HighlightGroup> { new(new Color(1f, 0.85f, 0f, 0.75f), positions.ToList()) };
         }
     }
 }

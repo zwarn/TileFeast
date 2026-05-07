@@ -1,15 +1,15 @@
 using Board;
 using Cameras;
-using Zones;
 using Core;
-using Tools;
 using Pieces;
 using Pieces.Supply;
 using Rules;
 using Scenarios;
 using Solver;
+using Tools;
 using UnityEngine;
 using Zenject;
+using Zones;
 
 namespace Infrastructure
 {
@@ -24,6 +24,7 @@ namespace Infrastructure
         [SerializeField] private EditorModeController editorModeController;
         [SerializeField] private GameController gameController;
         [SerializeField] private HighlightController highlightController;
+        [SerializeField] private HighlightService highlightService;
         [SerializeField] private ZoneController zoneController;
         [SerializeField] private CameraController cameraController;
         [SerializeField] private PieceRepository pieceRepository;
@@ -44,6 +45,7 @@ namespace Infrastructure
             Container.Bind<EditorModeController>().FromInstance(editorModeController);
             Container.Bind<GameController>().FromInstance(gameController);
             Container.Bind<HighlightController>().FromInstance(highlightController);
+            Container.Bind<HighlightService>().FromInstance(highlightService);
             Container.Bind<ZoneController>().FromInstance(zoneController);
             Container.Bind<CameraController>().FromInstance(cameraController);
             Container.Bind<PieceRepository>().FromInstance(pieceRepository);

@@ -23,5 +23,11 @@ namespace Rules.Filters
             if (filters == null || filters.Count == 0) return "all pieces";
             return string.Join(" and ", filters.Select(f => f != null ? $"({f.GetDescription()})" : "(?)"));
         }
+
+        public override bool MatchesSupplyPiece(Piece piece)
+        {
+            if (filters == null || filters.Count == 0) return true;
+            return filters.All(f => f != null && f.MatchesSupplyPiece(piece));
+        }
     }
 }

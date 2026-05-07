@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Pieces;
 using Rules.Components;
+using UnityEngine;
 
 namespace Rules.Checks
 {
@@ -31,6 +33,22 @@ namespace Rules.Checks
         {
             var range = countRange != null ? countRange.GetDescription() : "any";
             return $"next to {range} empty tile(s)";
+        }
+
+        public override List<HighlightGroup> GetContextHighlight(
+            IEnumerable<PlacedPiece> filteredPieces, EmotionContext context)
+        {
+            var tileArray = context.TileArray;
+            var blocked   = context.State.BlockedPositions;
+            var emptyNeighbors = new HashSet<Vector2Int>();
+
+            foreach (var piece in filteredPieces)
+                foreach (var pos in RulesHelper.GetNeighborPositions(piece, tileArray))
+                    if (tileArray[pos.x, pos.y] == null && !blocked.Contains(pos))
+                        emptyNeighbors.Add(pos);
+
+            if (emptyNeighbors.Count == 0) return new List<HighlightGroup>();
+            return new List<HighlightGroup> { new(new Color(1f, 0.85f, 0f, 0.75f), emptyNeighbors.ToList()) };
         }
     }
 }

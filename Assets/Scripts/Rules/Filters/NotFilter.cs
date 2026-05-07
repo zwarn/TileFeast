@@ -21,5 +21,11 @@ namespace Rules.Filters
             var innerText = inner != null ? inner.GetDescription() : "?";
             return $"pieces that are not ({innerText})";
         }
+
+        public override bool MatchesSupplyPiece(Piece piece)
+        {
+            if (inner == null) return false;
+            return !inner.MatchesSupplyPiece(piece);
+        }
     }
 }

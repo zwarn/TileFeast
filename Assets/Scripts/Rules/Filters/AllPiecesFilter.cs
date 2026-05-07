@@ -8,5 +8,6 @@ namespace Rules.Filters
     {
         public override bool Matches(PlacedPiece piece, EmotionContext context) => true;
         public override string GetDescription() => "All pieces";
+        public override bool MatchesSupplyPiece(Piece piece) => true;
     }
 }

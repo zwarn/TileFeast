@@ -12,5 +12,11 @@ namespace Rules.Filters
     {
         public abstract bool Matches(PlacedPiece piece, EmotionContext context);
         public abstract string GetDescription();
+
+        /// <summary>
+        /// Best-effort match for supply pieces (not yet placed). Only aspect-aware filters
+        /// override this; board-contextual filters (edge, zone, emotion) return false.
+        /// </summary>
+        public virtual bool MatchesSupplyPiece(Piece piece) => false;
     }
 }

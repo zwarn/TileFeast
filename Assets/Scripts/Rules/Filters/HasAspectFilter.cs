@@ -22,5 +22,11 @@ namespace Rules.Filters
             var name = aspect != null ? aspect.name : "?";
             return $"{name} pieces";
         }
+
+        public override bool MatchesSupplyPiece(Piece piece)
+        {
+            if (aspect == null) return false;
+            return piece.aspects.Contains(new Aspect(aspect));
+        }
     }
 }

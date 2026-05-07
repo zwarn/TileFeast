@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Pieces;
 using Pieces.Aspects;
 using Rules.Components;
+using UnityEngine;
 
 namespace Rules.Checks
 {
@@ -41,6 +43,19 @@ namespace Rules.Checks
             var aspectName = groupAspect != null ? groupAspect.name : "?";
             var range = sizeRange != null ? sizeRange.GetDescription() : "any";
             return $"in a {aspectName} group of size {range}";
+        }
+
+        public override List<HighlightGroup> GetContextHighlight(
+            IEnumerable<PlacedPiece> filteredPieces, EmotionContext context)
+        {
+            if (groupAspect == null) return new List<HighlightGroup>();
+            var aspect = new Aspect(groupAspect);
+            var groups = RulesHelper.GetGroups(context.TileArray,
+                p => p != null && p.AllAspects.Contains(aspect));
+
+            var positions = groups.SelectMany(g => g).ToList();
+            if (positions.Count == 0) return new List<HighlightGroup>();
+            return new List<HighlightGroup> { new(new Color(1f, 0.85f, 0f, 0.75f), positions) };
         }
     }
 }
