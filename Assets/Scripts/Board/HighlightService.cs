@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Core;
 using Pieces;
 using Rules;
@@ -32,6 +33,15 @@ namespace Board
 
         /// <summary>Fired when all hover highlighting should be cleared.</summary>
         public event Action OnSupplyHighlightCleared;
+
+        /// <summary>
+        /// Fired when piece-hover tooltip should highlight specific rule UI entries.
+        /// Predicate returns true for rules that contributed to the hovered piece's emotion.
+        /// </summary>
+        public event Action<Predicate<EmotionRule>> OnRuleUiHighlightChanged;
+
+        /// <summary>Fired when rule-entry UI highlighting should be cleared.</summary>
+        public event Action OnRuleUiHighlightCleared;
 
         private void OnEnable()
         {
@@ -100,11 +110,22 @@ namespace Board
             OnSupplyHighlightCleared?.Invoke();
         }
 
-        /// <summary>Clears all board and supply highlighting.</summary>
+        /// <summary>
+        /// Highlight rule UI entries whose rule contributed effects to a specific piece.
+        /// Non-matching entries are dimmed by subscribers.
+        /// </summary>
+        public void HighlightRulesForPiece(IEnumerable<EmotionRule> sourceRules)
+        {
+            var ruleSet = new HashSet<EmotionRule>(sourceRules);
+            OnRuleUiHighlightChanged?.Invoke(rule => ruleSet.Contains(rule));
+        }
+
+        /// <summary>Clears all board, supply, and rule-entry highlighting.</summary>
         public void ClearAll()
         {
             _highlightController.ResetHighlight();
             OnSupplyHighlightCleared?.Invoke();
+            OnRuleUiHighlightCleared?.Invoke();
         }
 
         // ── Internal ──────────────────────────────────────────────────────────────

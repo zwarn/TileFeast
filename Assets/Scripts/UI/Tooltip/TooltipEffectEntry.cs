@@ -18,7 +18,6 @@ namespace UI.Tooltip
         private const string HappyHex   = "#33DD33";
         private const string NeutralHex = "#BBBBBB";
         private const string SadHex     = "#DD3333";
-        private const string SourceHex  = "#888888";
 
         public void SetData(EmotionEffect effect)
         {
@@ -31,11 +30,7 @@ namespace UI.Tooltip
                 _                  => NeutralHex,
             };
 
-            string source = effect.Source != null
-                ? $"  <color={SourceHex}><size=80%>({effect.Source.GetDescription()})</size></color>"
-                : string.Empty;
-
-            label.text = $"<color={emotionHex}>{effect.Emotion}</color>  {effect.Reason}{source}";
+            label.text = $"<color={emotionHex}>{effect.Emotion}</color>  {effect.Reason}";
         }
 
         public void SetPlainText(string text)

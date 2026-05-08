@@ -65,6 +65,7 @@ namespace UI.Tooltip
 
             emotionRow.SetActive(true);
             whyLabel.gameObject.SetActive(true);
+            whyLabel.text = "Why:";
 
             var emotion = data.EmotionState?.FinalEmotion ?? PieceEmotion.Neutral;
             emotionLabel.text  = emotion.ToString();

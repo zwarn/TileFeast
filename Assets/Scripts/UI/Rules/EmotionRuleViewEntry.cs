@@ -6,6 +6,7 @@ using UI.Tooltip;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
+using System;
 
 namespace UI.Rules
 {
@@ -31,13 +32,43 @@ namespace UI.Rules
         [Inject] private RulesController _rulesController;
 
         private EmotionRule _rule;
-        private string _hoveredLinkId;
+        private string      _hoveredLinkId;
+        private string      _baseRichText;
+
+        private const string HighlightMark = "<mark=#FFD96680>";
+
+        private void OnEnable()
+        {
+            _highlightService.OnRuleUiHighlightChanged += OnRuleUiHighlightChanged;
+            _highlightService.OnRuleUiHighlightCleared += OnRuleUiHighlightCleared;
+        }
+
+        private void OnDisable()
+        {
+            _highlightService.OnRuleUiHighlightChanged -= OnRuleUiHighlightChanged;
+            _highlightService.OnRuleUiHighlightCleared -= OnRuleUiHighlightCleared;
+        }
+
+        private void OnRuleUiHighlightChanged(Predicate<EmotionRule> predicate)
+        {
+            if (descriptionLabel == null) return;
+            descriptionLabel.text = predicate(_rule)
+                ? $"{HighlightMark}{_baseRichText}</mark>"
+                : _baseRichText;
+        }
+
+        private void OnRuleUiHighlightCleared()
+        {
+            if (descriptionLabel != null)
+                descriptionLabel.text = _baseRichText;
+        }
 
         public void SetRule(EmotionRule rule)
         {
             _rule = rule;
             if (descriptionLabel == null) return;
-            descriptionLabel.text = rule != null ? BuildRichText(rule) : string.Empty;
+            _baseRichText = rule != null ? BuildRichText(rule) : string.Empty;
+            descriptionLabel.text = _baseRichText;
         }
 
         // ── Pointer handlers ──────────────────────────────────────────────────────
