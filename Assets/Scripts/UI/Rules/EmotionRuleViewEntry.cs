@@ -1,6 +1,8 @@
 using Board;
+using Rules;
 using Rules.EmotionRules;
 using TMPro;
+using UI.Tooltip;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -25,6 +27,8 @@ namespace UI.Rules
         [SerializeField] private TMP_Text descriptionLabel;
 
         [Inject] private HighlightService _highlightService;
+        [Inject] private TooltipService  _tooltipService;
+        [Inject] private RulesController _rulesController;
 
         private EmotionRule _rule;
         private string _hoveredLinkId;
@@ -40,8 +44,13 @@ namespace UI.Rules
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            // OnPointerMove will immediately refine this; rule effects is the fallback.
+            // OnPointerMove will immediately refine the board highlight; rule effects is the fallback.
             ShowRuleEffects();
+            _tooltipService?.Show(new EmotionRuleTooltipData
+            {
+                Rule             = _rule,
+                EvaluationResult = _rulesController.LastResult,
+            });
         }
 
         public void OnPointerMove(PointerEventData eventData)
@@ -72,6 +81,7 @@ namespace UI.Rules
         {
             _hoveredLinkId = null;
             _highlightService?.ClearAll();
+            _tooltipService?.Hide();
         }
 
         // ── Internal ──────────────────────────────────────────────────────────────

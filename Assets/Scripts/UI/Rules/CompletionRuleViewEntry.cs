@@ -4,6 +4,7 @@ using Rules;
 using Rules.CompletionRules;
 using TMPro;
 using UI.Common;
+using UI.Tooltip;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -18,6 +19,7 @@ namespace UI.Rules
 
         [Inject] private GameController   _gameController;
         [Inject] private HighlightService _highlightService;
+        [Inject] private TooltipService   _tooltipService;
 
         private CompletionRuleConfig _config;
         private RulesController _controller;
@@ -43,7 +45,21 @@ namespace UI.Rules
             checkmark.SetState(met);
         }
 
-        public void OnPointerEnter(PointerEventData eventData) => _highlightService?.HighlightAllEmotions();
-        public void OnPointerExit(PointerEventData eventData)  => _highlightService?.ClearAll();
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            _highlightService?.HighlightAllEmotions();
+            _tooltipService?.Show(new CompletionRuleTooltipData
+            {
+                Config           = _config,
+                EvaluationResult = _controller.LastResult,
+                State            = _gameController.CurrentState,
+            });
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            _highlightService?.ClearAll();
+            _tooltipService?.Hide();
+        }
     }
 }

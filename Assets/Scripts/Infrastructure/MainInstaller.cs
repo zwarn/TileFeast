@@ -7,6 +7,7 @@ using Rules;
 using Scenarios;
 using Solver;
 using Tools;
+using UI.Tooltip;
 using UnityEngine;
 using Zenject;
 using Zones;
@@ -32,6 +33,8 @@ namespace Infrastructure
         [Header("Tools")] [SerializeField] private GrabTool grabTool;
         [SerializeField] private ZoneTool zoneTool;
         [SerializeField] private ShapeTool shapeTool;
+        [Header("Tooltip")] [SerializeField] private BoardHoverService boardHoverService;
+        [SerializeField] private TooltipService tooltipService;
 
 
         public override void InstallBindings()
@@ -55,6 +58,9 @@ namespace Infrastructure
             Container.Bind<ShapeTool>().FromInstance(shapeTool);
 
             Container.Bind<SolverRunner>().FromInstance(solverRunner);
+
+            Container.Bind<BoardHoverService>().FromInstance(boardHoverService);
+            Container.Bind<TooltipService>().FromInstance(tooltipService);
         }
     }
 }
