@@ -11,13 +11,19 @@ namespace UI.Pieces
 {
     public class PieceSelectionEntry : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        private static readonly Color HighlightTint = new(0.5f, 1f,   1f,   1f); // cyan tint
-        private static readonly Color DimTint       = new(0.4f, 0.4f, 0.4f, 0.8f); // grey
+        private static readonly Color MatchColor = new(0f,   0.85f, 1f,   0.35f); // translucent cyan
+        private static readonly Color DimColor   = new(0.1f, 0.1f,  0.1f, 0.45f); // translucent dark
 
         [SerializeField] private Image image;
-        [Inject] private GameController      _gameController;
-        [Inject] private ToolController      _toolController;
-        [Inject] private HighlightService    _highlightService;
+        /// <summary>
+        /// A white Image child covering the entry. Disabled by default; enabled and
+        /// recolored when a supply highlight is active.
+        /// </summary>
+        [SerializeField] private Image highlightOverlay;
+
+        [Inject] private GameController   _gameController;
+        [Inject] private ToolController   _toolController;
+        [Inject] private HighlightService _highlightService;
 
         private Piece _piece;
 
@@ -37,6 +43,7 @@ namespace UI.Pieces
                 _highlightService.OnSupplyHighlightChanged -= ApplySupplyHighlight;
                 _highlightService.OnSupplyHighlightCleared -= ClearSupplyHighlight;
             }
+            ClearSupplyHighlight();
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -51,13 +58,8 @@ namespace UI.Pieces
             _gameController.RequestGrabPieceFromSupply(_piece);
         }
 
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-            OnPointerClick(eventData);
-        }
-
+        public void OnBeginDrag(PointerEventData eventData) => OnPointerClick(eventData);
         public void OnDrag(PointerEventData eventData) { }
-
         public void OnEndDrag(PointerEventData eventData) { }
 
         public void SetData(Piece piece)
@@ -68,13 +70,15 @@ namespace UI.Pieces
 
         private void ApplySupplyHighlight(System.Predicate<Piece> predicate)
         {
-            if (_piece == null || image == null) return;
-            image.color = predicate(_piece) ? HighlightTint : DimTint;
+            if (_piece == null || highlightOverlay == null) return;
+            highlightOverlay.gameObject.SetActive(true);
+            highlightOverlay.color = predicate(_piece) ? MatchColor : DimColor;
         }
 
         private void ClearSupplyHighlight()
         {
-            if (image != null) image.color = Color.white;
+            if (highlightOverlay != null)
+                highlightOverlay.gameObject.SetActive(false);
         }
     }
 }
