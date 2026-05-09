@@ -18,7 +18,7 @@ Key packages: URP 17.0.3, Input System 1.11.2, Zenject (Plugins), Sirenix Odin I
 
 All controllers are bound in `Assets/Scripts/Infrastructure/MainInstaller.cs` as `FromInstance` singletons (serialized scene references). When adding a new controller, register it there.
 
-Currently bound: `ToolController`, `BoardController`, `PieceSupplyController`, `RulesController`, `ScenarioController`, `ScenarioPersistence`, `EditorModeController`, `GameController`, `HighlightController`, `ZoneController`, `CameraController`, `PieceRepository`, `SolverRunner`, plus individual tool instances (`GrabTool`, `ZoneTool`, `ShapeTool`).
+Currently bound: `ToolController`, `BoardController`, `PieceSupplyController`, `RulesController`, `ScenarioController`, `ScenarioPersistence`, `EditorModeController`, `GameController`, `HighlightController`, `ZoneController`, `CameraController`, `PieceRepository`, `SolverRunner`, plus individual tool instances (`GrabTool`, `ZoneTool`, `ShapeTool`), and the audio trio `SoundController`, `MusicController`, `AudioEventHandler`.
 
 ### Core flow
 
@@ -50,7 +50,23 @@ Zones are pure spatial markers (`Zones/Zone.cs`, no embedded rule); any zone-awa
 
 ### Scenario
 
-`Scenarios/ScenarioSO.cs` — level asset. Holds grid size, blocked positions, available + locked pieces, happiness rules, completion rules, zones, next-level reference. `ScenarioController` loads; `ScenarioPersistence` serializes edits from the in-game editor.
+`Scenarios/ScenarioSO.cs` — level asset. Holds grid size, blocked positions, available + locked pieces, happiness rules, completion rules, zones, next-level reference, and `musicContext` (determines which music track plays). `ScenarioController` loads; `ScenarioPersistence` serializes edits from the in-game editor.
+
+### Audio system (`Assets/Scripts/Audio/`)
+
+Three-layer design: **data SOs → service MonoBehaviours → event bridge**.
+
+- `SoundEventSO` — an SFX clip pool (random selection) with per-clip volume and pitch range. Stateless; no runtime fields.
+- `MusicTrackSO` — a single music clip with loop and volume settings.
+- `SoundLibrarySO` — maps `GameSoundEvent` enum values → `SoundEventSO`. Add a binding here (no code change needed) to wire a new game moment to a clip.
+- `MusicLibrarySO` — maps `MusicContext` enum values → `MusicTrackSO`. Also holds `crossfadeDuration`.
+- `SoundController` — plays one-shot SFX via `Play(GameSoundEvent)` or `PlayDirect(SoundEventSO)`. Owns the cooldown dictionary so cooldown state resets with the MonoBehaviour. Uses `PlayOneShot` on its own `AudioSource`.
+- `MusicController` — owns two `AudioSource`s (`_sourceA`/`_sourceB`) for coroutine-based crossfade. `SetContext(MusicContext)` is the only public API; it no-ops if the context has no configured track (so unassigned contexts never silence currently playing music).
+- `AudioEventHandler` — subscribes to all game C# events in `OnEnable`/`OnDisable` and calls `SoundController`/`MusicController`. This is the only class that couples the audio system to game events.
+
+`GameSoundEvent` enum lists every audible game moment. `MusicContext` enum lists all music states; `ScenarioSO.musicContext` tags each level. `MusicContext.None` is the only context that explicitly fades to silence.
+
+**Critical gotcha**: Never store mutable runtime state (timers, counters, last-play times) in private fields of ScriptableObject assets. With *Enter Play Mode → Reload Domain* disabled, private SO fields persist across play sessions. `Time.time` resets to 0 on re-entry, making any time-comparison check permanently stale. Keep runtime state in MonoBehaviours.
 
 ### Solver (`Assets/Scripts/Solver/`)
 
@@ -64,6 +80,7 @@ Panels instantiate entries via `_container.InstantiatePrefab(prefab, parent)` so
 
 ```
 Assets/Scripts/
+├── Audio/           SoundController, MusicController, AudioEventHandler, SOs, enums
 ├── Board/           BoardController, view
 ├── Cameras/         CameraController
 ├── Core/            GameController, GameState
@@ -95,3 +112,5 @@ Namespaces follow folder names (`Pieces`, `Core`, `Board`, `Rules`, `Rules.Compl
 - **Happiness rule:** subclass `HappinessRuleSO` under `Rules/EmotionRules/`. Prefer composing existing `AspectSources` / `Checks` / `Filters` / `Conclusions` components over bespoke logic.
 - **Completion rule:** subclass `CompletionRuleSO` under `Rules/CompletionRules/`.
 - **Tool:** subclass `ToolBase` under `Tools/`, bind the instance in `MainInstaller`.
+- **Sound effect:** create a `SoundEventSO` asset under `Assets/ScriptableObjects/Audio/SoundEvents/`, assign clips, then add a binding to `SoundLibrary` (no code change needed). To hook a new game moment, add a value to `GameSoundEvent` and subscribe to the relevant C# event in `AudioEventHandler`.
+- **Music track:** create a `MusicTrackSO` asset and add a binding to `MusicLibrary` for the target `MusicContext`. Tag scenarios via `ScenarioSO.musicContext`; add new contexts by extending the `MusicContext` enum.

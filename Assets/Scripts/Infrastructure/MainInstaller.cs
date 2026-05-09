@@ -1,3 +1,4 @@
+using Audio;
 using Board;
 using Cameras;
 using Core;
@@ -35,6 +36,9 @@ namespace Infrastructure
         [SerializeField] private ShapeTool shapeTool;
         [Header("Tooltip")] [SerializeField] private BoardHoverService boardHoverService;
         [SerializeField] private TooltipService tooltipService;
+        [Header("Audio")] [SerializeField] private SoundController soundController;
+        [SerializeField] private MusicController musicController;
+        [SerializeField] private AudioEventHandler audioEventHandler;
 
 
         public override void InstallBindings()
@@ -61,6 +65,10 @@ namespace Infrastructure
 
             Container.Bind<BoardHoverService>().FromInstance(boardHoverService);
             Container.Bind<TooltipService>().FromInstance(tooltipService);
+
+            Container.Bind<SoundController>().FromInstance(soundController);
+            Container.Bind<MusicController>().FromInstance(musicController);
+            Container.Bind<AudioEventHandler>().FromInstance(audioEventHandler);
         }
     }
 }

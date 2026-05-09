@@ -81,16 +81,15 @@ namespace Tools
 
         private void HandleRotationInput()
         {
-            var piece = _gameController.GetPieceInHand();
-            if (piece == null) return;
+            if (_gameController.IsHandEmpty()) return;
 
             var mouseScroll = Input.mouseScrollDelta.y;
 
             if (Input.GetKeyUp(KeyCode.Q) || mouseScroll > 0.5f)
-                piece.Rotate(1);
+                _gameController.RotatePieceInHand(1);
 
             if (Input.GetKeyUp(KeyCode.E) || mouseScroll < -0.5f)
-                piece.Rotate(-1);
+                _gameController.RotatePieceInHand(-1);
         }
 
         public override void OnSelect()

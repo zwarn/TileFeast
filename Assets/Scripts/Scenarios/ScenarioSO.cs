@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Audio;
 using Zones;
 using Pieces;
 using Rules.AspectSources;
@@ -23,6 +24,7 @@ namespace Scenarios
         public List<Zone> zones;
         [SerializeReference] private List<AspectSource> aspectSources = new();
         public ScenarioSO nextLevel;
+        public MusicContext musicContext = MusicContext.InGame;
 
         public List<Piece> AvailablePieces()
         {

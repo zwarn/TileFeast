@@ -28,6 +28,7 @@ namespace Core
         public event Action OnBoardChanged;
         public event Action<Vector2Int> OnTileChanged;
         public event Action OnHandChanged;
+        public event Action OnPieceRotated;
 
         [ShowInInspector, ReadOnly] public GameState CurrentState { get; private set; }
 
@@ -296,6 +297,14 @@ namespace Core
         public PieceWithRotation GetPieceInHand()
         {
             return CurrentState?.PieceInHand;
+        }
+
+        public void RotatePieceInHand(int direction)
+        {
+            var piece = GetPieceInHand();
+            if (piece == null) return;
+            piece.Rotate(direction);
+            OnPieceRotated?.Invoke();
         }
 
         public void RequestReturnPieceInHand()
